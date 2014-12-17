@@ -101,10 +101,10 @@ string processDateFromConfFile = "";
 string previousLogYear="",previousLogMonth="",previousLogDay="";
 
 
-const int MAXDENIEDOBJ = 20;
+const int MAXDENIEDOBJ = 4;
 int NoDENOBJ;
 
-const int MAXACCESSOBJ = 20;
+const int MAXACCESSOBJ = 4;
 int NoACCOBJ;
 
 RowDataDenied *rowDataDen[MAXDENIEDOBJ];
@@ -188,7 +188,9 @@ Log::Format::SquidNative(const AccessLogEntry::Pointer &al, Logfile * logfile)
 			 pstmt->setString(1,boost::lexical_cast<std::string>(current_time.tv_sec));
 
 		//inserting date	
-			currentLogDate = boost::lexical_cast<std::string>(1900 + ltm->tm_year)+"-"+boost::lexical_cast<std::string>(1 + ltm->tm_mon < 10 ?"0":"")+boost::lexical_cast<std::string>(1 + ltm->tm_mon)+"-"+boost::lexical_cast<std::string>((ltm->tm_mday < 10 ?"0":""))+boost::lexical_cast<std::string>(ltm->tm_mday);
+		//	currentLogDate = boost::lexical_cast<std::string>(1900 + ltm->tm_year)+"-"+boost::lexical_cast<std::string>(1 + ltm->tm_mon < 10 ?"0":"")+boost::lexical_cast<std::string>(1 + ltm->tm_mon)+"-"+boost::lexical_cast<std::string>((ltm->tm_mday < 10 ?"0":""))+boost::lexical_cast<std::string>(ltm->tm_mday);
+//			currentLogDate = boost::lexical_cast<std::string>(1900 + ltm->tm_year)+"-"+boost::lexical_cast<std::string>(1 + ltm->tm_mon < 10 ?"0":"")+boost::lexical_cast<std::string>(1 + ltm->tm_mon)+"-"+boost::lexical_cast<std::string>((ltm->tm_mday < 10 ?"0":""))+boost::lexical_cast<std::string>(ltm->tm_mday);
+			currentLogDate = boost::lexical_cast<std::string>((ltm->tm_mday < 10 ?"0":""))+boost::lexical_cast<std::string>(ltm->tm_mday) + "-"+boost::lexical_cast<std::string>(1 + ltm->tm_mon < 10 ?"0":"")+boost::lexical_cast<std::string>(1 + ltm->tm_mon)+"-"+boost::lexical_cast<std::string>(1900 + ltm->tm_year);
 			pstmt->setString(2,boost::lexical_cast<std::string>(1900 + ltm->tm_year)+"-"+boost::lexical_cast<std::string>(1 + ltm->tm_mon < 10 ?"0":"")+boost::lexical_cast<std::string>(1 + ltm->tm_mon)+"-"+boost::lexical_cast<std::string>((ltm->tm_mday < 10 ?"0":""))+boost::lexical_cast<std::string>(ltm->tm_mday));
 
 		//inserting time
@@ -230,7 +232,8 @@ Log::Format::SquidNative(const AccessLogEntry::Pointer &al, Logfile * logfile)
 	//######################## Sending Squid log to generate the statistics##############################
 
 	if(startFlag == 1)
-	{
+	{ 
+		syslog(LOG_NOTICE,"start of analyze statistics");
 		statLog = new DBConnection();
 	}
 
@@ -255,8 +258,9 @@ Log::Format::SquidNative(const AccessLogEntry::Pointer &al, Logfile * logfile)
 		}
 
 		//Checking whether lastly processed date(which is stored in separate configuration file) is same as current date
-		if((processDateFromConfFile != currentLogDate && processDateFromConfFile != "a") && startFlag == 1)
+	/*	if((processDateFromConfFile != currentLogDate && processDateFromConfFile != "a") && startFlag == 1)
 		{
+			syslog(LOG_NOTICE,"inside configuration file stat analysis");
 			string temTN = "ud_acc_"+processDateFromConfFile;
 			thread t1(grossStatisticsAcc,temTN);
 			//t1.join();
@@ -264,7 +268,7 @@ Log::Format::SquidNative(const AccessLogEntry::Pointer &al, Logfile * logfile)
 			temTN = "ud_den_"+processDateFromConfFile;
 			thread t2(grossStatisticsDen,temTN);
 			//t2.join();
-		}
+		}*/
 
 		//checking whether previous log year is same as current log year
 		//           1. If year changes, then new db is created
@@ -272,9 +276,9 @@ Log::Format::SquidNative(const AccessLogEntry::Pointer &al, Logfile * logfile)
 		if(previousLogYear != currentLogDate.substr(6,4))
 		{
 			previousLogYear=currentLogDate.substr(6,4);
-			string dbName = "squidStatistics_"+currentLogDate;
+			string dbName = "squidStatistics_"+previousLogYear;
 			statLog->dbConnOpen("127.0.0.1","3306","root","simple",dbName);
-			statLog->createStatTable(1,currentLogDate);
+			statLog->createStatTable(1,previousLogYear);
 		}
 
 
@@ -303,6 +307,7 @@ Log::Format::SquidNative(const AccessLogEntry::Pointer &al, Logfile * logfile)
 			previousLogDay = currentLogDate.substr(0,2);
 		}
 		statLog->createStatTableName(dateForTN);
+		syslog(LOG_NOTICE,"end of analyze statistics");
 
 	}
 	startFlag = 0;
@@ -312,7 +317,9 @@ Log::Format::SquidNative(const AccessLogEntry::Pointer &al, Logfile * logfile)
 
 	if( LogTags_str[al->cache.code] != sta.c_str())
 	{
+		syslog(LOG_NOTICE,"start to PPPPPPPPPPParse log");
 		logDataAcc *dataLog = new logDataAcc();
+		syslog(LOG_NOTICE,"created obj for the structure");
 		dataLog->domain = domain;
 		dataLog->response_time = al->cache.msec;
 		dataLog->size = al->cache.replySize;
@@ -320,32 +327,37 @@ Log::Format::SquidNative(const AccessLogEntry::Pointer &al, Logfile * logfile)
 		dataLog->tim = currentLogTime;
 		dataLog->user = userIp;
 
-
+					syslog(LOG_NOTICE,"check data in object");
 
 					pointObj = checkDataInOBJ(NoACCOBJ,userIp,domain);
 
 					if(pointObj != -1)
 					{
+						syslog(LOG_NOTICE,"update data in object 1");
 						updateDataInObj(statLog,rowDataAcc[pointObj],dataLog);
 					}
 					else
 					{
 						if(NoACCOBJ<MAXACCESSOBJ)
 						{
+							syslog(LOG_NOTICE,"create new object");
 							createNewObj();
 							pointObj = NoACCOBJ -1;
 						}
 						else
 						{
+							syslog(LOG_NOTICE,"insert object into table");
 							pointObj = getLeastObjPriority();
 							insertObjIntoTable(pointObj,statLog);
 							emptyTheObj(pointObj);
 						}
 
+						syslog(LOG_NOTICE,"check data in table");
 						isnewLogInTable = checkDataInTable(statLog,statLog->tableNameAcc,userIp,domain);
 
 						if(isnewLogInTable == 1)
-						{
+						{	
+							syslog(LOG_NOTICE,"updateobjfromtable");
 							updateObjFromTable(pointObj,statLog->res);
 							updateDataInObj(statLog,rowDataAcc[pointObj],dataLog);
 						}
@@ -354,6 +366,7 @@ Log::Format::SquidNative(const AccessLogEntry::Pointer &al, Logfile * logfile)
 							updateDataInObj(statLog,rowDataAcc[pointObj],dataLog);
 						}
 					}
+					syslog(LOG_NOTICE,"end of parse log");
 				}
 				else
 				{

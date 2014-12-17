@@ -9,7 +9,7 @@
 #include "log/DBConnection.h"
 
 
-extern const int MAXDENIEDOBJ = 20;
+extern const int MAXDENIEDOBJ = 4;
 extern int NoDENOBJ;
 
 extern RowDataDenied *rowDataDen[MAXDENIEDOBJ];

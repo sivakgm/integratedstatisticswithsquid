@@ -35,19 +35,18 @@ shm.lo: shm.cc ../include/squid.h ../include/autoconf.h \
  /usr/include/bits/signum.h /usr/include/bits/siginfo.h \
  /usr/include/bits/sigaction.h /usr/include/bits/sigcontext.h \
  /usr/include/bits/sigstack.h /usr/include/sys/ucontext.h \
- /usr/include/bits/sigthread.h /usr/include/et/com_err.h \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/include/stdarg.h \
- ../compat/xalloc.h ../compat/xstrerror.h /usr/include/errno.h \
- /usr/include/bits/errno.h /usr/include/linux/errno.h \
- /usr/include/asm/errno.h /usr/include/asm-generic/errno.h \
- /usr/include/asm-generic/errno-base.h ../compat/xstring.h \
- /usr/include/string.h ../compat/xstrto.h \
+ /usr/include/bits/sigthread.h ../compat/xalloc.h ../compat/xstrerror.h \
+ /usr/include/errno.h /usr/include/bits/errno.h \
+ /usr/include/linux/errno.h /usr/include/asm/errno.h \
+ /usr/include/asm-generic/errno.h /usr/include/asm-generic/errno-base.h \
+ ../compat/xstring.h /usr/include/string.h ../compat/xstrto.h \
  /usr/lib/gcc/x86_64-redhat-linux/4.4.7/include/stdbool.h ../compat/xis.h \
  /usr/include/ctype.h ../compat/strtoll.h ../compat/stdvarargs.h \
  /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/cstdarg \
  /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/x86_64-redhat-linux/bits/c++config.h \
  /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/x86_64-redhat-linux/bits/os_defines.h \
  /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/x86_64-redhat-linux/bits/cpu_defines.h \
+ /usr/lib/gcc/x86_64-redhat-linux/4.4.7/include/stdarg.h \
  /usr/include/syslog.h /usr/include/sys/syslog.h \
  /usr/include/bits/syslog-path.h ../compat/assert.h ../compat/stdio.h \
  /usr/include/stdio.h /usr/include/libio.h /usr/include/_G_config.h \
@@ -228,10 +227,6 @@ shm.lo: shm.cc ../include/squid.h ../include/autoconf.h \
 
 /usr/include/bits/sigthread.h:
 
-/usr/include/et/com_err.h:
-
-/usr/lib/gcc/x86_64-redhat-linux/4.4.7/include/stdarg.h:
-
 ../compat/xalloc.h:
 
 ../compat/xstrerror.h:
@@ -271,6 +266,8 @@ shm.lo: shm.cc ../include/squid.h ../include/autoconf.h \
 /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/x86_64-redhat-linux/bits/os_defines.h:
 
 /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/x86_64-redhat-linux/bits/cpu_defines.h:
+
+/usr/lib/gcc/x86_64-redhat-linux/4.4.7/include/stdarg.h:
 
 /usr/include/syslog.h:
 

@@ -120,7 +120,7 @@
 /* #undef LTDL_DLOPEN_DEPLIBS */
 
 /* Define to the system default library search path. */
-#define LT_DLSEARCH_PATH "/lib:/usr/lib:/usr/lib64/ctapi:/usr/lib64/mysql:/usr/lib64/qt-3.3/lib:/usr/lib64/xulrunner"
+#define LT_DLSEARCH_PATH "/lib:/usr/lib:/usr/lib64/mysql:/usr/lib/vmware-tools/lib32/libvmGuestLib.so:/usr/lib/vmware-tools/lib64/libvmGuestLib.so:/usr/lib/vmware-tools/lib32/libvmGuestLibJava.so:/usr/lib/vmware-tools/lib64/libvmGuestLibJava.so:/usr/lib/vmware-tools/lib32/libDeployPkg.so:/usr/lib/vmware-tools/lib64/libDeployPkg.so:/usr/lib64/xulrunner"
 
 /* The archive extension */
 #define LT_LIBEXT "a"

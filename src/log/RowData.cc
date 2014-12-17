@@ -4,11 +4,11 @@
  *  Created on: Nov 5, 2014
  *      Author: sivaprakash
  */
-
+#include "squid.h"
 #include "log/RowData.h"
 #include "log/DBConnection.h"
 
-extern const int MAXACCESSOBJ = 20;
+extern const int MAXACCESSOBJ = 4;
 extern int NoACCOBJ;
 
 extern RowData *rowDataAcc[MAXACCESSOBJ];
@@ -249,12 +249,15 @@ int checkDataInTable(DBConnection *statLog,string tableName,string user,string d
 {
 	try
 	{
+		syslog(LOG_NOTICE,"start in row data check table");
 		statLog->setReadPstmt(0,tableName,user,domain);
+		syslog(LOG_NOTICE,"calling read table");
 		statLog->readTable();
 		if(statLog->res->next())
 		{
 			return 1;
 		}
+		
 	}
 	catch (exception& e)
 	{
@@ -262,5 +265,6 @@ int checkDataInTable(DBConnection *statLog,string tableName,string user,string d
 		cout << "(" << __FUNCTION__ << ") on line " << __LINE__ << endl;
 	    cout << e.what() << '\n';
 	}
+	syslog(LOG_NOTICE,"end in row data check table");
 	return -1;
 }

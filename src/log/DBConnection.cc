@@ -6,7 +6,7 @@
  *      Author: sivaprakash
  *
  */
-
+#include "squid.h"
 #include "log/DBConnection.h"
 #include "log/RowDataDenied.h"
 #include "log/RowData.h"
@@ -15,8 +15,10 @@ void DBConnection::createDBIfNotExists(string schema)
 {
 	try
 	{
+		syslog(LOG_NOTICE,"DB:creating DB");			
+		syslog(LOG_NOTICE,schema.c_str());
 		this->stmt=this->conn->createStatement();
-		this->stmt->execute("create database if not exists "+schema);
+		this->stmt->execute("create database if not exists "+schema+";");
 		return;
 	}
 	catch (sql::SQLException &e)
@@ -68,6 +70,7 @@ void DBConnection::dbConnOpen(string host,string port,string user,string pass,st
 	{
 		Driver *driver = get_driver_instance();
 		string addre = "tcp://"+host+":"+port;
+		syslog(LOG_NOTICE,addre.c_str());
 		this->conn = driver->connect(addre,user,pass);
 		this->createDBIfNotExists(schema);
 		this->conn->setSchema(schema);
@@ -168,6 +171,7 @@ void DBConnection::setReadPstmt(int flag,string tableNam,string user,string doma
 {
 	try
 	{
+		syslog(LOG_NOTICE,"DB:set read pstmt");
 		string query;
 
 		if(flag == 1)
@@ -195,6 +199,7 @@ void DBConnection::setReadPstmt(int flag,string tableNam,string user,string doma
 	  	cout << " (MySQL error code: " << e.getErrorCode();
 	  	cout << ", SQLState: " << e.getSQLState() << " )" << endl;
 	}
+	syslog(LOG_NOTICE,"DB:end set read pstmt");
 }
 
 string timeAndDate()
@@ -345,8 +350,10 @@ void updateTableDen(RowDataDenied *rowData,PreparedStatement *pstmt)
 void DBConnection::readTable()
 {
 	try
-	{
+	{	
+		syslog(LOG_NOTICE,"DB:start read table");
 		this->res = this->readpstmt->executeQuery();
+		syslog(LOG_NOTICE,"DB:end of readtable");
 		return;
 	}
 	catch (sql::SQLException &e)
