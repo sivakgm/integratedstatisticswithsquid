@@ -233,7 +233,7 @@ Log::Format::SquidNative(const AccessLogEntry::Pointer &al, Logfile * logfile)
 
 	if(startFlag == 1)
 	{ 
-		syslog(LOG_NOTICE,"start of analyze statistics");
+		syslog(LOG_NOTICE,"Nat::First time code execution and db connection establishment");
 		statLog = new DBConnection();
 	}
 
@@ -307,7 +307,7 @@ Log::Format::SquidNative(const AccessLogEntry::Pointer &al, Logfile * logfile)
 			previousLogDay = currentLogDate.substr(0,2);
 		}
 		statLog->createStatTableName(dateForTN);
-		syslog(LOG_NOTICE,"end of analyze statistics");
+		syslog(LOG_NOTICE,"NAT::End of db connection code");
 
 	}
 	startFlag = 0;
