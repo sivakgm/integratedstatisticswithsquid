@@ -60,9 +60,16 @@ void setObjPriority(int lim)
 		{
 			lim = NoACCOBJ;
 		}
-		for(int i=0;i<lim;i++)
+/*		for(int i=0;i<lim;i++)
 		{
 			rowDataAcc[i]->priority = rowDataAcc[i]->priority + 1;
+		}*/
+		for(int i=0;i<NoACCOBJ;i++)
+		{
+			if( rowDataAcc[i]->priority < lim )
+			{
+				rowDataAcc[i]->priority = rowDataAcc[i]->priority + 1;
+			}
 		}
 	}
 	catch (exception& e)
@@ -155,12 +162,16 @@ void insertObjIntoTable(int pointObj,DBConnection *statLog)
 	try
 	{
 		if(rowDataAcc[pointObj]->isInTable == 1)
-		{
+		{	
+			syslog(LOG_NOTICE,"RD:: update data");
 			updateTableAcc(rowDataAcc[pointObj],statLog->upPstmtAcc);
+			syslog(LOG_NOTICE,"RD:: End of update data");
 		}
 		else
-		{
+		{	
+			syslog(LOG_NOTICE,"RD:: Insert data");
 			insertIntoTableAcc(rowDataAcc[pointObj],statLog->insPstmtAcc);
+			syslog(LOG_NOTICE,"RD:: End of Insert data");
 		}
 	}
 	catch (exception& e)

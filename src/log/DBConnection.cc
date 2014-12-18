@@ -263,6 +263,7 @@ void insertIntoTableAcc(RowData *rowData,PreparedStatement *pstmt)
 {
 	try
 	{
+		syslog(LOG_NOTICE,"DB:: Start insert date in table");
 		pstmt->setString(1,rowData->user);
 		pstmt->setString(2,rowData->domain);
 		pstmt->setDouble(3,rowData->size);
@@ -271,6 +272,7 @@ void insertIntoTableAcc(RowData *rowData,PreparedStatement *pstmt)
 		pstmt->setDouble(6,rowData->miss);
 		pstmt->setDouble(7,rowData->response_time);
 		pstmt->executeUpdate();
+		syslog(LOG_NOTICE,"DB:: Start insert date in table");
 	}
 	catch (sql::SQLException &e)
 	{
@@ -286,6 +288,7 @@ void updateTableAcc(RowData *rowData,PreparedStatement *pstmt)
 {
 	try
 	{
+		syslog(LOG_NOTICE,"DB:: Start update date in table");	
 		pstmt->setDouble(1,rowData->size);
 		pstmt->setInt(2,rowData->connection);
 		pstmt->setDouble(3,rowData->hit);
@@ -295,6 +298,7 @@ void updateTableAcc(RowData *rowData,PreparedStatement *pstmt)
 		pstmt->setString(7,rowData->domain);
 
 		pstmt->executeUpdate();
+		syslog(LOG_NOTICE,"DB:: end of Start update date in table");
 		return;
 	}
 	catch (sql::SQLException &e)
