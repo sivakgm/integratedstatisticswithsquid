@@ -42,15 +42,15 @@ void DBConnection::createStatTable(int flag,string tableNam)
 			{
 				this->tableNameYearAcc = "ud_acc_"+tableNam;
 				this->tableNameYearDen = "ud_den_"+tableNam;
-				this->stmt->execute("create table if not exists ud_acc_" + tableNam + " (user varchar(12), domain varchar(100), size double, connection int, hit float, miss float,response_time float);");
-				this->stmt->execute("create table if not exists ud_den_" + tableNam + " (user varchar(12), domain varchar(100),connection int);");
+				this->stmt->execute("create table if not exists ud_acc_" + tableNam + " (user varchar(16), domain varchar(100), size double, connection int, hit float, miss float,response_time float);");
+				this->stmt->execute("create table if not exists ud_den_" + tableNam + " (user varchar(16), domain varchar(100),connection int);");
 			}
 			else
 			{
 				this->tableNameMonthAcc = "ud_acc_"+tableNam;
 				this->tableNameMonthDen = "ud_den_"+tableNam;
-				this->stmt->execute("create table if not exists ud_acc_" + tableNam + " (user varchar(12), domain varchar(100), size double, connection int, hit float, miss float,response_time float);");
-				this->stmt->execute("create table if not exists ud_den_" + tableNam + " (user varchar(12), domain varchar(100),connection int);");
+				this->stmt->execute("create table if not exists ud_acc_" + tableNam + " (user varchar(16), domain varchar(100), size double, connection int, hit float, miss float,response_time float);");
+				this->stmt->execute("create table if not exists ud_den_" + tableNam + " (user varchar(16), domain varchar(100),connection int);");
 			}
 		}
 	}
@@ -120,10 +120,10 @@ void DBConnection::createTableIfNotExist()
 	try
 	{
 		this->stmt=this->conn->createStatement();
-		this->stmt->execute("create table if not exists " + this->tableNameAcc + " (user varchar(12), domain varchar(100), size double, connection int, hit float, miss float,response_time float);");
-		this->stmt->execute("create table if not exists " + this->tableNameDen + " (user varchar(12), domain varchar(100), connection int);");
-		this->stmt->execute("create table if not exists " + this->tableNameAccTime + " (user varchar(12), domain varchar(100), accTime varchar(15));");
-		this->stmt->execute("create table if not exists " + this->tableNameDenTime + " (user varchar(12), domain varchar(100), accTime varchar(15));");
+		this->stmt->execute("create table if not exists " + this->tableNameAcc + " (user varchar(16), domain varchar(100), size double, connection int, hit float, miss float,response_time float);");
+		this->stmt->execute("create table if not exists " + this->tableNameDen + " (user varchar(16), domain varchar(100), connection int);");
+		this->stmt->execute("create table if not exists " + this->tableNameAccTime + " (user varchar(16), domain varchar(100), accTime varchar(15));");
+		this->stmt->execute("create table if not exists " + this->tableNameDenTime + " (user varchar(16), domain varchar(100), accTime varchar(15));");
 	}
 	catch (sql::SQLException &e)
 	{
