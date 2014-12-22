@@ -15,8 +15,8 @@ void DBConnection::createDBIfNotExists(string schema)
 {
 	try
 	{
-		syslog(LOG_NOTICE,"DB:creating DB");			
-		syslog(LOG_NOTICE,schema.c_str());
+//		syslog(LOG_NOTICE,"DB:creating DB");			
+//		syslog(LOG_NOTICE,schema.c_str());
 		this->stmt=this->conn->createStatement();
 		this->stmt->execute("create database if not exists "+schema+";");
 		return;
@@ -70,7 +70,7 @@ void DBConnection::dbConnOpen(string host,string port,string user,string pass,st
 	{
 		Driver *driver = get_driver_instance();
 		string addre = "tcp://"+host+":"+port;
-		syslog(LOG_NOTICE,addre.c_str());
+//		syslog(LOG_NOTICE,addre.c_str());
 		this->conn = driver->connect(addre,user,pass);
 		this->createDBIfNotExists(schema);
 		this->conn->setSchema(schema);
@@ -171,7 +171,7 @@ void DBConnection::setReadPstmt(int flag,string tableNam,string user,string doma
 {
 	try
 	{
-		syslog(LOG_NOTICE,"DB:set read pstmt");
+		//syslog(LOG_NOTICE,"DB:set read pstmt");
 		string query;
 
 		if(flag == 1)
@@ -199,7 +199,7 @@ void DBConnection::setReadPstmt(int flag,string tableNam,string user,string doma
 	  	cout << " (MySQL error code: " << e.getErrorCode();
 	  	cout << ", SQLState: " << e.getSQLState() << " )" << endl;
 	}
-	syslog(LOG_NOTICE,"DB:end set read pstmt");
+	//syslog(LOG_NOTICE,"DB:end set read pstmt");
 }
 
 string timeAndDate()
@@ -263,7 +263,7 @@ void insertIntoTableAcc(RowData *rowData,PreparedStatement *pstmt)
 {
 	try
 	{
-		syslog(LOG_NOTICE,"DB:: Start insert date in table");
+		//syslog(LOG_NOTICE,"DB:: Start insert date in table");
 		pstmt->setString(1,rowData->user);
 		pstmt->setString(2,rowData->domain);
 		pstmt->setDouble(3,rowData->size);
@@ -272,7 +272,7 @@ void insertIntoTableAcc(RowData *rowData,PreparedStatement *pstmt)
 		pstmt->setDouble(6,rowData->miss);
 		pstmt->setDouble(7,rowData->response_time);
 		pstmt->executeUpdate();
-		syslog(LOG_NOTICE,"DB:: Start insert date in table");
+		//syslog(LOG_NOTICE,"DB:: Start insert date in table");
 	}
 	catch (sql::SQLException &e)
 	{
@@ -288,7 +288,7 @@ void updateTableAcc(RowData *rowData,PreparedStatement *pstmt)
 {
 	try
 	{
-		syslog(LOG_NOTICE,"DB:: Start update date in table");	
+		//syslog(LOG_NOTICE,"DB:: Start update date in table");	
 		pstmt->setDouble(1,rowData->size);
 		pstmt->setInt(2,rowData->connection);
 		pstmt->setDouble(3,rowData->hit);
@@ -298,7 +298,7 @@ void updateTableAcc(RowData *rowData,PreparedStatement *pstmt)
 		pstmt->setString(7,rowData->domain);
 
 		pstmt->executeUpdate();
-		syslog(LOG_NOTICE,"DB:: end of Start update date in table");
+		//syslog(LOG_NOTICE,"DB:: end of Start update date in table");
 		return;
 	}
 	catch (sql::SQLException &e)
@@ -355,9 +355,9 @@ void DBConnection::readTable()
 {
 	try
 	{	
-		syslog(LOG_NOTICE,"DB:start read table");
+		//syslog(LOG_NOTICE,"DB:start read table");
 		this->res = this->readpstmt->executeQuery();
-		syslog(LOG_NOTICE,"DB:end of readtable");
+		//syslog(LOG_NOTICE,"DB:end of readtable");
 		return;
 	}
 	catch (sql::SQLException &e)

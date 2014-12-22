@@ -108,10 +108,19 @@ void setDenObjPriority(int lim)
 		{
 			lim = NoDENOBJ;
 		}
-		for(int i=0;i<lim;i++)
+/*		for(int i=0;i<lim;i++)
 		{
 			rowDataDen[i]->priority = rowDataDen[i]->priority + 1;
-		}
+		}*/
+		for(int i=0;i<NoDENOBJ;i++)
+                {
+                        if( rowDataDen[i]->priority < lim )
+                        {
+                                rowDataDen[i]->priority = rowDataDen[i]->priority + 1;
+                        }
+                }
+
+		
 	}
 	catch (exception& e)
 	{

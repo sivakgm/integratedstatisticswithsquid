@@ -291,7 +291,7 @@
 #	If you want to use the traditional NCSA proxy authentication, set
 #	this line to something like
 #
-#	auth_param basic program /usr/local/squidstat/libexec/basic_ncsa_auth /usr/local/squidstat/etc/passwd
+#	auth_param basic program /usr/local/updatestat/libexec/basic_ncsa_auth /usr/local/updatestat/etc/passwd
 #
 #	"utf8" on|off
 #	HTTP uses iso-latin-1 as character set, while some authentication
@@ -375,7 +375,7 @@
 #	If you want to use a digest authenticator, set this line to
 #	something like
 #
-#	auth_param digest program /usr/local/squidstat/bin/digest_pw_auth /usr/local/squidstat/etc/digpass
+#	auth_param digest program /usr/local/updatestat/bin/digest_pw_auth /usr/local/updatestat/etc/digpass
 #
 #	"utf8" on|off
 #	HTTP uses iso-latin-1 as character set, while some authentication
@@ -2345,11 +2345,11 @@ http_port 3128
 #       --enable-ssl-crtd
 #
 #	Specify the location and options of the executable for ssl_crtd process.
-#	/usr/local/squidstat/libexec/ssl_crtd program requires -s and -M parameters
+#	/usr/local/updatestat/libexec/ssl_crtd program requires -s and -M parameters
 #	For more information use:
-#		/usr/local/squidstat/libexec/ssl_crtd -h
+#		/usr/local/updatestat/libexec/ssl_crtd -h
 #Default:
-# sslcrtd_program /usr/local/squidstat/libexec/ssl_crtd -s /usr/local/squidstat/var/lib/ssl_db -M 4MB
+# sslcrtd_program /usr/local/updatestat/libexec/ssl_crtd -s /usr/local/updatestat/var/lib/ssl_db -M 4MB
 
 #  TAG: sslcrtd_children
 # Note: This option is only available if Squid is rebuilt with the
@@ -3228,7 +3228,7 @@ http_port 3128
 #
 
 # Uncomment and adjust the following to add a disk cache directory.
-#cache_dir ufs /usr/local/squidstat/var/cache/squid 100 16 256
+#cache_dir ufs /usr/local/updatestat/var/cache/squid 100 16 256
 
 #  TAG: store_dir_select_algorithm
 #	How Squid selects which cache_dir to use when the response
@@ -3638,9 +3638,9 @@ http_port 3128
 #		Place Format:   //host:port
 #
 #	Default:
-#		access_log daemon:/usr/local/squidstat/var/logs/access.log squid
+#		access_log daemon:/usr/local/updatestat/var/logs/access.log squid
 #Default:
-# access_log daemon:/usr/local/squidstat/var/logs/access.log squid
+# access_log daemon:/usr/local/updatestat/var/logs/access.log squid
 
 #  TAG: icap_log
 # Note: This option is only available if Squid is rebuilt with the
@@ -3745,7 +3745,7 @@ http_port 3128
 #
 #	No responses is expected.
 #Default:
-# logfile_daemon /usr/local/squidstat/libexec/log_file_daemon
+# logfile_daemon /usr/local/updatestat/libexec/log_file_daemon
 
 #  TAG: log_access
 #	Remove this line. Use acls with access_log directives to control access logging
@@ -3777,8 +3777,8 @@ http_port 3128
 #	of modules supported.
 #	
 #	Example:
-#		cache_store_log stdio:/usr/local/squidstat/var/logs/store.log
-#		cache_store_log daemon:/usr/local/squidstat/var/logs/store.log
+#		cache_store_log stdio:/usr/local/updatestat/var/logs/store.log
+#		cache_store_log daemon:/usr/local/updatestat/var/logs/store.log
 #Default:
 # none
 
@@ -3849,7 +3849,7 @@ http_port 3128
 #	You shouldn't need to change this, but the default file contains
 #	examples and formatting information if you do.
 #Default:
-# mime_table /usr/local/squidstat/etc/mime.conf
+# mime_table /usr/local/updatestat/etc/mime.conf
 
 #  TAG: log_mime_hdrs	on|off
 #	The Cache can record both the request and the response MIME
@@ -3873,7 +3873,7 @@ http_port 3128
 #  TAG: pid_filename
 #	A filename to write the process-id to.  To disable, enter "none".
 #Default:
-# pid_filename /usr/local/squidstat/var/run/squid.pid
+# pid_filename /usr/local/updatestat/var/run/squid.pid
 
 #  TAG: log_fqdn
 #	Remove this option from your config. To log FQDN use %>A in the log format.
@@ -3927,7 +3927,7 @@ http_port 3128
 #
 #	To disable, enter "none".
 #Default:
-# netdb_filename stdio:/usr/local/squidstat/var/logs/netdb.state
+# netdb_filename stdio:/usr/local/updatestat/var/logs/netdb.state
 
 # OPTIONS FOR TROUBLESHOOTING
 # -----------------------------------------------------------------------------
@@ -3939,7 +3939,7 @@ http_port 3128
 #	increase the amount of data logged to this file and how often it is
 #	rotated with "debug_options"
 #Default:
-# cache_log /usr/local/squidstat/var/logs/cache.log
+# cache_log /usr/local/updatestat/var/logs/cache.log
 
 #  TAG: debug_options
 #	Logging options are set as section,level where each source file
@@ -3968,7 +3968,7 @@ http_port 3128
 #
 
 # Leave coredumps in the first cache dir
-coredump_dir /usr/local/squidstat/var/cache/squid
+coredump_dir /usr/local/updatestat/var/cache/squid
 
 # OPTIONS FOR FTP GATEWAYING
 # -----------------------------------------------------------------------------
@@ -4080,12 +4080,12 @@ coredump_dir /usr/local/squidstat/var/cache/squid
 #	Note this is only useful if you have compiled in
 #	diskd as one of the store io modules.
 #Default:
-# diskd_program /usr/local/squidstat/libexec/diskd
+# diskd_program /usr/local/updatestat/libexec/diskd
 
 #  TAG: unlinkd_program
 #	Specify the location of the executable for file deletion process.
 #Default:
-# unlinkd_program /usr/local/squidstat/libexec/unlinkd
+# unlinkd_program /usr/local/updatestat/libexec/unlinkd
 
 #  TAG: pinger_program
 # Note: This option is only available if Squid is rebuilt with the
@@ -4093,7 +4093,7 @@ coredump_dir /usr/local/squidstat/var/cache/squid
 #
 #	Specify the location of the executable for the pinger process.
 #Default:
-# pinger_program /usr/local/squidstat/libexec/pinger
+# pinger_program /usr/local/updatestat/libexec/pinger
 
 #  TAG: pinger_enable
 # Note: This option is only available if Squid is rebuilt with the
@@ -6181,9 +6181,9 @@ refresh_pattern .		0	20%	4320
 
 #  TAG: icon_directory
 #	Where the icons are stored. These are normally kept in
-#	/usr/local/squidstat/share/icons
+#	/usr/local/updatestat/share/icons
 #Default:
-# icon_directory /usr/local/squidstat/share/icons
+# icon_directory /usr/local/updatestat/share/icons
 
 #  TAG: global_internal_static
 #	This directive controls is Squid should intercept all requests for
@@ -6258,7 +6258,7 @@ refresh_pattern .		0	20%	4320
 #
 #	For information on CSS see http://www.w3.org/Style/CSS/
 #Default:
-# err_page_stylesheet /usr/local/squidstat/etc/errorpage.css
+# err_page_stylesheet /usr/local/updatestat/etc/errorpage.css
 
 #  TAG: err_html_text
 #	HTML text to include in error messages.  Make this a "mailto"
@@ -6944,7 +6944,7 @@ refresh_pattern .		0	20%	4320
 #	Instructs Squid to load the specified dynamic module(s) or activate
 #	preloaded module(s).
 #Example:
-#loadable_modules /usr/local/squidstat/lib/MinimalAdapter.so
+#loadable_modules /usr/local/updatestat/lib/MinimalAdapter.so
 #Default:
 # none
 
@@ -7215,7 +7215,7 @@ refresh_pattern .		0	20%	4320
 #
 #	Specify the location of the executable for dnslookup process.
 #Default:
-# cache_dns_program /usr/local/squidstat/libexec/dnsserver
+# cache_dns_program /usr/local/updatestat/libexec/dnsserver
 
 #  TAG: dns_children
 # Note: This option is only available if Squid is rebuilt with the

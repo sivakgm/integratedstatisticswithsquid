@@ -163,15 +163,15 @@ void insertObjIntoTable(int pointObj,DBConnection *statLog)
 	{
 		if(rowDataAcc[pointObj]->isInTable == 1)
 		{	
-			syslog(LOG_NOTICE,"RD:: update data");
+			//syslog(LOG_NOTICE,"RD:: update data");
 			updateTableAcc(rowDataAcc[pointObj],statLog->upPstmtAcc);
-			syslog(LOG_NOTICE,"RD:: End of update data");
+			//syslog(LOG_NOTICE,"RD:: End of update data");
 		}
 		else
 		{	
-			syslog(LOG_NOTICE,"RD:: Insert data");
+//			syslog(LOG_NOTICE,"RD:: Insert data");
 			insertIntoTableAcc(rowDataAcc[pointObj],statLog->insPstmtAcc);
-			syslog(LOG_NOTICE,"RD:: End of Insert data");
+//			syslog(LOG_NOTICE,"RD:: End of Insert data");
 		}
 	}
 	catch (exception& e)
@@ -260,9 +260,9 @@ int checkDataInTable(DBConnection *statLog,string tableName,string user,string d
 {
 	try
 	{
-		syslog(LOG_NOTICE,"start in row data check table");
+		//syslog(LOG_NOTICE,"start in row data check table");
 		statLog->setReadPstmt(0,tableName,user,domain);
-		syslog(LOG_NOTICE,"calling read table");
+//		syslog(LOG_NOTICE,"calling read table");
 		statLog->readTable();
 		if(statLog->res->next())
 		{
@@ -276,6 +276,6 @@ int checkDataInTable(DBConnection *statLog,string tableName,string user,string d
 		cout << "(" << __FUNCTION__ << ") on line " << __LINE__ << endl;
 	    cout << e.what() << '\n';
 	}
-	syslog(LOG_NOTICE,"end in row data check table");
+//	syslog(LOG_NOTICE,"end in row data check table");
 	return -1;
 }
