@@ -324,6 +324,15 @@ Log::Format::SquidNative(const AccessLogEntry::Pointer &al, Logfile * logfile)
 		syslog(LOG_NOTICE,"MAIN::End of db connection code");
 		
 		processDateFromConfFile = dateForTN;
+		/*try
+        	{
+	                ofstream confFile("/home/squ.conf");
+        	        confFile<<processDateFromConfFile;
+        	}
+	        catch (exception& e)
+        	{
+	               	syslog(LOG_NOTICE,"Error in reading conf file containing the lastly processed date");
+        	}*/
 
 	}
 	startFlag = 0;
