@@ -126,6 +126,8 @@ Log::Format::SquidNative(const AccessLogEntry::Pointer &al, Logfile * logfile)
 
     //#############
     string currentLogTime,currentLogDate;
+	string userIp,domain,dateForTN;
+	int pointObj,isnewLogInTable;
     //##########
 
 
@@ -248,8 +250,6 @@ Log::Format::SquidNative(const AccessLogEntry::Pointer &al, Logfile * logfile)
 		statLog = new DBConnection();
 	}
 
-	string userIp,domain,dateForTN;
-	int pointObj,isnewLogInTable;
 
 	userIp = clientip;
 	domain = parseURLtoDomain(al->url);
@@ -267,9 +267,12 @@ Log::Format::SquidNative(const AccessLogEntry::Pointer &al, Logfile * logfile)
 				dateForTN[x]='_';
 			}
 		}
+		
 
 		//Checking whether lastly processed date(which is stored in separate configuration file) is same as current date
-		if((processDateFromConfFile != currentLogDate && processDateFromConfFile != "a") && startFlag == 1)
+		syslog(LOG_NOTICE,"value from process date from conf file");
+		syslog(LOG_NOTICE,processDateFromConfFile.c_str());
+		if((processDateFromConfFile != dateForTN && processDateFromConfFile != "a") && startFlag == 1)
 		{
 			syslog(LOG_NOTICE,"inside configuration file stat analysis");
 			string temTN = "ud_acc_"+processDateFromConfFile;
@@ -319,6 +322,8 @@ Log::Format::SquidNative(const AccessLogEntry::Pointer &al, Logfile * logfile)
 		}
 		statLog->createStatTableName(dateForTN);
 		syslog(LOG_NOTICE,"MAIN::End of db connection code");
+		
+		processDateFromConfFile = dateForTN;
 
 	}
 	startFlag = 0;
@@ -447,8 +452,8 @@ Log::Format::SquidNative(const AccessLogEntry::Pointer &al, Logfile * logfile)
 		syslog(LOG_NOTICE,"MAIN:: End of Denied");
 	}
 
-	processDateFromConfFile = dateForTN;
-
+	syslog(LOG_NOTICE,"Process data at the end");
+	syslog(LOG_NOTICE,processDateFromConfFile.c_str());
 
 
 	////////////////////////////////////////////////////////
