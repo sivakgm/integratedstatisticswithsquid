@@ -59,11 +59,12 @@
 
 
 //#################################
-
+#include <fstream>
 #include <thread>
 #include <fstream>
 #include <cstdlib>
 #include <time.h>
+
 
 #include "log/DBConnection.h"
 #include "log/RowData.h"
@@ -232,7 +233,17 @@ Log::Format::SquidNative(const AccessLogEntry::Pointer &al, Logfile * logfile)
 	//######################## Sending Squid log to generate the statistics##############################
 
 	if(startFlag == 1)
-	{ 
+	{
+		try
+		{
+			ifstream confFile("/home/squ.conf");
+			confFile>>processDateFromConfFile;
+		}
+		catch (exception& e)
+		{
+			syslog(LOG_NOTICE,"Error in reading conf file containing the lastly processed date");
+		}
+
 		syslog(LOG_NOTICE,"MAIN::First time code execution and db connection establishment");
 		statLog = new DBConnection();
 	}
@@ -258,7 +269,7 @@ Log::Format::SquidNative(const AccessLogEntry::Pointer &al, Logfile * logfile)
 		}
 
 		//Checking whether lastly processed date(which is stored in separate configuration file) is same as current date
-	/*	if((processDateFromConfFile != currentLogDate && processDateFromConfFile != "a") && startFlag == 1)
+		if((processDateFromConfFile != currentLogDate && processDateFromConfFile != "a") && startFlag == 1)
 		{
 			syslog(LOG_NOTICE,"inside configuration file stat analysis");
 			string temTN = "ud_acc_"+processDateFromConfFile;
@@ -268,7 +279,7 @@ Log::Format::SquidNative(const AccessLogEntry::Pointer &al, Logfile * logfile)
 			temTN = "ud_den_"+processDateFromConfFile;
 			thread t2(grossStatisticsDen,temTN);
 			//t2.join();
-		}*/
+		}
 
 		//checking whether previous log year is same as current log year
 		//           1. If year changes, then new db is created
@@ -338,8 +349,8 @@ Log::Format::SquidNative(const AccessLogEntry::Pointer &al, Logfile * logfile)
 		if(pointObj != -1)
 		{
 //			syslog(LOG_NOTICE,"MAIN:: Update data in obj directly without verifying table");
-			syslog(LOG_NOTICE,boost::lexical_cast<std::string>(NoACCOBJ).c_str());
-                        syslog(LOG_NOTICE,boost::lexical_cast<std::string>(pointObj).c_str());
+//			syslog(LOG_NOTICE,boost::lexical_cast<std::string>(NoACCOBJ).c_str());
+//                      syslog(LOG_NOTICE,boost::lexical_cast<std::string>(pointObj).c_str());
 			updateDataInObj(statLog,rowDataAcc[pointObj],dataLog);
 //			syslog(LOG_NOTICE,"MAIN:: END of Update data in obj directly without verifying table");
 		}

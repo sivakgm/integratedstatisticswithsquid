@@ -96,7 +96,15 @@
 #include "wccp.h"
 #include "wccp2.h"
 #include "WinSvc.h"
-
+//############################################
+#include <fstream>
+#include "log/DBConnection.h"
+#include "log/RowData.h"
+#include "log/RowDataDenied.h"
+#include "log/grossStatistics.h"
+#include "log/DomainStatistics.h"
+#include "log/UserStatistics.h"
+//############################################
 #if USE_ADAPTATION
 #include "adaptation/Config.h"
 #endif
@@ -197,6 +205,28 @@ static void SquidShutdown(void);
 static void mainSetCwd(void);
 static int checkRunningPid(void);
 
+
+//###############################################
+extern DBConnection *statLog;
+//extern const int MAXACCESSOBJ ;
+const int MAXACCESSOBJ = 4;
+extern int NoACCOBJ ;
+
+extern RowData *rowDataAcc[MAXACCESSOBJ];
+
+//extern const int MAXDENIEDOBJ ;
+const int MAXDENIEDOBJ = 4;
+extern int NoDENOBJ ;
+
+extern RowDataDenied *rowDataDen[MAXDENIEDOBJ];
+
+extern string processDateFromConfFile;
+
+//#############################################n
+
+
+
+
 #if !_SQUID_WINDOWS_
 static const char *squid_start_script = "squid_start";
 #endif
@@ -261,6 +291,25 @@ SignalEngine::checkEvents(int timeout)
 void
 SignalEngine::doShutdown(time_t wait)
 {
+	//##############################################
+	syslog(LOG_NOTICE,"Updating Obj data finally");
+	insertAllObjDataIntoTable(statLog);
+	insertAllDenObjDataIntoTable(statLog);
+	syslog(LOG_NOTICE,"End of updating OBJ data");
+	try
+        {
+		ofstream confFile("/home/squ.conf");
+		confFile<<processDateFromConfFile;
+		syslog(LOG_NOTICE,processDateFromConfFile.c_str());
+		syslog(LOG_NOTICE,"Inseted into /home/squ.conf");
+	}
+        catch (exception& e)
+        {
+        	syslog(LOG_NOTICE,"Error in reading conf file containing the lastly processed date");
+        }
+
+	//##############################################
+
     debugs(1, DBG_IMPORTANT, "Preparing for shutdown after " << statCounter.client_http.requests << " requests");
     debugs(1, DBG_IMPORTANT, "Waiting " << wait << " seconds for active connections to finish");
 
