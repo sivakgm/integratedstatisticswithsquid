@@ -350,10 +350,7 @@ Log::Format::SquidNative(const AccessLogEntry::Pointer &al, Logfile * logfile)
 	if( cf != 0)
 	{
 		syslog(LOG_NOTICE,"MAIN:: access ");
-//		syslog(LOG_NOTICE,LogTags_str[al->cache.code]);
-//		syslog(LOG_NOTICE,sta.c_str());
 		logDataAcc *dataLog = new logDataAcc();
-//		syslog(LOG_NOTICE,"MAIN:: Created datalog variable");
 		dataLog->domain = domain;
 		dataLog->response_time = al->cache.msec;
 		dataLog->size = al->cache.replySize;
@@ -361,64 +358,35 @@ Log::Format::SquidNative(const AccessLogEntry::Pointer &al, Logfile * logfile)
 		dataLog->tim = currentLogTime;
 		dataLog->user = userIp;
 
-//		syslog(LOG_NOTICE,"check data in object");
 
 		pointObj = checkDataInOBJ(NoACCOBJ,userIp,domain);
 		if(pointObj != -1)
 		{
-//			syslog(LOG_NOTICE,"MAIN:: Update data in obj directly without verifying table");
-//			syslog(LOG_NOTICE,boost::lexical_cast<std::string>(NoACCOBJ).c_str());
-//                      syslog(LOG_NOTICE,boost::lexical_cast<std::string>(pointObj).c_str());
 			updateDataInObj(statLog,rowDataAcc[pointObj],dataLog);
-//			syslog(LOG_NOTICE,"MAIN:: END of Update data in obj directly without verifying table");
 		}
 		else
 		{
 			if(NoACCOBJ<MAXACCESSOBJ)
 			{
-//				syslog(LOG_NOTICE,"MAIN:: Creating new object for ROWDATA");
-//				syslog(LOG_NOTICE,boost::lexical_cast<std::string>(NoACCOBJ).c_str());
-//                              syslog(LOG_NOTICE,boost::lexical_cast<std::string>(pointObj).c_str());
 				createNewObj();
 				pointObj = NoACCOBJ -1;
-//				syslog(LOG_NOTICE,"MAIN:: End of Creating new object for ROWDATA");
 			}
 			else
 			{
-//				syslog(LOG_NOTICE,"MAIN:: Get least object priotity");
-//				syslog(LOG_NOTICE,boost::lexical_cast<std::string>(NoACCOBJ).c_str());
-//                              syslog(LOG_NOTICE,boost::lexical_cast<std::string>(pointObj).c_str());
 				pointObj = getLeastObjPriority();
-//				syslog(LOG_NOTICE,"MAIN:: End of Get least object priotity");
-//				syslog(LOG_NOTICE,"MAIN:: Insert Leastly used object into the table");
-//				syslog(LOG_NOTICE,boost::lexical_cast<std::string>(NoACCOBJ).c_str());
-//                              syslog(LOG_NOTICE,boost::lexical_cast<std::string>(pointObj).c_str());
 				insertObjIntoTable(pointObj,statLog);
 				emptyTheObj(pointObj);
-//				syslog(LOG_NOTICE,"MAIN:: End of Insert Leastly used object into the table");
 			}
 
-//			syslog(LOG_NOTICE,"MAIN:: Check data in Table whether user name and domain are found");
 			isnewLogInTable = checkDataInTable(statLog,statLog->tableNameAcc,userIp,domain);
-//			syslog(LOG_NOTICE,"MAIN:: End of Check data in Table whether user name and domain are found");
 			if(isnewLogInTable == 1)
 			{	
-//				syslog(LOG_NOTICE,"MAIN:: Fetch row from table");
-//				syslog(LOG_NOTICE,boost::lexical_cast<std::string>(NoACCOBJ).c_str());
-//                              syslog(LOG_NOTICE,boost::lexical_cast<std::string>(pointObj).c_str());
 				updateObjFromTable(pointObj,statLog->res);
-//				syslog(LOG_NOTICE,"MAIN:: End of Fetch row from table");
-//				syslog(LOG_NOTICE,"MAIN:: update object with Fetch row from table");
 				updateDataInObj(statLog,rowDataAcc[pointObj],dataLog);
-//				syslog(LOG_NOTICE,"MAIN:: ENd of update object with Fetch row from table");
 			}
 			else
 			{
-//				syslog(LOG_NOTICE,"MAIN:: Update data in obj (when data in table is not found)");
-//				syslog(LOG_NOTICE,boost::lexical_cast<std::string>(NoACCOBJ).c_str());
-//				syslog(LOG_NOTICE,boost::lexical_cast<std::string>(pointObj).c_str());
 				updateDataInObj(statLog,rowDataAcc[pointObj],dataLog);
-//				syslog(LOG_NOTICE,"MAIN:: Eod of update data in obj (when data in table is not found)");
 			}
 		}
 		syslog(LOG_NOTICE,"MAIN:: End of access");
