@@ -108,6 +108,8 @@ int NoDENOBJ;
 const int MAXACCESSOBJ = 4;
 int NoACCOBJ;
 
+string currentTableAcc,currentTableDen;
+
 RowDataDenied *rowDataDen[MAXDENIEDOBJ];
 RowData *rowDataAcc[MAXACCESSOBJ];
 
@@ -322,6 +324,9 @@ Log::Format::SquidNative(const AccessLogEntry::Pointer &al, Logfile * logfile)
 			previousLogDay = currentLogDate.substr(0,2);
 		}
 		statLog->createStatTableName(dateForTN);
+
+		currentTableAcc = statLog->tableNameAcc;
+		currentTableDen = statLog->tableNameDen;
 		syslog(LOG_NOTICE,"MAIN::End of db connection code");
 		
 		processDateFromConfFile = dateForTN;
@@ -378,7 +383,7 @@ Log::Format::SquidNative(const AccessLogEntry::Pointer &al, Logfile * logfile)
 				emptyTheObj(pointObj);
 			}
 
-			isnewLogInTable = checkDataInTable(statLog,statLog->tableNameAcc,userIp,domain);
+			isnewLogInTable = checkDataInTable(statLog,currentTableAcc,userIp,domain);
 			if(isnewLogInTable == 1)
 			{	
 				updateObjFromTable(pointObj,statLog->res);
@@ -419,7 +424,7 @@ Log::Format::SquidNative(const AccessLogEntry::Pointer &al, Logfile * logfile)
 				insertDenObjIntoTable(pointObj,statLog);
 				emptyTheDenObj(pointObj);
 			}
-			isnewLogInTable = checkDataInTable(statLog,statLog->tableNameDen,userIp,domain);
+			isnewLogInTable = checkDataInTable(statLog,currentTableDen,userIp,domain);
 			if(isnewLogInTable == 1)
 			{
 				updateDenObjFromTable(pointObj,statLog->res);

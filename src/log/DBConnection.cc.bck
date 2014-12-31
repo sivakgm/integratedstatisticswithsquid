@@ -15,6 +15,8 @@ void DBConnection::createDBIfNotExists(string schema)
 {
 	try
 	{
+//		syslog(LOG_NOTICE,"DB:creating DB");			
+//		syslog(LOG_NOTICE,schema.c_str());
 		this->stmt=this->conn->createStatement();
 		this->stmt->execute("create database if not exists "+schema+";");
 		return;
@@ -33,8 +35,7 @@ void DBConnection::createStatTable(int flag,string tableNam)
 {
 	try
 	{
-	/////////////////////////////////////////////////////
-	//	this->stmt=this->conn->createStatement();
+		this->stmt=this->conn->createStatement();
 		if(tableNam != "")
 		{
 			if(flag == 1)
@@ -69,6 +70,7 @@ void DBConnection::dbConnOpen(string host,string port,string user,string pass,st
 	{
 		Driver *driver = get_driver_instance();
 		string addre = "tcp://"+host+":"+port;
+//		syslog(LOG_NOTICE,addre.c_str());
 		this->conn = driver->connect(addre,user,pass);
 		this->createDBIfNotExists(schema);
 		this->conn->setSchema(schema);
@@ -100,7 +102,7 @@ void DBConnection::createStatTableName(string tableNam)
 		this->tableNameAccTime = "at_acc_" + tableNam;
 		this->tableNameDenTime= "at_den_" + tableNam;
 		this->createTableIfNotExist();
-//		this->setPstmt();
+		this->setPstmt();
 		return;
 	}
 	catch (sql::SQLException &e)
@@ -165,7 +167,6 @@ void DBConnection::setPstmt()
 	}
 }
 
-/*
 void DBConnection::setReadPstmt(int flag,string tableNam,string user,string domain)
 {
 	try
@@ -199,10 +200,7 @@ void DBConnection::setReadPstmt(int flag,string tableNam,string user,string doma
 	  	cout << ", SQLState: " << e.getSQLState() << " )" << endl;
 	}
 	//syslog(LOG_NOTICE,"DB:end set read pstmt");
-}*/
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+}
 
 string timeAndDate()
 {
@@ -222,11 +220,14 @@ string timeAndDate()
 	return NULL;
 }
 
-void insertIntoTableAccTime(RowData *rowData,string acctime,Statement *stmt,string tn)
+void insertIntoTableAccTime(RowData *rowData,string acctime,PreparedStatement *pstmt)
 {
 	try
 	{
-		stmt->execute("insert into " + tn + "(user,domain,accTime) values('"+rowData->user+"','" + rowData->domain + "','"+ acctime +"');");
+		pstmt->setString(1,rowData->user);
+		pstmt->setString(2,rowData->domain);
+		pstmt->setString(3,acctime);
+		pstmt->executeUpdate();
 	}
 	catch (sql::SQLException &e)
 	{
@@ -238,11 +239,14 @@ void insertIntoTableAccTime(RowData *rowData,string acctime,Statement *stmt,stri
 	}
 }
 
-void insertIntoTableDenTime(RowDataDenied *rowDataDen,string acctime,Statement *stmt,string tn)
+void insertIntoTableDenTime(RowDataDenied *rowData,string acctime,PreparedStatement *pstmt)
 {
 	try
 	{
-		stmt->execute("insert into " + tn + "(user,domain,accTime) values('"+rowDataDen->user+"','" + rowDataDen->domain + "','"+ acctime +"');");
+		pstmt->setString(1,rowData->user);
+		pstmt->setString(2,rowData->domain);
+		pstmt->setString(3,acctime);
+		pstmt->executeUpdate();
 	}
 	catch (sql::SQLException &e)
 	{
@@ -255,11 +259,20 @@ void insertIntoTableDenTime(RowDataDenied *rowDataDen,string acctime,Statement *
 }
 
 
-void insertIntoTableAcc(RowData *rowData,Statement *stmt,string tn)
+void insertIntoTableAcc(RowData *rowData,PreparedStatement *pstmt)
 {
 	try
 	{
-		stmt->execute("insert into " + tn +"(user,domain,size,connection,hit,miss,response_time) values('"+rowData->user+"','"+rowData->domain+"','"+boost::lexical_cast<std::string>(rowData->size)+"','"+ boost::lexical_cast<std::string>(rowData->connection)+"','"+boost::lexical_cast<std::string>(rowData->hit)+"','"+boost::lexical_cast<std::string>(rowData->miss)+"','"+boost::lexical_cast<std::string>(rowData->response_time)+"';");
+		//syslog(LOG_NOTICE,"DB:: Start insert date in table");
+		pstmt->setString(1,rowData->user);
+		pstmt->setString(2,rowData->domain);
+		pstmt->setDouble(3,rowData->size);
+		pstmt->setInt(4,rowData->connection);
+		pstmt->setDouble(5,rowData->hit);
+		pstmt->setDouble(6,rowData->miss);
+		pstmt->setDouble(7,rowData->response_time);
+		pstmt->executeUpdate();
+		//syslog(LOG_NOTICE,"DB:: Start insert date in table");
 	}
 	catch (sql::SQLException &e)
 	{
@@ -271,12 +284,21 @@ void insertIntoTableAcc(RowData *rowData,Statement *stmt,string tn)
 	}
 }
 
-void updateTableAcc(RowData *rowData,Statement *stmt,sting tn)
+void updateTableAcc(RowData *rowData,PreparedStatement *pstmt)
 {
 	try
 	{
-		stmt->execute("update " + tn + " set size='"+boost::lexical_cast<std::string>(rowData->size)+"',connection='"+boost::lexical_cast<std::string>(rowData->connection)+"',hit='"+boost::lexical_cast<std::string>(rowData->hit)+"',miss='"++boost::lexical_cast<std::string>(rowData->miss)"',response_time='"+boost::lexical_cast<std::string>(rowData->response_time)+"' where user='"++"' and domain=?;");	
+		//syslog(LOG_NOTICE,"DB:: Start update date in table");	
+		pstmt->setDouble(1,rowData->size);
+		pstmt->setInt(2,rowData->connection);
+		pstmt->setDouble(3,rowData->hit);
+		pstmt->setDouble(4,rowData->miss);
+		pstmt->setDouble(5,rowData->response_time);
+		pstmt->setString(6,rowData->user);
+		pstmt->setString(7,rowData->domain);
 
+		pstmt->executeUpdate();
+		//syslog(LOG_NOTICE,"DB:: end of Start update date in table");
 		return;
 	}
 	catch (sql::SQLException &e)
@@ -289,13 +311,15 @@ void updateTableAcc(RowData *rowData,Statement *stmt,sting tn)
 	}
 }
 
-void insertIntoTableDen(RowDataDenied *rowData,Statement *stmt,string tn)
+void insertIntoTableDen(RowDataDenied *rowData,PreparedStatement *pstmt)
 {
 	try
 	{
-	stmt->execute("insert into " + tn +"(user,domain,connection) values('"+rowData->user+"','"+rowData->domain+"','"+boost::lexical_cast<std::string>(
-rowData->connection)+"');");
-	return;
+		pstmt->setString(1,rowData->user);
+		pstmt->setString(2,rowData->domain);
+		pstmt->setInt(3,rowData->connection);
+		pstmt->executeUpdate();
+		return;
 	}
 	catch (sql::SQLException &e)
 	{
@@ -307,11 +331,14 @@ rowData->connection)+"');");
 	}
 }
 
-void updateTableDen(RowDataDenied *rowData,Statement *stmt,string tn)
+void updateTableDen(RowDataDenied *rowData,PreparedStatement *pstmt)
 {
 	try
 	{
-		stmt->execute("update " + tn + " set connection='"+rowData->connection+"' where user='"+rowData->user+"' and domain='"+rowData->domain+"';");
+		pstmt->setInt(1,rowData->connection);
+		pstmt->setString(2,rowData->user);
+		pstmt->setString(3,rowData->domain);
+		pstmt->executeUpdate();
 		return;
 	}
 	catch (sql::SQLException &e)
@@ -324,23 +351,13 @@ void updateTableDen(RowDataDenied *rowData,Statement *stmt,string tn)
 	}
 }
 
-void DBConnection::readTable(int flag,string tableNam,string user,string domain,Statement *stmt)
+void DBConnection::readTable()
 {
 	try
 	{	
-		string query;
-
-                if(flag == 1)
-                {
-                        query = "select * from " + tableNam +";";
-                }
-                else
-                {
-                        query = "select * from " + tableNam +" where user='"+user+"' and domain='"+domain+"';";
-                }
-
-		this->res = stmt->executeQuery(query);
-		
+		//syslog(LOG_NOTICE,"DB:start read table");
+		this->res = this->readpstmt->executeQuery();
+		//syslog(LOG_NOTICE,"DB:end of readtable");
 		return;
 	}
 	catch (sql::SQLException &e)

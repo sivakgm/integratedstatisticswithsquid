@@ -161,16 +161,18 @@ void insertObjIntoTable(int pointObj,DBConnection *statLog)
 {
 	try
 	{
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 		if(rowDataAcc[pointObj]->isInTable == 1)
 		{	
 			//syslog(LOG_NOTICE,"RD:: update data");
-			updateTableAcc(rowDataAcc[pointObj],statLog->upPstmtAcc);
+			updateTableAcc(rowDataAcc[pointObj],statLog->stmt,currentTableAcc);
 			//syslog(LOG_NOTICE,"RD:: End of update data");
 		}
 		else
 		{	
 //			syslog(LOG_NOTICE,"RD:: Insert data");
-			insertIntoTableAcc(rowDataAcc[pointObj],statLog->insPstmtAcc);
+			insertIntoTableAcc(rowDataAcc[pointObj],statLog->stmt,currentTableAcc);
 //			syslog(LOG_NOTICE,"RD:: End of Insert data");
 		}
 	}
@@ -201,7 +203,7 @@ void updateDataInObj(DBConnection *statLog,RowData *rowdata,logDataAcc *log)
 		{
 			rowdata->miss = rowdata->miss + log->size;
 		}
-		insertIntoTableAccTime(rowdata,log->tim,statLog->insPstmtAccTime);
+		insertIntoTableAccTime(rowdata,log->tim,statLog->stmt,statLog->tableNameAccTime);
 		setObjPriority(lim);
 		return;
 	}
@@ -260,10 +262,10 @@ int checkDataInTable(DBConnection *statLog,string tableName,string user,string d
 {
 	try
 	{
-		//syslog(LOG_NOTICE,"start in row data check table");
-		statLog->setReadPstmt(0,tableName,user,domain);
+//		syslog(LOG_NOTICE,"start in row data check table");
+//		statLog->setReadPstmt(0,tableName,user,domain);
 //		syslog(LOG_NOTICE,"calling read table");
-		statLog->readTable();
+		statLog->readTable(0,tableName,user,domain,statLog->stmt);
 		if(statLog->res->next())
 		{
 			return 1;

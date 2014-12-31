@@ -58,6 +58,7 @@ class DBConnection
 public:
 
 	Connection *conn;
+	PreparedStatement *insPstmtAcc,*insPstmtDen,*insPstmtAccTime,*insPstmtDenTime;
 	PreparedStatement *upPstmtAcc,*upPstmtDen;
 	PreparedStatement *readpstmt;
 	Statement *stmt;
@@ -72,7 +73,7 @@ public:
 
 	void setPstmt();
 	void setReadPstmt(int a,string tableName,string user,string domain);
-	void readTable(int flag,string tableNam,string user,string domain,Statement *stmt);
+	void readTable();
 
 	void createStatTableName(string tableName);
 	void createTableIfNotExist();
@@ -80,13 +81,12 @@ public:
 	void createStatTable(int flag,string tableName);
 };
 
-void insertIntoTableAcc(RowData *rowData,Statement *stmt,string tn);
-void updateTableAcc(RowData *rowData,Statement *stmt,string tn);
-void insertIntoTableDen(RowDataDenied *rowData,Statement *stmt,string tn);
-void updateTableDen(RowDataDenied *rowData,Statement *stmt,string tn);
-
-void insertIntoTableAccTime(RowData *rowData,string time,Statement *stmt,string tn);
-void insertIntoTableDenTime(RowDataDenied *rowDataDen,string time,Statement *stmt,string tn);
+void insertIntoTableAcc(RowData *rowData,PreparedStatement *pstmt);
+void updateTableAcc(RowData *rowData,PreparedStatement *pstmt);
+void insertIntoTableDen(RowDataDenied *rowData,PreparedStatement *pstmt);
+void updateTableDen(RowDataDenied *rowData,PreparedStatement *pstmt);
+void insertIntoTableAccTime(RowData *rowData,string time,PreparedStatement *pstmt);
+void insertIntoTableDenTime(RowDataDenied *rowData,string time,PreparedStatement *pstmt);
 
 string parseURLtoDomain(string url);
 string timeAndDate();

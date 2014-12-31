@@ -30,6 +30,7 @@ void grossStatisticsAcc(string tbNa)
 	string tName = tbNa;
 
 	cout<<"";
+	string tn;
 
 
 	try
@@ -61,11 +62,6 @@ void grossStatisticsAcc(string tbNa)
 		string searchQueryMonth = "select * from "+ monthStatisticstable +"  where user=? and domain=? ;";
 		string searchQueryYear = "select * from "+ yearStatisticstable +"  where user=? and domain=?;";
 
-		string insertMonth = "insert into " + monthStatisticstable + "(user,domain,size,connection,hit,miss,response_time) values(?,?,?,?,?,?,?);";
-		string updateMonth = "update " + monthStatisticstable + " set size=?,connection=?,hit=?,miss=?,response_time=? where user=? and domain=?;";
-
-		string insertYear = "insert into " + yearStatisticstable + "(user,domain,size,connection,hit,miss,response_time) values(?,?,?,?,?,?,?);";
-		string updateYear = "update " + yearStatisticstable + " set size=?,connection=?,hit=?,miss=?,response_time=? where user=? and domain=?;";
 
 		string selectQuery = "select * from " + tName +";";
 		readPstmt = grossLog->conn->prepareStatement(selectQuery);
@@ -78,15 +74,13 @@ void grossStatisticsAcc(string tbNa)
 			{
 				if(i ==  0)  //updating monthly gross statistics
 				{
+					tn = monthStatisticstable;
 					readPstmt = grossLog->conn->prepareStatement(searchQueryMonth);
-					inPstmt =  grossLog->conn->prepareStatement(insertMonth);
-					upPstmt = grossLog->conn->prepareStatement(updateMonth);
 				}
 				else
 				{
+					tn = yearStatisticstable;
 					readPstmt = grossLog->conn->prepareStatement(searchQueryYear);
-					inPstmt =  grossLog->conn->prepareStatement(insertYear);
-					upPstmt = grossLog->conn->prepareStatement(updateYear);
 				}
 
 				readPstmt->setString(1,dailyRes->getString(1));
@@ -95,12 +89,12 @@ void grossStatisticsAcc(string tbNa)
 
 				if(ymRes->next())
 				{
-					updateRowDataAcc(dailyRes,ymRes,upPstmt);
+					updateRowDataAcc(dailyRes,ymRes,stmt,tn);
 				}
 				else
 				{
 					//	cout<<dailyRes->getInt(4)<<endl;
-					insertRowDataAcc(dailyRes,inPstmt);
+					insertRowDataAcc(dailyRes,stmt,tn);
 				}
 			}
 		}
@@ -124,7 +118,7 @@ void grossStatisticsAcc(string tbNa)
 
 }
 
-void updateRowDataAcc(ResultSet *dailyRes,ResultSet *ymRes,PreparedStatement *pstmt)
+void updateRowDataAcc(ResultSet *dailyRes,ResultSet *ymRes,Statement *stmt,string tn)
 {
 	try
 	{
@@ -137,7 +131,7 @@ void updateRowDataAcc(ResultSet *dailyRes,ResultSet *ymRes,PreparedStatement *ps
 		rowData->miss = dailyRes->getDouble(6) + ymRes->getDouble(6);
 		rowData->response_time = dailyRes->getDouble(7) + ymRes->getDouble(7);
 
-		updateTableAcc(rowData,pstmt);
+		updateTableAcc(rowData,stmt,tn);
 	}
 	catch (sql::SQLException &e)
 	{
@@ -148,7 +142,7 @@ void updateRowDataAcc(ResultSet *dailyRes,ResultSet *ymRes,PreparedStatement *ps
 		cout << ", SQLState: " << e.getSQLState() << " )" << endl;
 	}
 }
-void insertRowDataAcc(ResultSet *dailyRes,PreparedStatement *pstmt)
+void insertRowDataAcc(ResultSet *dailyRes,Statement *stmt,string tn)
 {
 	try
 	{
@@ -161,7 +155,7 @@ void insertRowDataAcc(ResultSet *dailyRes,PreparedStatement *pstmt)
 		rowData->miss = dailyRes->getDouble(6);
 		rowData->response_time = dailyRes->getDouble(7);
 
-		insertIntoTableAcc(rowData,pstmt);
+		insertIntoTableAcc(rowData,stmt,tn);
 	}
 	catch (sql::SQLException &e)
 	{
@@ -197,6 +191,7 @@ void grossStatisticsDen(string tbNa)
 	//	string te = (char*)tbNa;
 	//	cout<<"Den decryption:"<<te<<endl;
 	string tName = tbNa;
+	string tn;
 	try
 	{
 	/*	ifstream confFile("/home/sivaprakash/workspace/StatisticsDataFromDB/src/tabDen.conf");
@@ -228,11 +223,6 @@ void grossStatisticsDen(string tbNa)
 		string searchQueryMonth = "select * from "+ monthStatisticstable +"  where user=? and domain=? ;";
 		string searchQueryYear = "select * from "+ yearStatisticstable +"  where user=? and domain=?;";
 
-		string insertMonth = "insert into " + monthStatisticstable + "(user,domain,connection) values(?,?,?);";
-		string updateMonth = "update " + monthStatisticstable + " set connection=? where user=? and domain=?;";
-
-		string insertYear = "insert into " + yearStatisticstable + "(user,domain,connection) values(?,?,?);";
-		string updateYear = "update " + yearStatisticstable + " set connection=? where user=? and domain=?;";
 
 		string selectQuery = "select * from " + tName +";";
 		readPstmt = grossLog->conn->prepareStatement(selectQuery);
@@ -246,15 +236,13 @@ void grossStatisticsDen(string tbNa)
 			{
 				if(i ==  0)
 				{
+					tn = monthStatisticstable;
 					readPstmt = grossLog->conn->prepareStatement(searchQueryMonth);
-					inPstmt =  grossLog->conn->prepareStatement(insertMonth);
-					upPstmt = grossLog->conn->prepareStatement(updateMonth);
 				}
 				else
 				{
+					tn = yearStatisticstable;
 					readPstmt = grossLog->conn->prepareStatement(searchQueryYear);
-					inPstmt =  grossLog->conn->prepareStatement(insertYear);
-					upPstmt = grossLog->conn->prepareStatement(updateYear);
 				}
 
 				readPstmt->setString(1,dailyRes->getString(1));
@@ -263,11 +251,11 @@ void grossStatisticsDen(string tbNa)
 
 				if(ymRes->next())
 				{
-					updateRowDataDen(dailyRes,ymRes,upPstmt);
+					updateRowDataDen(dailyRes,ymRes,stmt,tn);
 				}
 				else
 				{
-					insertRowDataDen(dailyRes,inPstmt);
+					insertRowDataDen(dailyRes,stmt,tn);
 				}
 			}
 		}
@@ -291,7 +279,7 @@ void grossStatisticsDen(string tbNa)
 	}
 }
 
-void updateRowDataDen(ResultSet *dailyRes,ResultSet *ymRes,PreparedStatement *pstmt)
+void updateRowDataDen(ResultSet *dailyRes,ResultSet *ymRes,Statement *stmt,string tn)
 {
 	try
 	{
@@ -300,7 +288,7 @@ void updateRowDataDen(ResultSet *dailyRes,ResultSet *ymRes,PreparedStatement *ps
 		rowData->domain = dailyRes->getString(2);
 		rowData->connection = dailyRes->getInt(3) + ymRes->getInt(3);
 
-		updateTableDen(rowData,pstmt);
+		updateTableDen(rowData,stmt,tn);
 	}
 	catch (sql::SQLException &e)
 	{
@@ -311,7 +299,7 @@ void updateRowDataDen(ResultSet *dailyRes,ResultSet *ymRes,PreparedStatement *ps
 		cout << ", SQLState: " << e.getSQLState() << " )" << endl;
 	}
 }
-void insertRowDataDen(ResultSet *dailyRes,PreparedStatement *pstmt)
+void insertRowDataDen(ResultSet *dailyRes,PreparedStatement *stmt,string tn)
 {
 	try
 	{
@@ -319,7 +307,7 @@ void insertRowDataDen(ResultSet *dailyRes,PreparedStatement *pstmt)
 		rowData->user = dailyRes->getString(1);
 		rowData->domain = dailyRes->getString(2);
 		rowData->connection = dailyRes->getInt(3);
-		insertIntoTableDen(rowData,pstmt);
+		insertIntoTableDen(rowData,stmt,tn);
 	}
 	catch (sql::SQLException &e)
 	{
