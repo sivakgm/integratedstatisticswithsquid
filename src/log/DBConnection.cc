@@ -133,7 +133,7 @@ void DBConnection::createTableIfNotExist()
 	}
 }
 
-void DBConnection::setPstmt()
+/*void DBConnection::setPstmt()
 {
 	try
 	{
@@ -165,7 +165,7 @@ void DBConnection::setPstmt()
 	}
 }
 
-/*
+
 void DBConnection::setReadPstmt(int flag,string tableNam,string user,string domain)
 {
 	try
@@ -271,11 +271,11 @@ void insertIntoTableAcc(RowData *rowData,Statement *stmt,string tn)
 	}
 }
 
-void updateTableAcc(RowData *rowData,Statement *stmt,sting tn)
+void updateTableAcc(RowData *rowData,Statement *stmt,string tn)
 {
 	try
 	{
-		stmt->execute("update " + tn + " set size='"+boost::lexical_cast<std::string>(rowData->size)+"',connection='"+boost::lexical_cast<std::string>(rowData->connection)+"',hit='"+boost::lexical_cast<std::string>(rowData->hit)+"',miss='"++boost::lexical_cast<std::string>(rowData->miss)"',response_time='"+boost::lexical_cast<std::string>(rowData->response_time)+"' where user='"++"' and domain=?;");	
+		stmt->execute("update " + tn + " set size='"+boost::lexical_cast<std::string>(rowData->size)+"',connection='"+boost::lexical_cast<std::string>(rowData->connection)+"',hit='"+boost::lexical_cast<std::string>(rowData->hit)+"',miss='"+boost::lexical_cast<std::string>(rowData->miss)+"',response_time='"+boost::lexical_cast<std::string>(rowData->response_time)+"' where user='"+rowData->user+"' and domain='"+rowData->domain+"';");	
 
 		return;
 	}
@@ -311,7 +311,7 @@ void updateTableDen(RowDataDenied *rowData,Statement *stmt,string tn)
 {
 	try
 	{
-		stmt->execute("update " + tn + " set connection='"+rowData->connection+"' where user='"+rowData->user+"' and domain='"+rowData->domain+"';");
+		stmt->execute("update " + tn + " set connection='"+boost::lexical_cast<std::string>(rowData->connection)+"' where user='"+rowData->user+"' and domain='"+rowData->domain+"';");
 		return;
 	}
 	catch (sql::SQLException &e)
@@ -324,7 +324,7 @@ void updateTableDen(RowDataDenied *rowData,Statement *stmt,string tn)
 	}
 }
 
-void DBConnection::readTable(int flag,string tableNam,string user,string domain,Statement *stmt)
+void DBConnection::readTable(int flag,string tableNam,string user,string domain)
 {
 	try
 	{	
@@ -339,7 +339,7 @@ void DBConnection::readTable(int flag,string tableNam,string user,string domain,
                         query = "select * from " + tableNam +" where user='"+user+"' and domain='"+domain+"';";
                 }
 
-		this->res = stmt->executeQuery(query);
+		this->res = this->stmt->executeQuery(query);
 		
 		return;
 	}

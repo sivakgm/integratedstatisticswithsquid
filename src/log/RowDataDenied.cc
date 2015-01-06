@@ -11,7 +11,7 @@
 
 extern const int MAXDENIEDOBJ = 4;
 extern int NoDENOBJ;
-
+extern string currentTableDen;
 extern RowDataDenied *rowDataDen[MAXDENIEDOBJ];
 
 

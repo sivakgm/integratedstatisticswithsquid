@@ -10,6 +10,7 @@
 
 extern const int MAXACCESSOBJ = 4;
 extern int NoACCOBJ;
+extern string currentTableAcc;
 
 extern RowData *rowDataAcc[MAXACCESSOBJ];
 
@@ -265,7 +266,7 @@ int checkDataInTable(DBConnection *statLog,string tableName,string user,string d
 //		syslog(LOG_NOTICE,"start in row data check table");
 //		statLog->setReadPstmt(0,tableName,user,domain);
 //		syslog(LOG_NOTICE,"calling read table");
-		statLog->readTable(0,tableName,user,domain,statLog->stmt);
+		statLog->readTable(0,tableName,user,domain);
 		if(statLog->res->next())
 		{
 			return 1;

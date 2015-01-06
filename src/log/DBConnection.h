@@ -72,7 +72,7 @@ public:
 
 	void setPstmt();
 	void setReadPstmt(int a,string tableName,string user,string domain);
-	void readTable(int flag,string tableNam,string user,string domain,Statement *stmt);
+	void readTable(int flag,string tableNam,string user,string domain);
 
 	void createStatTableName(string tableName);
 	void createTableIfNotExist();

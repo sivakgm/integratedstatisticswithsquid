@@ -40,7 +40,7 @@ void grossStatisticsAcc(string tbNa)
 		confFile.close();
 		cout<<"start of Acc thread for table:"<<tName<<endl;*/
 
-		PreparedStatement *readPstmt,*inPstmt,*upPstmt;
+		PreparedStatement *readPstmt;
 		ResultSet *dailyRes,*ymRes;
 
 		string year = tName.substr(13,4);
@@ -199,7 +199,7 @@ void grossStatisticsDen(string tbNa)
 		confFile.close();*/
 
 
-		PreparedStatement *readPstmt,*inPstmt,*upPstmt;
+		PreparedStatement *readPstmt;
 		ResultSet *dailyRes,*ymRes;
 
 		string year = tName.substr(13,4);
@@ -299,7 +299,7 @@ void updateRowDataDen(ResultSet *dailyRes,ResultSet *ymRes,Statement *stmt,strin
 		cout << ", SQLState: " << e.getSQLState() << " )" << endl;
 	}
 }
-void insertRowDataDen(ResultSet *dailyRes,PreparedStatement *stmt,string tn)
+void insertRowDataDen(ResultSet *dailyRes,Statement *stmt,string tn)
 {
 	try
 	{
