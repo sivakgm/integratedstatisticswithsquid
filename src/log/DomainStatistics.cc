@@ -132,7 +132,7 @@ void checkPresenecOfDomainStatisticsTableAcc(Statement *stmt,string tableName)
 {
 	try
 	{
-		stmt->execute("create table if not exists " + tableName + "(domain varchar(100), size double, connection int, hit float, miss float,response_time float);");
+		stmt->execute("create table if not exists " + tableName + "(domain varchar(100), size double, connection double, hit double, miss double,response_time double);");
 	}
 	catch (sql::SQLException &e)
 	{
@@ -262,7 +262,7 @@ void checkPresenecOfDomainStatisticsTableDen(Statement *stmt,string tableName)
 {
 	try
 	{
-		stmt->execute("create table if not exists " + tableName + "(domain varchar(100), connection int);");
+		stmt->execute("create table if not exists " + tableName + "(domain varchar(100), connection double);");
 	}
 	catch (sql::SQLException &e)
 	{

@@ -238,6 +238,7 @@ Log::Format::SquidNative(const AccessLogEntry::Pointer &al, Logfile * logfile)
 
 	if(startFlag == 1)
 	{
+		syslog(LOG_NOTICE,"MAIN:: start of the parsing");
 		try
 		{
 			ifstream confFile("/home/squ.conf");
@@ -251,6 +252,7 @@ Log::Format::SquidNative(const AccessLogEntry::Pointer &al, Logfile * logfile)
 
 		syslog(LOG_NOTICE,"MAIN::First time code execution and db connection establishment");
 		statLog = new DBConnection();
+		syslog(LOG_NOTICE,"MAIN::End of parsing");
 	}
 
 
@@ -259,6 +261,7 @@ Log::Format::SquidNative(const AccessLogEntry::Pointer &al, Logfile * logfile)
 
 	if(currentLogDate != previousLogDate)
 	{
+		syslog(LOG_NOTICE,"MAIN:: Inside table selection and table creation");
 		previousLogDate = currentLogDate;
 		dateForTN = currentLogDate;
 
@@ -273,17 +276,19 @@ Log::Format::SquidNative(const AccessLogEntry::Pointer &al, Logfile * logfile)
 		
 
 		//Checking whether lastly processed date(which is stored in separate configuration file) is same as current date
-		syslog(LOG_NOTICE,"value from process date from conf file");
-		syslog(LOG_NOTICE,processDateFromConfFile.c_str());
+	//	syslog(LOG_NOTICE,"value from process date from conf file");
+	//	syslog(LOG_NOTICE,processDateFromConfFile.c_str());
 		if((processDateFromConfFile != dateForTN && processDateFromConfFile != "a") && startFlag == 1)
 		{
-			syslog(LOG_NOTICE,"inside configuration file stat analysis");
+	//		syslog(LOG_NOTICE,"MAIN::inside_file_conf_date_processing");
+	//		syslog(LOG_NOTICE,"inside configuration file stat analysis");
 			string temTN = "ud_acc_"+processDateFromConfFile;
 			thread t1(grossStatisticsAcc,temTN);
 			//t1.join();
 
 			temTN = "ud_den_"+processDateFromConfFile;
 			thread t2(grossStatisticsDen,temTN);
+	//		syslog(LOG_NOTICE,"MAIN::end_of_inside_file_data_processing");
 			//t2.join();
 		}
 
@@ -292,21 +297,26 @@ Log::Format::SquidNative(const AccessLogEntry::Pointer &al, Logfile * logfile)
 		//			 2. For the time, the connection to the database is opened
 		if(previousLogYear != currentLogDate.substr(6,4))
 		{
+//			syslog(LOG_NOTICE,"MAIN::Year_table_connection");
 			previousLogYear=currentLogDate.substr(6,4);
 			string dbName = "squidStatistics_"+previousLogYear;
 			statLog->dbConnOpen("127.0.0.1","3306","root","simple",dbName);
 			statLog->createStatTable(1,previousLogYear);
+//			syslog(LOG_NOTICE,"MAIN::End_of_Year_table_checking");
 		}
 
 
 		if(previousLogMonth != currentLogDate.substr(3,2))
 		{
+//			syslog(LOG_NOTICE,"MAIN::Month_start");
 			previousLogMonth = currentLogDate.substr(3,2);
 			statLog->createStatTable(0,previousLogMonth);
+//			syslog(LOG_NOTICE,"MAIN::Month_End");
 		}
 
 		if(previousLogDay != currentLogDate.substr(0,2))
 		{
+//			syslog(LOG_NOTICE,"MAIN::Day_start");
 			if(previousLogDay != "")
 			{
 				string temTN = statLog->tableNameAcc;
@@ -322,27 +332,31 @@ Log::Format::SquidNative(const AccessLogEntry::Pointer &al, Logfile * logfile)
 
 			}
 			previousLogDay = currentLogDate.substr(0,2);
+//			syslog(LOG_NOTICE,"MAIN::Date_End");
 		}
 		statLog->createStatTableName(dateForTN);
 
 		currentTableAcc = statLog->tableNameAcc;
 		currentTableDen = statLog->tableNameDen;
-		syslog(LOG_NOTICE,"MAIN::End of db connection code");
+//		syslog(LOG_NOTICE,"MAIN::End of db connection code");
 		
 		processDateFromConfFile = dateForTN;
 //		if(startFlag != 1)
 		{
 			try
 	        	{
+//				syslog(LOG_NOTICE,"MAIN::writing squ.conf");
 	                	ofstream confFile("/home/squ.conf");
         		        confFile<<processDateFromConfFile;
 				confFile.close();
+//				syslog(LOG_NOTICE,"MAIN::End of squ.conf writing");
 	        	}
 		        catch (exception& e)
 	        	{
 		               	syslog(LOG_NOTICE,"Error in reading conf file containing the lastly processed date");
 	        	}
 		}
+	syslog(LOG_NOTICE,"MAIN::End of creating table and asssing table name");
 	}
 	startFlag = 0;
 

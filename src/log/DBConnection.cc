@@ -21,6 +21,7 @@ void DBConnection::createDBIfNotExists(string schema)
 	}
 	catch (sql::SQLException &e)
 	{
+	  syslog(LOG_NOTICE,e.what());
 	  cout << "# ERR: SQLException in " << __FILE__;
 	  cout << "(" << __FUNCTION__ << ") on line " << __LINE__ << endl;
 	  cout << "# ERR: " << e.what();
@@ -34,27 +35,28 @@ void DBConnection::createStatTable(int flag,string tableNam)
 	try
 	{
 	/////////////////////////////////////////////////////
-	//	this->stmt=this->conn->createStatement();
+		this->stmt=this->conn->createStatement();
 		if(tableNam != "")
 		{
 			if(flag == 1)
 			{
 				this->tableNameYearAcc = "ud_acc_"+tableNam;
 				this->tableNameYearDen = "ud_den_"+tableNam;
-				this->stmt->execute("create table if not exists ud_acc_" + tableNam + " (user varchar(16), domain varchar(100), size double, connection int, hit float, miss float,response_time float);");
-				this->stmt->execute("create table if not exists ud_den_" + tableNam + " (user varchar(16), domain varchar(100),connection int);");
+				this->stmt->execute("create table if not exists ud_acc_" + tableNam + " (user varchar(16), domain varchar(100), size double, connection double, hit double, miss double,response_time double);");
+				this->stmt->execute("create table if not exists ud_den_" + tableNam + " (user varchar(16), domain varchar(100),connection double);");
 			}
 			else
 			{
 				this->tableNameMonthAcc = "ud_acc_"+tableNam;
 				this->tableNameMonthDen = "ud_den_"+tableNam;
-				this->stmt->execute("create table if not exists ud_acc_" + tableNam + " (user varchar(16), domain varchar(100), size double, connection int, hit float, miss float,response_time float);");
-				this->stmt->execute("create table if not exists ud_den_" + tableNam + " (user varchar(16), domain varchar(100),connection int);");
+				this->stmt->execute("create table if not exists ud_acc_" + tableNam + " (user varchar(16), domain varchar(100), size double, connection double, hit double, miss double,response_time double);");
+				this->stmt->execute("create table if not exists ud_den_" + tableNam + " (user varchar(16), domain varchar(100),connection double);");
 			}
 		}
 	}
 	catch (sql::SQLException &e)
 	{
+	  syslog(LOG_NOTICE,e.what());
 	  cout << "# ERR: SQLException in " << __FILE__;
 	  cout << "(" << __FUNCTION__ << ") on line " << __LINE__ << endl;
 	  cout << "# ERR: " << e.what();
@@ -76,6 +78,7 @@ void DBConnection::dbConnOpen(string host,string port,string user,string pass,st
 	}
 	catch (sql::SQLException &e)
 	{
+		syslog(LOG_NOTICE,e.what());
 		cout << "# ERR: SQLException in " << __FILE__;
 		cout << "(" << __FUNCTION__ << ") on line " << __LINE__ << endl;
 		cout << "# ERR: " << e.what();
@@ -84,6 +87,7 @@ void DBConnection::dbConnOpen(string host,string port,string user,string pass,st
 	}
 	catch (exception& e)
 	{
+		syslog(LOG_NOTICE,e.what());
 		cout << "# ERR File: " << __FILE__;
 		cout << "(" << __FUNCTION__ << ") on line " << __LINE__ << endl;
 	    cout << e.what() << '\n';
@@ -105,6 +109,7 @@ void DBConnection::createStatTableName(string tableNam)
 	}
 	catch (sql::SQLException &e)
 	{
+	  syslog(LOG_NOTICE,e.what());
 	  cout << "# ERR: SQLException in " << __FILE__;
 	  cout << "(" << __FUNCTION__ << ") on line " << __LINE__ << endl;
 	  cout << "# ERR: " << e.what();
@@ -118,13 +123,14 @@ void DBConnection::createTableIfNotExist()
 	try
 	{
 		this->stmt=this->conn->createStatement();
-		this->stmt->execute("create table if not exists " + this->tableNameAcc + " (user varchar(16), domain varchar(100), size double, connection int, hit float, miss float,response_time float);");
-		this->stmt->execute("create table if not exists " + this->tableNameDen + " (user varchar(16), domain varchar(100), connection int);");
+		this->stmt->execute("create table if not exists " + this->tableNameAcc + " (user varchar(16), domain varchar(100), size double, connection double, hit double, miss double,response_time double);");
+		this->stmt->execute("create table if not exists " + this->tableNameDen + " (user varchar(16), domain varchar(100), connection double);");
 		this->stmt->execute("create table if not exists " + this->tableNameAccTime + " (user varchar(16), domain varchar(100), accTime varchar(15));");
 		this->stmt->execute("create table if not exists " + this->tableNameDenTime + " (user varchar(16), domain varchar(100), accTime varchar(15));");
 	}
 	catch (sql::SQLException &e)
 	{
+	  syslog(LOG_NOTICE,e.what());
 	  cout << "# ERR: SQLException in " << __FILE__;
 	  cout << "(" << __FUNCTION__ << ") on line " << __LINE__ << endl;
 	  cout << "# ERR: " << e.what();
@@ -215,6 +221,7 @@ string timeAndDate()
 	}
 	catch (exception& e)
 	{
+		syslog(LOG_NOTICE,e.what());
 		cout << "# ERR File: " << __FILE__;
 		cout << "(" << __FUNCTION__ << ") on line " << __LINE__ << endl;
 		cout << e.what() << '\n';
@@ -230,6 +237,7 @@ void insertIntoTableAccTime(RowData *rowData,string acctime,Statement *stmt,stri
 	}
 	catch (sql::SQLException &e)
 	{
+		syslog(LOG_NOTICE,e.what());
 		cout << "# ERR: SQLException in " << __FILE__;
 		cout << "(" << __FUNCTION__ << ") on line " << __LINE__ << endl;
 		cout << "# ERR: " << e.what();
@@ -246,6 +254,7 @@ void insertIntoTableDenTime(RowDataDenied *rowDataDen,string acctime,Statement *
 	}
 	catch (sql::SQLException &e)
 	{
+		syslog(LOG_NOTICE,e.what());
 		cout << "# ERR: SQLException in " << __FILE__;
 		cout << "(" << __FUNCTION__ << ") on line " << __LINE__ << endl;
 		cout << "# ERR: " << e.what();
@@ -259,10 +268,13 @@ void insertIntoTableAcc(RowData *rowData,Statement *stmt,string tn)
 {
 	try
 	{
-		stmt->execute("insert into " + tn +"(user,domain,size,connection,hit,miss,response_time) values('"+rowData->user+"','"+rowData->domain+"','"+boost::lexical_cast<std::string>(rowData->size)+"','"+ boost::lexical_cast<std::string>(rowData->connection)+"','"+boost::lexical_cast<std::string>(rowData->hit)+"','"+boost::lexical_cast<std::string>(rowData->miss)+"','"+boost::lexical_cast<std::string>(rowData->response_time)+"';");
+		syslog(LOG_NOTICE,"DB:: insert data");
+		stmt->execute("insert into " + tn +"(user,domain,size,connection,hit,miss,response_time) values('"+rowData->user+"','"+rowData->domain+"','"+boost::lexical_cast<std::string>(rowData->size)+"','"+ boost::lexical_cast<std::string>(rowData->connection)+"','"+boost::lexical_cast<std::string>(rowData->hit)+"','"+boost::lexical_cast<std::string>(rowData->miss)+"','"+boost::lexical_cast<std::string>(rowData->response_time)+"');");
+		syslog(LOG_NOTICE,"DB:: insert data");
 	}
 	catch (sql::SQLException &e)
 	{
+		syslog(LOG_NOTICE,e.what());
 		cout << "# ERR: SQLException in " << __FILE__;
 		cout << "(" << __FUNCTION__ << ") on line " << __LINE__ << endl;
 		cout << "# ERR: " << e.what();
@@ -275,12 +287,14 @@ void updateTableAcc(RowData *rowData,Statement *stmt,string tn)
 {
 	try
 	{
+		syslog(LOG_NOTICE,"DB:: update data");
 		stmt->execute("update " + tn + " set size='"+boost::lexical_cast<std::string>(rowData->size)+"',connection='"+boost::lexical_cast<std::string>(rowData->connection)+"',hit='"+boost::lexical_cast<std::string>(rowData->hit)+"',miss='"+boost::lexical_cast<std::string>(rowData->miss)+"',response_time='"+boost::lexical_cast<std::string>(rowData->response_time)+"' where user='"+rowData->user+"' and domain='"+rowData->domain+"';");	
-
+		syslog(LOG_NOTICE,"DB:: update data");
 		return;
 	}
 	catch (sql::SQLException &e)
 	{
+		syslog(LOG_NOTICE,e.what());
 		cout << "# ERR: SQLException in " << __FILE__;
 		cout << "(" << __FUNCTION__ << ") on line " << __LINE__ << endl;
 		cout << "# ERR: " << e.what();
@@ -293,12 +307,14 @@ void insertIntoTableDen(RowDataDenied *rowData,Statement *stmt,string tn)
 {
 	try
 	{
-	stmt->execute("insert into " + tn +"(user,domain,connection) values('"+rowData->user+"','"+rowData->domain+"','"+boost::lexical_cast<std::string>(
-rowData->connection)+"');");
+	syslog(LOG_NOTICE,"DB:: denied insert data");
+	stmt->execute("insert into " + tn +"(user,domain,connection) values('"+rowData->user+"','"+rowData->domain+"','"+boost::lexical_cast<std::string>(rowData->connection)+"');");
+	syslog(LOG_NOTICE,"DB:: denied insert data");
 	return;
 	}
 	catch (sql::SQLException &e)
 	{
+		syslog(LOG_NOTICE,e.what());
 		cout << "# ERR: SQLException in " << __FILE__;
 	  	cout << "(" << __FUNCTION__ << ") on line " << __LINE__ << endl;
 	  	cout << "# ERR: " << e.what();
@@ -311,11 +327,14 @@ void updateTableDen(RowDataDenied *rowData,Statement *stmt,string tn)
 {
 	try
 	{
+		syslog(LOG_NOTICE,"DB:: denied update data");
 		stmt->execute("update " + tn + " set connection='"+boost::lexical_cast<std::string>(rowData->connection)+"' where user='"+rowData->user+"' and domain='"+rowData->domain+"';");
+		syslog(LOG_NOTICE,"DB:: denied update data");
 		return;
 	}
 	catch (sql::SQLException &e)
 	{
+		syslog(LOG_NOTICE,e.what());
 		cout << "# ERR: SQLException in " << __FILE__;
 		cout << "(" << __FUNCTION__ << ") on line " << __LINE__ << endl;
 		cout << "# ERR: " << e.what();
@@ -345,6 +364,7 @@ void DBConnection::readTable(int flag,string tableNam,string user,string domain)
 	}
 	catch (sql::SQLException &e)
 	{
+		syslog(LOG_NOTICE,e.what());
 		cout << "# ERR: SQLException in " << __FILE__;
 		cout << "(" << __FUNCTION__ << ") on line " << __LINE__ << endl;
 		cout << "# ERR: " << e.what();
@@ -382,6 +402,7 @@ string parseURLtoDomain(string url)
 	}
 	catch (exception& e)
 	{
+		syslog(LOG_NOTICE,e.what());
 		cout << "# ERR File: " << __FILE__;
 		cout << "(" << __FUNCTION__ << ") on line " << __LINE__ << endl;
 	    cout << e.what() << '\n';

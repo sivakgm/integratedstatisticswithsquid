@@ -166,15 +166,15 @@ void insertObjIntoTable(int pointObj,DBConnection *statLog)
 
 		if(rowDataAcc[pointObj]->isInTable == 1)
 		{	
-			//syslog(LOG_NOTICE,"RD:: update data");
+			syslog(LOG_NOTICE,"RD:: update data");
 			updateTableAcc(rowDataAcc[pointObj],statLog->stmt,currentTableAcc);
-			//syslog(LOG_NOTICE,"RD:: End of update data");
+			syslog(LOG_NOTICE,"RD:: End of update data");
 		}
 		else
 		{	
-//			syslog(LOG_NOTICE,"RD:: Insert data");
+			syslog(LOG_NOTICE,"RD:: Insert data");
 			insertIntoTableAcc(rowDataAcc[pointObj],statLog->stmt,currentTableAcc);
-//			syslog(LOG_NOTICE,"RD:: End of Insert data");
+			syslog(LOG_NOTICE,"RD:: End of Insert data");
 		}
 	}
 	catch (exception& e)
