@@ -280,16 +280,24 @@ Log::Format::SquidNative(const AccessLogEntry::Pointer &al, Logfile * logfile)
 	//	syslog(LOG_NOTICE,processDateFromConfFile.c_str());
 		if((processDateFromConfFile != dateForTN && processDateFromConfFile != "a") && startFlag == 1)
 		{
-	//		syslog(LOG_NOTICE,"MAIN::inside_file_conf_date_processing");
-	//		syslog(LOG_NOTICE,"inside configuration file stat analysis");
+			syslog(LOG_NOTICE,processDateFromConfFile.c_str());
+			syslog(LOG_NOTICE,dateForTN.c_str());
+			syslog(LOG_NOTICE,"MAIN::inside_file_conf_date_processing");
+			syslog(LOG_NOTICE,"inside configuration file stat analysis");
 			string temTN = "ud_acc_"+processDateFromConfFile;
+			syslog(LOG_NOTICE,"MAIN::thread1");
 			thread t1(grossStatisticsAcc,temTN);
-			//t1.join();
-
+			syslog(LOG_NOTICE,"MAIN::thread1");
+		//	sleep(1);
+			t1.detach();
+			
 			temTN = "ud_den_"+processDateFromConfFile;
+			syslog(LOG_NOTICE,"MAIN::thread2");
 			thread t2(grossStatisticsDen,temTN);
-	//		syslog(LOG_NOTICE,"MAIN::end_of_inside_file_data_processing");
-			//t2.join();
+			syslog(LOG_NOTICE,"MAIN::thread2");
+			syslog(LOG_NOTICE,"MAIN::end_of_inside_file_data_processing");
+//			sleep(1)
+			t2.detach();
 		}
 
 		//checking whether previous log year is same as current log year

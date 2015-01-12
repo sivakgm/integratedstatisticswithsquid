@@ -4,7 +4,7 @@
  *  Created on: Nov 20, 2014
  *      Author: sivaprakash
  */
-
+#include "squid.h"
 #include <string>
 #include <iostream>
 #include <fstream>
@@ -39,7 +39,7 @@ void grossStatisticsAcc(string tbNa)
 		confFile>>tName;
 		confFile.close();
 		cout<<"start of Acc thread for table:"<<tName<<endl;*/
-
+		syslog(LOG_NOTICE,"gsACC: start");
 		PreparedStatement *readPstmt;
 		ResultSet *dailyRes,*ymRes;
 
@@ -100,9 +100,11 @@ void grossStatisticsAcc(string tbNa)
 		}
 		createUserStatisticsAcc(tName);
 		createDomainStatisticsAcc(tName);
+		 syslog(LOG_NOTICE,"gsACC: end");
 	}
 	catch (sql::SQLException &e)
 	{
+		syslog(LOG_NOTICE,e.what());
 		cout << "# ERR: SQLException in " << __FILE__;
 		cout << "(" << __FUNCTION__ << ") on line " << __LINE__ << endl;
 		cout << "# ERR: " << e.what();
@@ -111,6 +113,7 @@ void grossStatisticsAcc(string tbNa)
 	}
 	catch (exception& e)
 	{
+		 syslog(LOG_NOTICE,e.what());
 		cout << "# ERR File: " << __FILE__;
 		cout << "(" << __FUNCTION__ << ") on line " << __LINE__ << endl;
 	    cout << e.what() << '\n';
@@ -198,7 +201,7 @@ void grossStatisticsDen(string tbNa)
 		confFile>>tName;
 		confFile.close();*/
 
-
+		syslog(LOG_NOTICE,"gsDen:start");
 		PreparedStatement *readPstmt;
 		ResultSet *dailyRes,*ymRes;
 
@@ -261,10 +264,12 @@ void grossStatisticsDen(string tbNa)
 		}
 		createUserStatisticsDen(tName);
 		createDomainStatisticsDen(tName);
+		 syslog(LOG_NOTICE,"gsDen:end");
 
 	}
 	catch (sql::SQLException &e)
 	{
+		 syslog(LOG_NOTICE,e.what());
 		cout << "# ERR: SQLException in " << __FILE__;
 		cout << "(" << __FUNCTION__ << ") on line " << __LINE__ << endl;
 		cout << "# ERR: " << e.what();
@@ -273,6 +278,7 @@ void grossStatisticsDen(string tbNa)
 	}
 	catch (exception& e)
 	{
+		 syslog(LOG_NOTICE,e.what());
 		cout << "# ERR File: " << __FILE__;
 		cout << "(" << __FUNCTION__ << ") on line " << __LINE__ << endl;
 	    cout << e.what() << '\n';
