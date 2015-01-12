@@ -204,7 +204,7 @@ void updateDataInObj(DBConnection *statLog,RowData *rowdata,logDataAcc *log)
 		{
 			rowdata->miss = rowdata->miss + log->size;
 		}
-		insertIntoTableAccTime(rowdata,log->tim,statLog->stmt,statLog->tableNameAccTime);
+		insertIntoTableAccTime(rowdata,log->tim,statLog->stmt,currentTableAcc);
 		setObjPriority(lim);
 		return;
 	}

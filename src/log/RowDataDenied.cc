@@ -140,7 +140,7 @@ void updateDataInDenObj(DBConnection *statLog,RowDataDenied *rowdataden,logDataD
 		rowdataden->connection = rowdataden->connection + 1;
 		rowdataden->priority = 0;
 
-		insertIntoTableDenTime(rowdataden,log->tim,statLog->stmt,statLog->tableNameDenTime);
+		insertIntoTableDenTime(rowdataden,log->tim,statLog->stmt,currentTableDen);
 		setDenObjPriority(lim);
 		return;
 	}

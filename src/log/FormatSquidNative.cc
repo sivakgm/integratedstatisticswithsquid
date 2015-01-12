@@ -298,6 +298,7 @@ Log::Format::SquidNative(const AccessLogEntry::Pointer &al, Logfile * logfile)
 			syslog(LOG_NOTICE,"MAIN::end_of_inside_file_data_processing");
 //			sleep(1)
 			t2.detach();
+
 		}
 
 		//checking whether previous log year is same as current log year
