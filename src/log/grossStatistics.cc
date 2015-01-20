@@ -93,7 +93,6 @@ void grossStatisticsAcc(string tbNa)
 				}
 				else
 				{
-					//	cout<<dailyRes->getInt(4)<<endl;
 					insertRowDataAcc(dailyRes,stmt,tn);
 				}
 			}

@@ -113,6 +113,10 @@ string currentTableAcc,currentTableDen;
 RowDataDenied *rowDataDen[MAXDENIEDOBJ];
 RowData *rowDataAcc[MAXACCESSOBJ];
 
+
+int ptrToSwpTable = 1;
+clock_t tim,t;
+
 // ##################################
 
 
@@ -244,6 +248,7 @@ Log::Format::SquidNative(const AccessLogEntry::Pointer &al, Logfile * logfile)
 			ifstream confFile("/home/squ.conf");
 			confFile>>processDateFromConfFile;
 			confFile.close();
+			tim = clock();
 		}
 		catch (exception& e)
 		{
@@ -258,6 +263,7 @@ Log::Format::SquidNative(const AccessLogEntry::Pointer &al, Logfile * logfile)
 
 	userIp = clientip;
 	domain = parseURLtoDomain(al->url);
+
 
 	if(currentLogDate != previousLogDate)
 	{
@@ -328,27 +334,36 @@ Log::Format::SquidNative(const AccessLogEntry::Pointer &al, Logfile * logfile)
 //			syslog(LOG_NOTICE,"MAIN::Day_start");
 			if(previousLogDay != "")
 			{
-				string temTN = statLog->tableNameAcc;
 
-				insertAllObjDataIntoTable(statLog);
-				thread t1(grossStatisticsAcc,temTN);
-				//t1.join();
+		                 string dayTN = statLog->tableNameAcc ;
+                		 insertAllObjDataIntoTable(statLog,currentTableAcc);
+		                 tempTableToDayTable(statLog,currentTableAcc,dayTN);
+                                 thread t1(grossStatisticsAcc,dayTN);
+                                 t1.detach();
 
-				insertAllDenObjDataIntoTable(statLog);
-				temTN = statLog->tableNameDen;
-				thread t2(grossStatisticsDen,temTN);
-				//t2.join();
+		                 dayTN = statLog->tableNameDen;
+		                 insertAllDenObjDataIntoTable(statLog,currentTableDen);
+		                 tempTableToDayTableDen(statLog,currentTableDen,dayTN);
+				 thread t2(grossStatisticsDen,dayTN);
+		                 t2.detach();
 
 			}
 			previousLogDay = currentLogDate.substr(0,2);
 //			syslog(LOG_NOTICE,"MAIN::Date_End");
 		}
 		statLog->createStatTableName(dateForTN);
-
-		currentTableAcc = statLog->tableNameAcc;
-		currentTableDen = statLog->tableNameDen;
-//		syslog(LOG_NOTICE,"MAIN::End of db connection code");
 		
+		ptrToSwpTable++;
+		if(ptrToSwpTable > 5)
+		{	
+			ptrToSwpTable = ptrToSwpTable % 5;
+		}
+
+		currentTableAcc = "swap_acc"+boost::lexical_cast<std::string>(ptrToSwpTable);
+		currentTableDen = "swap_den"+boost::lexical_cast<std::string>(ptrToSwpTable);
+	
+		tim = clock();
+
 		processDateFromConfFile = dateForTN;
 //		if(startFlag != 1)
 		{
@@ -367,6 +382,37 @@ Log::Format::SquidNative(const AccessLogEntry::Pointer &al, Logfile * logfile)
 		}
 	syslog(LOG_NOTICE,"MAIN::End of creating table and asssing table name");
 	}
+
+	t = clock() - tim;	
+	
+	if(((float)t)/CLOCKS_PER_SEC > 60)
+	{		
+
+     		 tim = clock();
+
+		 string dayTN = statLog->tableNameAcc ; 
+                 insertAllObjDataIntoTable(statLog,currentTableAcc);
+                 thread t3(tempTableToDayTable,statLog,currentTableAcc,dayTN);
+                 t3.detach();
+
+ 		 dayTN = statLog->tableNameDen;
+    	 	 insertAllDenObjDataIntoTable(statLog,currentTableDen);
+                 thread t4(tempTableToDayTableDen,statLog,currentTableDen,dayTN);
+                 t4.detach();
+
+                ptrToSwpTable++;	
+		if(ptrToSwpTable > 5)
+                {
+                        ptrToSwpTable = ptrToSwpTable % 5;
+                }
+
+                currentTableAcc = "swap_acc"+boost::lexical_cast<std::string>(ptrToSwpTable);
+                currentTableDen = "swap_den"+boost::lexical_cast<std::string>(ptrToSwpTable);
+		
+	}
+	
+	
+
 	startFlag = 0;
 
 	/////////////////////////////////////////////////////////
@@ -402,7 +448,7 @@ Log::Format::SquidNative(const AccessLogEntry::Pointer &al, Logfile * logfile)
 			else
 			{
 				pointObj = getLeastObjPriority();
-				insertObjIntoTable(pointObj,statLog);
+				insertObjIntoTable(pointObj,statLog,currentTableAcc);
 				emptyTheObj(pointObj);
 			}
 
@@ -444,7 +490,7 @@ Log::Format::SquidNative(const AccessLogEntry::Pointer &al, Logfile * logfile)
 			else
 			{
 				pointObj = getLeastDenObjPriority();
-				insertDenObjIntoTable(pointObj,statLog);
+				insertDenObjIntoTable(pointObj,statLog,currentTableDen);
 				emptyTheDenObj(pointObj);
 			}
 			isnewLogInTable = checkDataInTable(statLog,currentTableDen,userIp,domain);

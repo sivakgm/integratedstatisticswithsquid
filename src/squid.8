@@ -51,7 +51,7 @@ Squid is derived from the ARPA\-funded Harvest Project.
 .PP
 This manual page only lists the command line arguments.
 For details on how to configure Squid see the file 
-.BI /usr/local/updatestat/etc/squid.conf.documented,
+.BI /usr/local/integStat/etc/squid.conf.documented,
 the Squid wiki FAQ and examples at http://wiki.squid-cache.org/ ,
 or the configuration manual on the Squid home page
 .if !'po4a'hide' http://www.squid-cache.org/Doc/config/
@@ -75,7 +75,7 @@ Write debugging to stderr also.
 .if !'po4a'hide' .TP
 .if !'po4a'hide' .B "\-f file"
 Use the given config-file instead of
-.B /usr/local/updatestat/etc/squid.conf .
+.B /usr/local/integStat/etc/squid.conf .
 If the file name starts with a 
 .B !
 or
@@ -138,7 +138,7 @@ on port.
 .if !'po4a'hide' .TP
 .if !'po4a'hide' .B \-s
 Enable logging to syslog. Also configurable in
-.BI /usr/local/updatestat/etc/squid.conf
+.BI /usr/local/integStat/etc/squid.conf
 .
 .if !'po4a'hide' .TP
 .if !'po4a'hide' .B \-S
@@ -183,7 +183,7 @@ other SMP features work as expected). Use
 option to overwrite this.
 .
 .SH FILES
-Squid configuration files located in /usr/local/updatestat/etc/:
+Squid configuration files located in /usr/local/integStat/etc/:
 .
 .if !'po4a'hide' .IP "squid.conf"
 The main configuration file. You must initially make changes to this file for 
@@ -222,10 +222,10 @@ language Squid provides error pages for.
 .br
 Some files also located elsewhere:
 .
-.if !'po4a'hide' .IP "/usr/local/updatestat/etc/mime.conf (mime_table)"
+.if !'po4a'hide' .IP "/usr/local/integStat/etc/mime.conf (mime_table)"
 MIME type mappings for FTP gatewaying
 .
-.if !'po4a'hide' .IP "/usr/local/updatestat/share/errors"
+.if !'po4a'hide' .IP "/usr/local/integStat/share/errors"
 Location of Squid error pages and templates.
 .
 .SH AUTHOR

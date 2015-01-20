@@ -31,13 +31,16 @@ RowData::RowData(void)
 	// TODO Auto-generated destructor stub
 }*/
 
-void insertAllObjDataIntoTable(DBConnection *statLog)
+
+
+void insertAllObjDataIntoTable(DBConnection *statLog,string ctn)
 {
+	string tn = ctn;
 	try
 	{
 		for(int i=0;i<NoACCOBJ;i++)
 		{
-			insertObjIntoTable(i,statLog);
+			insertObjIntoTable(i,statLog,tn);
 		}
 		for(int i=0;i<NoACCOBJ;i++)
 		{
@@ -158,8 +161,9 @@ void updateObjFromTable(int pointObj,ResultSet *res)
 	}
 }
 
-void insertObjIntoTable(int pointObj,DBConnection *statLog)
+void insertObjIntoTable(int pointObj,DBConnection *statLog,string ctn)
 {
+	string tn = ctn;
 	try
 	{
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -167,18 +171,19 @@ void insertObjIntoTable(int pointObj,DBConnection *statLog)
 		if(rowDataAcc[pointObj]->isInTable == 1)
 		{	
 			syslog(LOG_NOTICE,"RD:: update data");
-			updateTableAcc(rowDataAcc[pointObj],statLog->stmt,currentTableAcc);
+			updateTableAcc(rowDataAcc[pointObj],statLog->stmt,tn);
 			syslog(LOG_NOTICE,"RD:: End of update data");
 		}
 		else
 		{	
 			syslog(LOG_NOTICE,"RD:: Insert data");
-			insertIntoTableAcc(rowDataAcc[pointObj],statLog->stmt,currentTableAcc);
+			insertIntoTableAcc(rowDataAcc[pointObj],statLog->stmt,tn);
 			syslog(LOG_NOTICE,"RD:: End of Insert data");
 		}
 	}
 	catch (exception& e)
 	{
+		syslog(LOG_NOTICE,e.what());
 		cout << "# ERR File: " << __FILE__;
 		cout << "(" << __FUNCTION__ << ") on line " << __LINE__ << endl;
 	    cout << e.what() << '\n';
@@ -282,3 +287,54 @@ int checkDataInTable(DBConnection *statLog,string tableName,string user,string d
 //	syslog(LOG_NOTICE,"end in row data check table");
 	return -1;
 }
+
+
+void tempTableToDayTable(DBConnection *statLog,string currentTable,string dayTN)
+{
+                ResultSet *dayRes,*temRes;
+                PreparedStatement *readPstmt;
+                string ctn = currentTable;
+		string tn = dayTN;
+                string searchQueryDay = "select * from "+ tn +"  where user=? and domain=?;";
+                string selectQuery = "select * from " + ctn  +";";
+                Statement *stmt = statLog->conn->createStatement();
+
+                readPstmt = statLog->conn->prepareStatement(selectQuery);
+                temRes = readPstmt->executeQuery();
+
+                while(temRes->next())
+                {
+
+                                readPstmt = statLog->conn->prepareStatement(searchQueryDay);
+                                readPstmt->setString(1,temRes->getString(1));
+                                readPstmt->setString(2,temRes->getString(2));
+                                dayRes = readPstmt->executeQuery();
+
+                                if(dayRes->next())
+                                {
+                                        RowData *rowData = new RowData();
+                                        rowData->user = temRes->getString(1);
+                                        rowData->domain = temRes->getString(2);
+                                        rowData->size = temRes->getDouble(3) + dayRes->getDouble(3);
+                                        rowData->connection = temRes->getInt(4) + dayRes->getInt(4);
+                                        rowData->hit = temRes->getDouble(5) + dayRes->getDouble(5);
+                                        rowData->miss = temRes->getDouble(6) + dayRes->getDouble(6);
+                                        rowData->response_time = temRes->getDouble(7) + dayRes->getDouble(7);
+                                        updateTableAcc(rowData,stmt,tn);
+                                }
+                                else
+                                {
+                                        RowData *rowData = new RowData();
+                                        rowData->user = temRes->getString(1);
+                                        rowData->domain = temRes->getString(2);
+                                        rowData->size = temRes->getDouble(3);
+                                        rowData->connection = temRes->getInt(4);
+                                        rowData->hit = temRes->getDouble(5) ;
+                                        rowData->miss = temRes->getDouble(6);
+                                        rowData->response_time = temRes->getDouble(7);
+                                        insertIntoTableAcc(rowData,stmt,tn);
+                                }
+               }
+
+}
+

@@ -42,17 +42,18 @@ void updateDenObjFromTable(int pointObj,ResultSet *res)
 	}
 }
 
-void insertDenObjIntoTable(int pointObj,DBConnection *statLog)
+void insertDenObjIntoTable(int pointObj,DBConnection *statLog,string ctn)
 {
+	string tn = ctn;
 	try
 	{
 		if(rowDataDen[pointObj]->isInTable == 1)
 		{
-			updateTableDen(rowDataDen[pointObj],statLog->stmt,currentTableDen);
+			updateTableDen(rowDataDen[pointObj],statLog->stmt,tn);
 		}
 		else
 		{
-			insertIntoTableDen(rowDataDen[pointObj],statLog->stmt,currentTableDen);
+			insertIntoTableDen(rowDataDen[pointObj],statLog->stmt,tn);
 		}
 	}
 	catch (exception& e)
@@ -172,13 +173,14 @@ int checkDataInDenOBJ(int count,string user,string domain)
 	}
 	return -1;
 }
-void insertAllDenObjDataIntoTable(DBConnection *statLog)
+void insertAllDenObjDataIntoTable(DBConnection *statLog,string ctn)
 {
+	string tn = ctn;
 	try
 	{
 		for(int i=0;i<NoDENOBJ;i++)
 		{
-			insertDenObjIntoTable(i,statLog);
+			insertDenObjIntoTable(i,statLog,tn);
 		}
 		for(int i=0;i<NoDENOBJ;i++)
 		{
@@ -208,4 +210,45 @@ void createNewDenObj()
 		cout << "(" << __FUNCTION__ << ") on line " << __LINE__ << endl;
 	    cout << e.what() << '\n';
 	}
+}
+
+void tempTableToDayTableDen(DBConnection *statLog,string currentTable,string dayTN)
+{
+   		ResultSet *dayRes,*temRes;
+		PreparedStatement *readPstmt;
+		string ctn = currentTable;
+		string tn = dayTN;
+                string searchQueryDay = "select * from "+ tn +"  where user=? and domain=?;";
+                string selectQuery = "select * from " + ctn  +";";
+		Statement *stmt = statLog->conn->createStatement();
+
+                readPstmt = statLog->conn->prepareStatement(selectQuery);
+                temRes = readPstmt->executeQuery();
+
+                while(temRes->next())
+                {
+	
+                      		readPstmt = statLog->conn->prepareStatement(searchQueryDay);
+				readPstmt->setString(1,temRes->getString(1));
+	                        readPstmt->setString(2,temRes->getString(2));
+                                dayRes = readPstmt->executeQuery();
+
+                                if(dayRes->next())
+                                {
+					RowDataDenied *rowData = new RowDataDenied();
+			                rowData->user = temRes->getString(1);
+			                rowData->domain = temRes->getString(2);
+			                rowData->connection = temRes->getInt(3) + dayRes->getInt(3);
+                			updateTableDen(rowData,stmt,tn);
+                                }
+                                else
+                                {
+					RowDataDenied *rowData = new RowDataDenied();
+			                rowData->user = temRes->getString(1);
+			                rowData->domain = temRes->getString(2);
+			                rowData->connection = temRes->getInt(3);
+			                insertIntoTableDen(rowData,stmt,tn);
+                                }
+               }
+
 }

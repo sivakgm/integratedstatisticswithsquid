@@ -42,17 +42,16 @@ public:
 };
 
 
-void insertAllObjDataIntoTable(DBConnection *statLog);
+void insertAllObjDataIntoTable(DBConnection *statLog,string tn);
 void setObjPriority(int lim);
 void createNewObj();
 void updateObjFromTable(int pointObj,ResultSet *res);
 void emptyTheObj(int pointObj);
-void insertObjIntoTable(int pointObj,DBConnection *statLog);
+void insertObjIntoTable(int pointObj,DBConnection *statLog,string ctn);
 int getLeastObjPriority();
 void readResSet(DBConnection *logDB);
 int checkDataInOBJ(int count,string user,string domain);
 void updateDataInObj(DBConnection *statLog,RowData *rowdata,logDataAcc *res);
 int checkDataInTable(DBConnection *statLog,string tableName,string user,string domain);
-
-
+void tempTableToDayTable(DBConnection *statLog,string currentTableAcc,string dayTN);
 #endif /* ROWDATA_H_ */

@@ -218,6 +218,8 @@ extern RowData *rowDataAcc[MAXACCESSOBJ];
 const int MAXDENIEDOBJ = 4;
 extern int NoDENOBJ ;
 
+extern string currentTableAcc,currentTableDen;
+
 extern RowDataDenied *rowDataDen[MAXDENIEDOBJ];
 
 extern string processDateFromConfFile;
@@ -293,8 +295,17 @@ SignalEngine::doShutdown(time_t wait)
 {
 	//##############################################
 	syslog(LOG_NOTICE,"Updating Obj data finally");
-	insertAllObjDataIntoTable(statLog);
-	insertAllDenObjDataIntoTable(statLog);
+	
+         string dayTN = statLog->tableNameAcc ;
+         insertAllObjDataIntoTable(statLog,currentTableAcc);
+         tempTableToDayTable(statLog,currentTableAcc,dayTN);
+         
+
+        dayTN = statLog->tableNameDen;
+        insertAllDenObjDataIntoTable(statLog,currentTableDen);
+        tempTableToDayTableDen(statLog,currentTableDen,dayTN);
+
+
 	syslog(LOG_NOTICE,"End of updating OBJ data");
 	try
         {

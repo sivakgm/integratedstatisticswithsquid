@@ -82,7 +82,7 @@ default_all(void)
     // No default for sslproxy_cert_adapt
     // No default for sslpassword_program
 #if USE_SSL_CRTD
-    default_line("sslcrtd_program /usr/local/updatestat/libexec/ssl_crtd -s /usr/local/updatestat/var/lib/ssl_db -M 4MB");
+    default_line("sslcrtd_program /usr/local/integStat/libexec/ssl_crtd -s /usr/local/integStat/var/lib/ssl_db -M 4MB");
 #endif
 #if USE_SSL_CRTD
     default_line("sslcrtd_children 32 startup=5 idle=1");
@@ -114,19 +114,19 @@ default_all(void)
     // No default for logformat
     // No default for access_log
     // No default for icap_log
-    default_line("logfile_daemon /usr/local/updatestat/libexec/log_file_daemon");
+    default_line("logfile_daemon /usr/local/integStat/libexec/log_file_daemon");
     // No default for stats_collection
     // No default for cache_store_log
     // No default for cache_swap_state
     default_line("logfile_rotate 10");
-    default_line("mime_table /usr/local/updatestat/etc/mime.conf");
+    default_line("mime_table /usr/local/integStat/etc/mime.conf");
     default_line("log_mime_hdrs off");
-    default_line("pid_filename /usr/local/updatestat/var/run/squid.pid");
+    default_line("pid_filename /usr/local/integStat/var/run/squid.pid");
     default_line("client_netmask no_addr");
     default_line("strip_query_terms on");
     default_line("buffered_logs off");
 #if USE_ICMP
-    default_line("netdb_filename stdio:/usr/local/updatestat/var/logs/netdb.state");
+    default_line("netdb_filename stdio:/usr/local/integStat/var/logs/netdb.state");
 #endif
     // No default for cache_log
     default_line("debug_options ALL,1");
@@ -138,12 +138,12 @@ default_all(void)
     default_line("ftp_eprt on");
     default_line("ftp_sanitycheck on");
     default_line("ftp_telnet_protocol on");
-    default_line("diskd_program /usr/local/updatestat/libexec/diskd");
+    default_line("diskd_program /usr/local/integStat/libexec/diskd");
 #if USE_UNLINKD
-    default_line("unlinkd_program /usr/local/updatestat/libexec/unlinkd");
+    default_line("unlinkd_program /usr/local/integStat/libexec/unlinkd");
 #endif
 #if USE_ICMP
-    default_line("pinger_program /usr/local/updatestat/libexec/pinger");
+    default_line("pinger_program /usr/local/integStat/libexec/pinger");
 #endif
 #if USE_ICMP
     default_line("pinger_enable on");
@@ -340,7 +340,7 @@ default_all(void)
     default_line("mcast_miss_encode_key XXXXXXXXXXXXXXXX");
 #endif
     default_line("mcast_icp_query_timeout 2000");
-    default_line("icon_directory /usr/local/updatestat/share/icons");
+    default_line("icon_directory /usr/local/integStat/share/icons");
     default_line("global_internal_static on");
     default_line("short_icon_urls on");
     // No default for error_directory
@@ -348,7 +348,7 @@ default_all(void)
 #if USE_ERR_LOCALES
     default_line("error_log_languages on");
 #endif
-    default_line("err_page_stylesheet /usr/local/updatestat/etc/errorpage.css");
+    default_line("err_page_stylesheet /usr/local/integStat/etc/errorpage.css");
     // No default for err_html_text
     default_line("email_err_data on");
     // No default for deny_info
@@ -427,7 +427,7 @@ default_all(void)
     default_line("check_hostnames off");
     default_line("allow_underscore on");
 #if USE_DNSHELPER
-    default_line("cache_dns_program /usr/local/updatestat/libexec/dnsserver");
+    default_line("cache_dns_program /usr/local/integStat/libexec/dnsserver");
 #endif
 #if USE_DNSHELPER
     default_line("dns_children 32 startup=1 idle=1");
@@ -504,10 +504,10 @@ defaults_if_none(void)
         default_line("http_access deny all");
     }
     if (check_null_access_log(Config.Log.accesslogs)) {
-        default_line("access_log daemon:/usr/local/updatestat/var/logs/access.log squid");
+        default_line("access_log daemon:/usr/local/integStat/var/logs/access.log squid");
     }
     if (check_null_string(Debug::cache_log)) {
-        default_line("cache_log /usr/local/updatestat/var/logs/cache.log");
+        default_line("cache_log /usr/local/integStat/var/logs/cache.log");
     }
     if (check_null_string(Config.coredump_dir)) {
         default_line("coredump_dir none");

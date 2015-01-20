@@ -35,14 +35,15 @@ public:
 	RowDataDenied();
 };
 
-void insertAllDenObjDataIntoTable(DBConnection *statLog);
+void insertAllDenObjDataIntoTable(DBConnection *statLog,string ctn);
 void updateDataInDenObj(DBConnection *statLog,RowDataDenied *rowDenData,logDataDen *log);
 int checkDataInDenOBJ(int count,string user,string domain);
 void setDenObjPriority(int lim);
 int getLeastDenObjPriority();
-void insertDenObjIntoTable(int pointObj,DBConnection *statLog);
+void insertDenObjIntoTable(int pointObj,DBConnection *statLog,string ctn);
 void emptyTheDenObj(int pointObj);
 void updateDenObjFromTable(int pointObj,ResultSet *res);
 void createNewDenObj();
+void tempTableToDayTableDen(DBConnection *statLog,string currentTableDen,string dayTN);
 
 #endif /* ROWDATADENIED_H_ */
