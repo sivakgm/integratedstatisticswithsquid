@@ -36,10 +36,10 @@ void updateDenObjFromTable(int pointObj,ResultSet *res)
 	}
 	catch (exception& e)
 	{
-		cout << "# ERR File: " << __FILE__;
-		cout << "(" << __FUNCTION__ << ") on line " << __LINE__ << endl;
-	    cout << e.what() << '\n';
-	}
+	syslog(LOG_NOTICE,e.what());
+	syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__FILE__).c_str());
+	syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__LINE__).c_str());
+}
 }
 
 void insertDenObjIntoTable(int pointObj,DBConnection *statLog,string ctn)
@@ -58,10 +58,10 @@ void insertDenObjIntoTable(int pointObj,DBConnection *statLog,string ctn)
 	}
 	catch (exception& e)
 	{
-		cout << "# ERR File: " << __FILE__;
-		cout << "(" << __FUNCTION__ << ") on line " << __LINE__ << endl;
-	    cout << e.what() << '\n';
-	}
+	syslog(LOG_NOTICE,e.what());
+	syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__FILE__).c_str());
+	syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__LINE__).c_str());
+}
 }
 
 void emptyTheDenObj(int pointObj)
@@ -75,10 +75,10 @@ void emptyTheDenObj(int pointObj)
 	}
 	catch (exception& e)
 	{
-		cout << "# ERR File: " << __FILE__;
-		cout << "(" << __FUNCTION__ << ") on line " << __LINE__ << endl;
-	    cout << e.what() << '\n';
-	}
+	syslog(LOG_NOTICE,e.what());
+	syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__FILE__).c_str());
+	syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__LINE__).c_str());
+}
 }
 
 
@@ -94,10 +94,10 @@ int getLeastDenObjPriority()
 	}
 	catch (exception& e)
 	{
-		cout << "# ERR File: " << __FILE__;
-		cout << "(" << __FUNCTION__ << ") on line " << __LINE__ << endl;
-	    cout << e.what() << '\n';
-	}
+	syslog(LOG_NOTICE,e.what());
+	syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__FILE__).c_str());
+	syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__LINE__).c_str());
+}
 	return -1;
 }
 
@@ -125,10 +125,10 @@ void setDenObjPriority(int lim)
 	}
 	catch (exception& e)
 	{
-		cout << "# ERR File: " << __FILE__;
-		cout << "(" << __FUNCTION__ << ") on line " << __LINE__ << endl;
-	    cout << e.what() << '\n';
-	}
+	syslog(LOG_NOTICE,e.what());
+	syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__FILE__).c_str());
+	syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__LINE__).c_str());
+}
 }
 
 void updateDataInDenObj(DBConnection *statLog,RowDataDenied *rowdataden,logDataDen *log)
@@ -147,10 +147,10 @@ void updateDataInDenObj(DBConnection *statLog,RowDataDenied *rowdataden,logDataD
 	}
 	catch (exception& e)
 	{
-		cout << "# ERR File: " << __FILE__;
-		cout << "(" << __FUNCTION__ << ") on line " << __LINE__ << endl;
-	    cout << e.what() << '\n';
-	}
+	syslog(LOG_NOTICE,e.what());
+	syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__FILE__).c_str());
+	syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__LINE__).c_str());
+}
 }
 
 int checkDataInDenOBJ(int count,string user,string domain)
@@ -167,10 +167,10 @@ int checkDataInDenOBJ(int count,string user,string domain)
 	}
 	catch (exception& e)
 	{
-		cout << "# ERR File: " << __FILE__;
-		cout << "(" << __FUNCTION__ << ") on line " << __LINE__ << endl;
-	    cout << e.what() << '\n';
-	}
+	syslog(LOG_NOTICE,e.what());
+	syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__FILE__).c_str());
+	syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__LINE__).c_str());
+}
 	return -1;
 }
 void insertAllDenObjDataIntoTable(DBConnection *statLog,string ctn)
@@ -190,10 +190,10 @@ void insertAllDenObjDataIntoTable(DBConnection *statLog,string ctn)
 	}
 	catch (exception& e)
 	{
-		cout << "# ERR File: " << __FILE__;
-		cout << "(" << __FUNCTION__ << ") on line " << __LINE__ << endl;
-	    cout << e.what() << '\n';
-	}
+	syslog(LOG_NOTICE,e.what());
+	syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__FILE__).c_str());
+	syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__LINE__).c_str());
+}
 }
 
 void createNewDenObj()
@@ -206,10 +206,10 @@ void createNewDenObj()
 	}
 	catch (exception& e)
 	{
-		cout << "# ERR File: " << __FILE__;
-		cout << "(" << __FUNCTION__ << ") on line " << __LINE__ << endl;
-	    cout << e.what() << '\n';
-	}
+	syslog(LOG_NOTICE,e.what());
+	syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__FILE__).c_str());
+	syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__LINE__).c_str());
+}
 }
 
 void tempTableToDayTableDen(DBConnection *statLog,string currentTable,string dayTN)
@@ -266,9 +266,8 @@ void tempTableToDayTableDen(DBConnection *statLog,string currentTable,string day
         {	
 		syslog(LOG_NOTICE,"Inside Temp Row Data Denied");
                 syslog(LOG_NOTICE,e.what());
-                cout << "# ERR File: " << __FILE__;
-                cout << "(" << __FUNCTION__ << ") on line " << __LINE__ << endl;
-            cout << e.what() << '\n';
-        }
+		syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__FILE__).c_str());
+		syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__LINE__).c_str());
+}
 
 }

@@ -4,7 +4,7 @@
  *  Created on: Nov 21, 2014
  *      Author: sivaprakash
  */
-
+#include "squid.h"
 #include "log/DomainStatistics.h"
 #include "log/RowData.h"
 #include "log/RowDataDenied.h"
@@ -74,12 +74,10 @@ void createDomainStatisticsAcc(string tableName)
 	}
 	catch (sql::SQLException &e)
 	{
-	  cout << "# ERR: SQLException in " << __FILE__;
-	  cout << "(" << __FUNCTION__ << ") on line " << __LINE__ << endl;
-	  cout << "# ERR: " << e.what();
-	  cout << " (MySQL error code: " << e.getErrorCode();
-	  cout << ", SQLState: " << e.getSQLState() << " )" << endl;
-	}
+	syslog(LOG_NOTICE,e.what());
+	syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__FILE__).c_str());
+	syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__LINE__).c_str());
+}
 }
 
 void insertDataIntoDailyDomainStatisticsAcc(RowData *rowData,Statement *stmt,string tableName)
@@ -90,12 +88,10 @@ void insertDataIntoDailyDomainStatisticsAcc(RowData *rowData,Statement *stmt,str
 	}
 	catch (sql::SQLException &e)
 	{
-	  cout << "# ERR: SQLException in " << __FILE__;
-	  cout << "(" << __FUNCTION__ << ") on line " << __LINE__ << endl;
-	  cout << "# ERR: " << e.what();
-	  cout << " (MySQL error code: " << e.getErrorCode();
-	  cout << ", SQLState: " << e.getSQLState() << " )" << endl;
-	}
+	syslog(LOG_NOTICE,e.what());
+	syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__FILE__).c_str());
+	syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__LINE__).c_str());
+}
 }
 
 void checkPresenceOfDomainDataInTableAcc(RowData *rowData,Statement *stmt,string tableName)
@@ -120,12 +116,10 @@ void checkPresenceOfDomainDataInTableAcc(RowData *rowData,Statement *stmt,string
 	}
 	catch (sql::SQLException &e)
 	{
-	  cout << "# ERR: SQLException in " << __FILE__;
-	  cout << "(" << __FUNCTION__ << ") on line " << __LINE__ << endl;
-	  cout << "# ERR: " << e.what();
-	  cout << " (MySQL error code: " << e.getErrorCode();
-	  cout << ", SQLState: " << e.getSQLState() << " )" << endl;
-	}
+	syslog(LOG_NOTICE,e.what());
+	syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__FILE__).c_str());
+	syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__LINE__).c_str());
+}
 }
 
 void checkPresenecOfDomainStatisticsTableAcc(Statement *stmt,string tableName)
@@ -136,18 +130,15 @@ void checkPresenecOfDomainStatisticsTableAcc(Statement *stmt,string tableName)
 	}
 	catch (sql::SQLException &e)
 	{
-	  cout << "# ERR: SQLException in " << __FILE__;
-	  cout << "(" << __FUNCTION__ << ") on line " << __LINE__ << endl;
-	  cout << "# ERR: " << e.what();
-	  cout << " (MySQL error code: " << e.getErrorCode();
-	  cout << ", SQLState: " << e.getSQLState() << " )" << endl;
-	}
+	syslog(LOG_NOTICE,e.what());
+	syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__FILE__).c_str());
+	syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__LINE__).c_str());
+}
 	catch (exception& e)
 	{
-		cout << "# ERR File: " << __FILE__;
-		cout << "(" << __FUNCTION__ << ") on line " << __LINE__ << endl;
-	    cout << e.what() << '\n';
-	}
+	yslog(LOG_NOTICE,e.what());
+	syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__FILE__).c_str());
+	syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__LINE__).c_str());
 }
 
 void createDomainStatisticsDen(string tableName)
@@ -208,12 +199,10 @@ void createDomainStatisticsDen(string tableName)
 	}
 	catch (sql::SQLException &e)
 	{
-	  cout << "# ERR: SQLException in " << __FILE__;
-	  cout << "(" << __FUNCTION__ << ") on line " << __LINE__ << endl;
-	  cout << "# ERR: " << e.what();
-	  cout << " (MySQL error code: " << e.getErrorCode();
-	  cout << ", SQLState: " << e.getSQLState() << " )" << endl;
-	}
+	syslog(LOG_NOTICE,e.what());
+	syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__FILE__).c_str());
+	syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__LINE__).c_str());
+}
 }
 
 void insertDataIntoDailyDomainStatisticsDen(RowDataDenied *rowDataDenied,Statement *stmt,string tableName)
@@ -224,12 +213,10 @@ void insertDataIntoDailyDomainStatisticsDen(RowDataDenied *rowDataDenied,Stateme
 	}
 	catch (sql::SQLException &e)
 	{
-	  cout << "# ERR: SQLException in " << __FILE__;
-	  cout << "(" << __FUNCTION__ << ") on line " << __LINE__ << endl;
-	  cout << "# ERR: " << e.what();
-	  cout << " (MySQL error code: " << e.getErrorCode();
-	  cout << ", SQLState: " << e.getSQLState() << " )" << endl;
-	}
+	syslog(LOG_NOTICE,e.what());
+	syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__FILE__).c_str());
+	syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__LINE__).c_str());
+}
 }
 
 void checkPresenceOfDomainDataInTableDen(RowDataDenied *rowDataDenied,Statement *stmt,string tableName)
@@ -250,12 +237,10 @@ void checkPresenceOfDomainDataInTableDen(RowDataDenied *rowDataDenied,Statement 
 	}
 	catch (sql::SQLException &e)
 	{
-	  cout << "# ERR: SQLException in " << __FILE__;
-	  cout << "(" << __FUNCTION__ << ") on line " << __LINE__ << endl;
-	  cout << "# ERR: " << e.what();
-	  cout << " (MySQL error code: " << e.getErrorCode();
-	  cout << ", SQLState: " << e.getSQLState() << " )" << endl;
-	}
+	syslog(LOG_NOTICE,e.what());
+	syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__FILE__).c_str());
+	syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__LINE__).c_str());
+}
 }
 
 void checkPresenecOfDomainStatisticsTableDen(Statement *stmt,string tableName)
@@ -266,10 +251,8 @@ void checkPresenecOfDomainStatisticsTableDen(Statement *stmt,string tableName)
 	}
 	catch (sql::SQLException &e)
 	{
-	  cout << "# ERR: SQLException in " << __FILE__;
-	  cout << "(" << __FUNCTION__ << ") on line " << __LINE__ << endl;
-	  cout << "# ERR: " << e.what();
-	  cout << " (MySQL error code: " << e.getErrorCode();
-	  cout << ", SQLState: " << e.getSQLState() << " )" << endl;
-	}
+	syslog(LOG_NOTICE,e.what());
+	syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__FILE__).c_str());
+	syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__LINE__).c_str());
+}
 }

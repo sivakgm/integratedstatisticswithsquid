@@ -97,12 +97,9 @@ void insertDataIntoDailyUserStatisticsAcc(RowData *rowData,Statement *stmt,strin
 	}
 	catch (sql::SQLException &e)
 	{
-		cout << "# ERR: SQLException in " << __FILE__;
-		cout << "(" << __FUNCTION__ << ") on line " << __LINE__ << endl;
-		cout << "# ERR: " << e.what();
-		cout << " (MySQL error code: " << e.getErrorCode();
-		cout << ", SQLState: " << e.getSQLState() << " )" << endl;
-	}
+	syslog(LOG_NOTICE,e.what());
+	syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__FILE__).c_str());
+	syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__LINE__).c_str());
 }
 
 void checkPresenceOfUserDataInTableAcc(RowData *rowData,Statement *stmt,string tableName)
@@ -130,12 +127,10 @@ void checkPresenceOfUserDataInTableAcc(RowData *rowData,Statement *stmt,string t
 	}
 	catch (sql::SQLException &e)
 	{
-		cout << "# ERR: SQLException in " << __FILE__;
-		cout << "(" << __FUNCTION__ << ") on line " << __LINE__ << endl;
-		cout << "# ERR: " << e.what();
-		cout << " (MySQL error code: " << e.getErrorCode();
-		cout << ", SQLState: " << e.getSQLState() << " )" << endl;
-	}
+	syslog(LOG_NOTICE,e.what());
+	syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__FILE__).c_str());
+	syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__LINE__).c_str());
+}
 }
 
 void checkPresenecOfUserStatisticsTableAcc(Statement *stmt,string tableName)
@@ -146,12 +141,10 @@ void checkPresenecOfUserStatisticsTableAcc(Statement *stmt,string tableName)
 	}
 	catch (sql::SQLException &e)
 	{
-		cout << "# ERR: SQLException in " << __FILE__;
-		cout << "(" << __FUNCTION__ << ") on line " << __LINE__ << endl;
-		cout << "# ERR: " << e.what();
-		cout << " (MySQL error code: " << e.getErrorCode();
-		cout << ", SQLState: " << e.getSQLState() << " )" << endl;
-	}
+	syslog(LOG_NOTICE,e.what());
+	syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__FILE__).c_str());
+	syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__LINE__).c_str());
+}
 }
 
 void createUserStatisticsDen(string tableName)
@@ -213,12 +206,10 @@ void createUserStatisticsDen(string tableName)
 	}
 	catch (sql::SQLException &e)
 	{
-		cout << "# ERR: SQLException in " << __FILE__;
-		cout << "(" << __FUNCTION__ << ") on line " << __LINE__ << endl;
-		cout << "# ERR: " << e.what();
-		cout << " (MySQL error code: " << e.getErrorCode();
-		cout << ", SQLState: " << e.getSQLState() << " )" << endl;
-	}
+	syslog(LOG_NOTICE,e.what());
+	syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__FILE__).c_str());
+	syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__LINE__).c_str());
+}
 }
 
 void insertDataIntoDailyUserStatisticsDen(RowDataDenied *rowDataDenied,Statement *stmt,string tableName)
@@ -229,12 +220,10 @@ void insertDataIntoDailyUserStatisticsDen(RowDataDenied *rowDataDenied,Statement
 	}
 	catch (sql::SQLException &e)
 	{
-		cout << "# ERR: SQLException in " << __FILE__;
-		cout << "(" << __FUNCTION__ << ") on line " << __LINE__ << endl;
-		cout << "# ERR: " << e.what();
-		cout << " (MySQL error code: " << e.getErrorCode();
-		cout << ", SQLState: " << e.getSQLState() << " )" << endl;
-	}
+	syslog(LOG_NOTICE,e.what());
+	syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__FILE__).c_str());
+	syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__LINE__).c_str());
+}
 }
 
 void checkPresenceOfUserDataInTableDen(RowDataDenied *rowDataDenied,Statement *stmt,string tableName)
@@ -256,12 +245,10 @@ void checkPresenceOfUserDataInTableDen(RowDataDenied *rowDataDenied,Statement *s
 	}
 	catch (sql::SQLException &e)
 	{
-		cout << "# ERR: SQLException in " << __FILE__;
-		cout << "(" << __FUNCTION__ << ") on line " << __LINE__ << endl;
-		cout << "# ERR: " << e.what();
-		cout << " (MySQL error code: " << e.getErrorCode();
-		cout << ", SQLState: " << e.getSQLState() << " )" << endl;
-	}
+	syslog(LOG_NOTICE,e.what());
+	syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__FILE__).c_str());
+	syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__LINE__).c_str());
+}
 }
 
 void checkPresenecOfUserStatisticsTableDen(Statement *stmt,string tableName)
@@ -272,11 +259,9 @@ void checkPresenecOfUserStatisticsTableDen(Statement *stmt,string tableName)
 	}
 	catch (sql::SQLException &e)
 	{
-		cout << "# ERR: SQLException in " << __FILE__;
-		cout << "(" << __FUNCTION__ << ") on line " << __LINE__ << endl;
-		cout << "# ERR: " << e.what();
-		cout << " (MySQL error code: " << e.getErrorCode();
-		cout << ", SQLState: " << e.getSQLState() << " )" << endl;
-	}
+	syslog(LOG_NOTICE,e.what());
+	syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__FILE__).c_str());
+	syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__LINE__).c_str());
+}
 }
 

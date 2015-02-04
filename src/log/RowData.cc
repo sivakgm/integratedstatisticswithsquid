@@ -51,10 +51,10 @@ void insertAllObjDataIntoTable(DBConnection *statLog,string ctn)
 	}
 	catch (exception& e)
 	{
-		cout << "# ERR File: " << __FILE__;
-		cout << "(" << __FUNCTION__ << ") on line " << __LINE__ << endl;
-	    cout << e.what() << '\n';
-	}
+	syslog(LOG_NOTICE,e.what());
+	syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__FILE__).c_str());
+	syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__LINE__).c_str());
+}
 }
 
 void setObjPriority(int lim)
@@ -79,10 +79,10 @@ void setObjPriority(int lim)
 	}
 	catch (exception& e)
 	{
-		cout << "# ERR File: " << __FILE__;
-		cout << "(" << __FUNCTION__ << ") on line " << __LINE__ << endl;
-	    cout << e.what() << '\n';
-	}
+	syslog(LOG_NOTICE,e.what());
+	syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__FILE__).c_str());
+	syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__LINE__).c_str());
+}
 }
 
 int getLeastObjPriority()
@@ -97,10 +97,10 @@ int getLeastObjPriority()
 	}
 	catch (exception& e)
 	{
-		cout << "# ERR File: " << __FILE__;
-		cout << "(" << __FUNCTION__ << ") on line " << __LINE__ << endl;
-	    cout << e.what() << '\n';
-	}
+	syslog(LOG_NOTICE,e.what());
+	syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__FILE__).c_str());
+	syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__LINE__).c_str());
+}
 	return -1;
 }
 
@@ -113,10 +113,10 @@ void createNewObj()
 	}
 	catch (exception& e)
 	{
-		cout << "# ERR File: " << __FILE__;
-		cout << "(" << __FUNCTION__ << ") on line " << __LINE__ << endl;
-	    cout << e.what() << '\n';
-	}
+	syslog(LOG_NOTICE,e.what());
+	syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__FILE__).c_str());
+	syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__LINE__).c_str());
+}
 	return;
 }
 
@@ -135,10 +135,10 @@ void emptyTheObj(int pointObj)
 	}
 	catch (exception& e)
 	{
-		cout << "# ERR File: " << __FILE__;
-		cout << "(" << __FUNCTION__ << ") on line " << __LINE__ << endl;
-	    cout << e.what() << '\n';
-	}
+	syslog(LOG_NOTICE,e.what());
+	syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__FILE__).c_str());
+	syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__LINE__).c_str());
+}
 }
 
 void updateObjFromTable(int pointObj,ResultSet *res)
@@ -156,10 +156,10 @@ void updateObjFromTable(int pointObj,ResultSet *res)
 	}
 	catch (exception& e)
 	{
-		cout << "# ERR File: " << __FILE__;
-		cout << "(" << __FUNCTION__ << ") on line " << __LINE__ << endl;
-	    cout << e.what() << '\n';
-	}
+	syslog(LOG_NOTICE,e.what());
+	syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__FILE__).c_str());
+	syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__LINE__).c_str());
+}
 }
 
 void insertObjIntoTable(int pointObj,DBConnection *statLog,string ctn)
@@ -184,11 +184,10 @@ void insertObjIntoTable(int pointObj,DBConnection *statLog,string ctn)
 	}
 	catch (exception& e)
 	{
-		syslog(LOG_NOTICE,e.what());
-		cout << "# ERR File: " << __FILE__;
-		cout << "(" << __FUNCTION__ << ") on line " << __LINE__ << endl;
-	    cout << e.what() << '\n';
-	}
+	syslog(LOG_NOTICE,e.what());
+	syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__FILE__).c_str());
+	syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__LINE__).c_str());
+}
 }
 
 void updateDataInObj(DBConnection *statLog,RowData *rowdata,logDataAcc *log)
@@ -216,10 +215,10 @@ void updateDataInObj(DBConnection *statLog,RowData *rowdata,logDataAcc *log)
 	}
 	catch (exception& e)
 	{
-		cout << "# ERR File: " << __FILE__;
-		cout << "(" << __FUNCTION__ << ") on line " << __LINE__ << endl;
-	    cout << e.what() << '\n';
-	}
+	syslog(LOG_NOTICE,e.what());
+		syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__FILE__).c_str());
+	syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__LINE__).c_str());
+}
 }
 
 
@@ -237,10 +236,10 @@ int checkDataInOBJ(int count,string user,string domain)
 	}
 	catch (exception& e)
 	{
-		cout << "# ERR File: " << __FILE__;
-		cout << "(" << __FUNCTION__ << ") on line " << __LINE__ << endl;
-	    cout << e.what() << '\n';
-	}
+	syslog(LOG_NOTICE,e.what());
+	syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__FILE__).c_str());
+	syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__LINE__).c_str());
+}
 	return -1;
 }
 
@@ -281,10 +280,10 @@ int checkDataInTable(DBConnection *statLog,string tableName,string user,string d
 	}
 	catch (exception& e)
 	{
-		cout << "# ERR File: " << __FILE__;
-		cout << "(" << __FUNCTION__ << ") on line " << __LINE__ << endl;
-	    cout << e.what() << '\n';
-	}
+	syslog(LOG_NOTICE,e.what());
+	syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__FILE__).c_str());
+	syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__LINE__).c_str());
+}
 //	syslog(LOG_NOTICE,"end in row data check table");
 	return -1;
 }
@@ -351,12 +350,8 @@ void tempTableToDayTable(DBConnection *statLog,string currentTable,string dayTN)
         {
                 syslog(LOG_NOTICE,e.what());
 		 syslog(LOG_NOTICE,"Inside Temp Row Data");
-                cout << "# ERR File: " << __FILE__;
-                cout << "(" << __FUNCTION__ << ") on line " << __LINE__ << endl;
-            cout << e.what() << '\n';
-        }
-
-		
-
+		syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__FILE__).c_str());
+		syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__LINE__).c_str());
+}
 }
 
