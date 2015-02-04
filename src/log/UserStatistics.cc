@@ -144,7 +144,7 @@ void checkPresenecOfUserStatisticsTableAcc(Statement *stmt,string tableName)
 {
 	try
 	{
-		stmt->execute("create table if not exists " + tableName + "(user varchar(12), size double, connection double, hit double, miss double,response_time double);");
+		stmt->execute("create table if not exists " + tableName + "(user varchar(16), size double, connection double, hit double, miss double,response_time double);");
 	}
 	catch (sql::SQLException &e)
 	{
@@ -270,7 +270,7 @@ void checkPresenecOfUserStatisticsTableDen(Statement *stmt,string tableName)
 {
 	try
 	{
-		stmt->execute("create table if not exists " + tableName + "(user varchar(12), connection double);");
+		stmt->execute("create table if not exists " + tableName + "(user varchar(16), connection double);");
 	}
 	catch (sql::SQLException &e)
 	{

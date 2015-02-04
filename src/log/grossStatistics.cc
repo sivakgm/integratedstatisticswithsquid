@@ -173,7 +173,7 @@ void checkPresenecOfGrossStatisticsTableAcc(Statement *stmt,string tName)
 {
 	try
 	{
-		stmt->execute("create table if not exists " + tName + "(user varchar(12),domain varchar(100), size double, connection double, hit double, miss double,response_time double);");
+		stmt->execute("create table if not exists " + tName + "(user varchar(16),domain varchar(100), size double, connection double, hit double, miss double,response_time double);");
 	}
 	catch (sql::SQLException &e)
 	{
@@ -326,5 +326,5 @@ void insertRowDataDen(ResultSet *dailyRes,Statement *stmt,string tn)
 
 void checkPresenecOfGrossStatisticsTableDen(Statement *stmt,string tName)
 {
-	stmt->execute("create table if not exists " + tName + "(user varchar(12),domain varchar(100), connection double);");
+	stmt->execute("create table if not exists " + tName + "(user varchar(16),domain varchar(100), connection double);");
 }

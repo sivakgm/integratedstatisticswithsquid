@@ -209,7 +209,7 @@ void updateDataInObj(DBConnection *statLog,RowData *rowdata,logDataAcc *log)
 		{
 			rowdata->miss = rowdata->miss + log->size;
 		}
-		insertIntoTableAccTime(rowdata,log->tim,statLog->stmt,currentTableAcc);
+		insertIntoTableAccTime(rowdata,log->tim,statLog->stmt,statLog->tableNameAccTime);
 		setObjPriority(lim);
 		return;
 	}
@@ -291,10 +291,19 @@ int checkDataInTable(DBConnection *statLog,string tableName,string user,string d
 
 void tempTableToDayTable(DBConnection *statLog,string currentTable,string dayTN)
 {
-                ResultSet *dayRes,*temRes;
-                PreparedStatement *readPstmt;
+		
+		try
+		{
                 string ctn = currentTable;
 		string tn = dayTN;
+
+		driver = get_driver_instance();
+                conn = driver->connect("tcp://127.0.0.1:3306","root","simple");
+                conn->setSchema("squidStatistics_2015");
+
+		syslog(LOG_NOTICE,"tempTableToDayTable acc start");	
+                ResultSet *dayRes,*temRes;
+                PreparedStatement *readPstmt;
                 string searchQueryDay = "select * from "+ tn +"  where user=? and domain=?;";
                 string selectQuery = "select * from " + ctn  +";";
                 Statement *stmt = statLog->conn->createStatement();
@@ -335,6 +344,19 @@ void tempTableToDayTable(DBConnection *statLog,string currentTable,string dayTN)
                                         insertIntoTableAcc(rowData,stmt,tn);
                                 }
                }
+		syslog(LOG_NOTICE,"tempTableToDayTable acc end");
+		
+	}
+	catch (exception& e)
+        {
+                syslog(LOG_NOTICE,e.what());
+		 syslog(LOG_NOTICE,"Inside Temp Row Data");
+                cout << "# ERR File: " << __FILE__;
+                cout << "(" << __FUNCTION__ << ") on line " << __LINE__ << endl;
+            cout << e.what() << '\n';
+        }
+
+		
 
 }
 

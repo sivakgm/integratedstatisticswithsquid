@@ -4,7 +4,7 @@
  *  Created on: Nov 18, 2014
  *      Author: sivaprakash
  */
-
+#include "squid.h"
 #include "log/RowDataDenied.h"
 #include "log/DBConnection.h"
 
@@ -141,7 +141,7 @@ void updateDataInDenObj(DBConnection *statLog,RowDataDenied *rowdataden,logDataD
 		rowdataden->connection = rowdataden->connection + 1;
 		rowdataden->priority = 0;
 
-		insertIntoTableDenTime(rowdataden,log->tim,statLog->stmt,currentTableDen);
+		insertIntoTableDenTime(rowdataden,log->tim,statLog->stmt,statLog->tableNameDenTime);
 		setDenObjPriority(lim);
 		return;
 	}
@@ -214,6 +214,9 @@ void createNewDenObj()
 
 void tempTableToDayTableDen(DBConnection *statLog,string currentTable,string dayTN)
 {
+		try
+		{
+		syslog(LOG_NOTICE,"tempTableToDayTableDen start");
    		ResultSet *dayRes,*temRes;
 		PreparedStatement *readPstmt;
 		string ctn = currentTable;
@@ -250,5 +253,16 @@ void tempTableToDayTableDen(DBConnection *statLog,string currentTable,string day
 			                insertIntoTableDen(rowData,stmt,tn);
                                 }
                }
+		syslog(LOG_NOTICE,"tempTableToDayTableDen end");
+	}
+
+        catch (exception& e)
+        {	
+		syslog(LOG_NOTICE,"Inside Temp Row Data Denied");
+                syslog(LOG_NOTICE,e.what());
+                cout << "# ERR File: " << __FILE__;
+                cout << "(" << __FUNCTION__ << ") on line " << __LINE__ << endl;
+            cout << e.what() << '\n';
+        }
 
 }

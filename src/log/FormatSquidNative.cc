@@ -114,8 +114,9 @@ RowDataDenied *rowDataDen[MAXDENIEDOBJ];
 RowData *rowDataAcc[MAXACCESSOBJ];
 
 
-int ptrToSwpTable = 1;
+int ptrToSwpTable = 0;
 clock_t tim,t;
+long int stopClock = 0;
 
 // ##################################
 
@@ -248,6 +249,7 @@ Log::Format::SquidNative(const AccessLogEntry::Pointer &al, Logfile * logfile)
 			ifstream confFile("/home/squ.conf");
 			confFile>>processDateFromConfFile;
 			confFile.close();
+			stopClock = (long int) current_time.tv_sec;
 			tim = clock();
 		}
 		catch (exception& e)
@@ -361,8 +363,13 @@ Log::Format::SquidNative(const AccessLogEntry::Pointer &al, Logfile * logfile)
 
 		currentTableAcc = "swap_acc"+boost::lexical_cast<std::string>(ptrToSwpTable);
 		currentTableDen = "swap_den"+boost::lexical_cast<std::string>(ptrToSwpTable);
+
+                statLog->stmt->execute("truncate "+currentTableAcc+";");
+                statLog->stmt->execute("truncate "+currentTableDen+";");
+
 	
 		tim = clock();
+		stopClock = (long int) current_time.tv_sec;
 
 		processDateFromConfFile = dateForTN;
 //		if(startFlag != 1)
@@ -383,22 +390,33 @@ Log::Format::SquidNative(const AccessLogEntry::Pointer &al, Logfile * logfile)
 	syslog(LOG_NOTICE,"MAIN::End of creating table and asssing table name");
 	}
 
-	t = clock() - tim;	
-	
-	if(((float)t)/CLOCKS_PER_SEC > 60)
+	t = clock() - tim;
+	string t_str = boost::lexical_cast<std::string>((long int) current_time.tv_sec - stopClock);	
+	syslog(LOG_NOTICE,"stop clock");
+	syslog(LOG_NOTICE,t_str.c_str());
+
+//	if(((float)t)/CLOCKS_PER_SEC > 60)
+	if(( (long int) current_time.tv_sec - stopClock) > 60)
 	{		
-
+		
+		syslog(LOG_NOTICE,"start of swap table part");
+		
      		 tim = clock();
+		 stopClock = (long int) current_time.tv_sec;
 
+		syslog(LOG_NOTICE,"start of swap thread Accessed");
 		 string dayTN = statLog->tableNameAcc ; 
                  insertAllObjDataIntoTable(statLog,currentTableAcc);
                  thread t3(tempTableToDayTable,statLog,currentTableAcc,dayTN);
-                 t3.detach();
+                 t3.join();
+		 syslog(LOG_NOTICE,"End accessed");		
 
+		syslog(LOG_NOTICE,"Start denied swap thread");
  		 dayTN = statLog->tableNameDen;
     	 	 insertAllDenObjDataIntoTable(statLog,currentTableDen);
                  thread t4(tempTableToDayTableDen,statLog,currentTableDen,dayTN);
-                 t4.detach();
+                 t4.join();
+		syslog(LOG_NOTICE,"End den thread");
 
                 ptrToSwpTable++;	
 		if(ptrToSwpTable > 5)
@@ -408,7 +426,15 @@ Log::Format::SquidNative(const AccessLogEntry::Pointer &al, Logfile * logfile)
 
                 currentTableAcc = "swap_acc"+boost::lexical_cast<std::string>(ptrToSwpTable);
                 currentTableDen = "swap_den"+boost::lexical_cast<std::string>(ptrToSwpTable);
-		
+		syslog(LOG_NOTICE,"ctn");
+		syslog(LOG_NOTICE,currentTableAcc.c_str());
+		syslog(LOG_NOTICE,currentTableDen.c_str());
+
+		statLog->stmt->execute("truncate "+currentTableAcc+";");
+        	statLog->stmt->execute("truncate "+currentTableDen+";");
+
+		syslog(LOG_NOTICE,"End of swap table part");
+	
 	}
 	
 	
