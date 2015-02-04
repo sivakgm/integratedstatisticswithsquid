@@ -12,6 +12,7 @@ extern const int MAXACCESSOBJ = 4;
 extern int NoACCOBJ;
 extern string currentTableAcc;
 
+
 extern RowData *rowDataAcc[MAXACCESSOBJ];
 
 RowData::RowData(void)
@@ -296,25 +297,24 @@ void tempTableToDayTable(DBConnection *statLog,string currentTable,string dayTN)
 		{
                 string ctn = currentTable;
 		string tn = dayTN;
-
-		driver = get_driver_instance();
-                conn = driver->connect("tcp://127.0.0.1:3306","root","simple");
-                conn->setSchema("squidStatistics_2015");
+		sql::Driver* drivers = get_driver_instance();
+                sql::Connection* conns = drivers->connect("tcp://127.0.0.1:3306","root","simple");
+		conns->setSchema("squidStatistics_2015");
 
 		syslog(LOG_NOTICE,"tempTableToDayTable acc start");	
                 ResultSet *dayRes,*temRes;
                 PreparedStatement *readPstmt;
                 string searchQueryDay = "select * from "+ tn +"  where user=? and domain=?;";
                 string selectQuery = "select * from " + ctn  +";";
-                Statement *stmt = statLog->conn->createStatement();
+                Statement *stmt = conns->createStatement();
 
-                readPstmt = statLog->conn->prepareStatement(selectQuery);
+                readPstmt = conns->prepareStatement(selectQuery);
                 temRes = readPstmt->executeQuery();
 
                 while(temRes->next())
                 {
 
-                                readPstmt = statLog->conn->prepareStatement(searchQueryDay);
+                                readPstmt = conns->prepareStatement(searchQueryDay);
                                 readPstmt->setString(1,temRes->getString(1));
                                 readPstmt->setString(2,temRes->getString(2));
                                 dayRes = readPstmt->executeQuery();

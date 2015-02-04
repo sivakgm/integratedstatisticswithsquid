@@ -408,14 +408,14 @@ Log::Format::SquidNative(const AccessLogEntry::Pointer &al, Logfile * logfile)
 		 string dayTN = statLog->tableNameAcc ; 
                  insertAllObjDataIntoTable(statLog,currentTableAcc);
                  thread t3(tempTableToDayTable,statLog,currentTableAcc,dayTN);
-                 t3.join();
+                 t3.detach();
 		 syslog(LOG_NOTICE,"End accessed");		
 
 		syslog(LOG_NOTICE,"Start denied swap thread");
  		 dayTN = statLog->tableNameDen;
     	 	 insertAllDenObjDataIntoTable(statLog,currentTableDen);
                  thread t4(tempTableToDayTableDen,statLog,currentTableDen,dayTN);
-                 t4.join();
+                 t4.detach();
 		syslog(LOG_NOTICE,"End den thread");
 
                 ptrToSwpTable++;	

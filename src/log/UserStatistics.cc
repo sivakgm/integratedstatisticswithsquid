@@ -6,7 +6,7 @@
  */
 
 
-
+#include "squid.h"
 #include "log/UserStatistics.h"
 #include "log/RowData.h"
 #include "log/RowDataDenied.h"
@@ -83,11 +83,9 @@ void createUserStatisticsAcc(string tableName)
 	}
 	catch (sql::SQLException &e)
 	{
-		cout << "# ERR: SQLException in " << __FILE__;
-		cout << "(" << __FUNCTION__ << ") on line " << __LINE__ << endl;
-		cout << "# ERR: " << e.what();
-		cout << " (MySQL error code: " << e.getErrorCode();
-		cout << ", SQLState: " << e.getSQLState() << " )" << endl;
+		syslog(LOG_NOTICE,e.what());
+		syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__FILE__).c_str());
+		syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__LINE__).c_str());
 	}
 }
 
