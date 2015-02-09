@@ -344,6 +344,11 @@ void tempTableToDayTable(DBConnection *statLog,string currentTable,string dayTN)
                                 }
                }
 		syslog(LOG_NOTICE,"tempTableToDayTable acc end");
+		delete readPstmt;
+		delete temRes;
+		delete dayRes;
+		delete stmt;
+		delete conns; 
 		
 	}
 	catch (exception& e)

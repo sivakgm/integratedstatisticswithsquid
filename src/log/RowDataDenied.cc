@@ -260,6 +260,12 @@ void tempTableToDayTableDen(DBConnection *statLog,string currentTable,string day
                                 }
                }
 		syslog(LOG_NOTICE,"tempTableToDayTableDen end");
+		delete readPstmt;
+                delete temRes;
+                delete dayRes;
+                delete stmt;
+                delete conns;
+
 	}
 
         catch (exception& e)
