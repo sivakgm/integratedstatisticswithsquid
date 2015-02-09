@@ -244,6 +244,9 @@ Log::Format::SquidNative(const AccessLogEntry::Pointer &al, Logfile * logfile)
 
 	//######################## Sending Squid log to generate the statistics##############################
 
+	try
+	{
+
 	if(startFlag == 1)
 	{
 		syslog(LOG_NOTICE,"MAIN:: start of the parsing");
@@ -544,7 +547,15 @@ Log::Format::SquidNative(const AccessLogEntry::Pointer &al, Logfile * logfile)
 
 	syslog(LOG_NOTICE,"Process data at the end");
 	syslog(LOG_NOTICE,processDateFromConfFile.c_str());
+	}
+	catch (exception& e)
+        {
+	        syslog(LOG_NOTICE,e.what());
+	        syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__FILE__).c_str());
+        	syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__LINE__).c_str());
+	}
 
+	
 
 	////////////////////////////////////////////////////////
 
