@@ -54,4 +54,5 @@ int checkDataInOBJ(int count,string user,string domain);
 void updateDataInObj(DBConnection *statLog,RowData *rowdata,logDataAcc *res);
 int checkDataInTable(DBConnection *statLog,string tableName,string user,string domain);
 void tempTableToDayTable(DBConnection *statLog,string currentTableAcc,string dayTN);
+void updateIsInObjInTable(DBConnection *statLog,string tableName,string user,string domain);
 #endif /* ROWDATA_H_ */

@@ -45,5 +45,7 @@ void emptyTheDenObj(int pointObj);
 void updateDenObjFromTable(int pointObj,ResultSet *res);
 void createNewDenObj();
 void tempTableToDayTableDen(DBConnection *statLog,string currentTableDen,string dayTN);
+void updateIsInObjInTableDen(DBConnection *statLog,string tableNameDen,string user,string domain);
+
 
 #endif /* ROWDATADENIED_H_ */

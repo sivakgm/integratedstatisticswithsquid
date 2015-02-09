@@ -118,6 +118,9 @@ int ptrToSwpTable = 0;
 clock_t tim,t;
 long int stopClock = 0;
 
+
+void resetAccObjIsInTable();
+void resetDenObjIsInTable();
 // ##################################
 
 
@@ -406,14 +409,16 @@ Log::Format::SquidNative(const AccessLogEntry::Pointer &al, Logfile * logfile)
 
 		syslog(LOG_NOTICE,"start of swap thread Accessed");
 		 string dayTN = statLog->tableNameAcc ; 
-                 insertAllObjDataIntoTable(statLog,currentTableAcc);
+		 resetAccObjIsInTable();
+//                 insertAllObjDataIntoTable(statLog,currentTableAcc);
                  thread t3(tempTableToDayTable,statLog,currentTableAcc,dayTN);
                  t3.detach();
 		 syslog(LOG_NOTICE,"End accessed");		
 
 		syslog(LOG_NOTICE,"Start denied swap thread");
  		 dayTN = statLog->tableNameDen;
-    	 	 insertAllDenObjDataIntoTable(statLog,currentTableDen);
+		resetDenObjIsInTable();
+//    	 	 insertAllDenObjDataIntoTable(statLog,currentTableDen);
                  thread t4(tempTableToDayTableDen,statLog,currentTableDen,dayTN);
                  t4.detach();
 		syslog(LOG_NOTICE,"End den thread");
@@ -480,7 +485,9 @@ Log::Format::SquidNative(const AccessLogEntry::Pointer &al, Logfile * logfile)
 
 			isnewLogInTable = checkDataInTable(statLog,currentTableAcc,userIp,domain);
 			if(isnewLogInTable == 1)
-			{	
+			{
+				//change where we need to update	
+				updateIsInObjInTable(statLog,currentTableAcc,userIp,domain);
 				updateObjFromTable(pointObj,statLog->res);
 				updateDataInObj(statLog,rowDataAcc[pointObj],dataLog);
 			}
@@ -522,6 +529,8 @@ Log::Format::SquidNative(const AccessLogEntry::Pointer &al, Logfile * logfile)
 			isnewLogInTable = checkDataInTable(statLog,currentTableDen,userIp,domain);
 			if(isnewLogInTable == 1)
 			{
+				//change where we need to update
+				updateIsInObjInTable(statLog,currentTableDen,userIp,domain);
 				updateDenObjFromTable(pointObj,statLog->res);
 				updateDataInDenObj(statLog,rowDataDen[pointObj],dataLog);
 			}
@@ -552,3 +561,21 @@ Log::Format::SquidNative(const AccessLogEntry::Pointer &al, Logfile * logfile)
         safe_free(erep);
     }
 }
+
+
+void resetAccObjIsInTable()
+{
+	for(int i = 0;i < NoACCOBJ;i++)
+	{
+		rowDataAcc[i]->isInTable = 0;
+	}
+}
+
+void resetDenObjIsInTable()
+{
+	for(int i = 0;i < NoDENOBJ ;i++)
+        {
+		 rowDataDen[i]->isInTable = 0;
+        }
+}
+

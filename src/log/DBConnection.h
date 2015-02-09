@@ -88,6 +88,8 @@ void updateTableDen(RowDataDenied *rowData,Statement *stmt,string tn);
 void insertIntoTableAccTime(RowData *rowData,string time,Statement *stmt,string tn);
 void insertIntoTableDenTime(RowDataDenied *rowDataDen,string time,Statement *stmt,string tn);
 
+void updateTableIsInObj(Statement *stmt,string tn,string user,string domain);
+
 string parseURLtoDomain(string url);
 string timeAndDate();
 

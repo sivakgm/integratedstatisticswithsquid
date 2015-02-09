@@ -218,17 +218,21 @@ void tempTableToDayTableDen(DBConnection *statLog,string currentTable,string day
 		{
 		string ctn = currentTable;
 		string tn = dayTN;
+                string year = tn.substr(13,4);   
+                string schema = "squidStatistics_"+year;
+		
+		syslog(LOG_NOTICE,schema.c_str());
 		syslog(LOG_NOTICE,"tempTableToDayTableDen start");
    		ResultSet *dayRes,*temRes;
 		PreparedStatement *readPstmt;
 
 		sql::Driver* drivers = get_driver_instance();
                 sql::Connection* conns = drivers->connect("tcp://127.0.0.1:3306","root","simple");
-                conns->setSchema("squidStatistics_2015");
+                conns->setSchema(schema);
 
 
                 string searchQueryDay = "select * from "+ tn +"  where user=? and domain=?;";
-                string selectQuery = "select * from " + ctn  +";";
+                string selectQuery = "select * from " + ctn  +" where isInObj=0;";
 		Statement *stmt = conns->createStatement();
 
                 readPstmt = conns->prepareStatement(selectQuery);
@@ -258,14 +262,13 @@ void tempTableToDayTableDen(DBConnection *statLog,string currentTable,string day
 			                rowData->connection = temRes->getInt(3);
 			                insertIntoTableDen(rowData,stmt,tn);
                                 }
+				
                }
 		syslog(LOG_NOTICE,"tempTableToDayTableDen end");
-		delete readPstmt;
-                delete temRes;
-                delete dayRes;
-                delete stmt;
-                delete conns;
 
+		
+		                delete stmt;
+		                delete conns;
 	}
 
         catch (exception& e)
@@ -277,3 +280,19 @@ void tempTableToDayTableDen(DBConnection *statLog,string currentTable,string day
 }
 
 }
+
+void updateIsInObjInTableDen(DBConnection *statLog,string tableNameDen,string user,string domain)
+{
+        try
+        {
+		updateTableIsInObj(statLog->stmt,tableNameDen,user,domain);
+        }
+        catch (exception& e)
+        {
+                syslog(LOG_NOTICE,e.what());
+                syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__FILE__).c_str());
+                syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__LINE__).c_str());
+        }
+
+}
+

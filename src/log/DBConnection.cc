@@ -303,6 +303,28 @@ void updateTableAcc(RowData *rowData,Statement *stmt,string tn)
 	}
 }
 
+void updateTableIsInObj(Statement *stmt,string tn,string user,string domain)
+{
+        try
+        {
+                syslog(LOG_NOTICE,"DB:: update data is in obj");
+                stmt->execute("update " + tn + " set isInObj=1 where user='"+user+"' and domain='"+domain+"';");
+                syslog(LOG_NOTICE,"DB:: update datais in obj");
+                return;
+        }
+        catch (sql::SQLException &e)
+        {
+                syslog(LOG_NOTICE,e.what());
+                cout << "# ERR: SQLException in " << __FILE__;
+                cout << "(" << __FUNCTION__ << ") on line " << __LINE__ << endl;
+                cout << "# ERR: " << e.what();
+                cout << " (MySQL error code: " << e.getErrorCode();
+                cout << ", SQLState: " << e.getSQLState() << " )" << endl;
+        }
+}
+
+
+
 void insertIntoTableDen(RowDataDenied *rowData,Statement *stmt,string tn)
 {
 	try

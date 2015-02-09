@@ -130,15 +130,10 @@ void checkPresenecOfDomainStatisticsTableAcc(Statement *stmt,string tableName)
 	}
 	catch (sql::SQLException &e)
 	{
-	syslog(LOG_NOTICE,e.what());
-	syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__FILE__).c_str());
-	syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__LINE__).c_str());
-}
-	catch (exception& e)
-	{
-	yslog(LOG_NOTICE,e.what());
-	syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__FILE__).c_str());
-	syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__LINE__).c_str());
+		syslog(LOG_NOTICE,e.what());
+		syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__FILE__).c_str());
+		syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__LINE__).c_str());
+	}
 }
 
 void createDomainStatisticsDen(string tableName)

@@ -97,13 +97,14 @@ void insertDataIntoDailyUserStatisticsAcc(RowData *rowData,Statement *stmt,strin
 	}
 	catch (sql::SQLException &e)
 	{
-	syslog(LOG_NOTICE,e.what());
-	syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__FILE__).c_str());
-	syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__LINE__).c_str());
+		syslog(LOG_NOTICE,e.what());
+		syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__FILE__).c_str());
+		syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__LINE__).c_str());
+	}
 }
 
 void checkPresenceOfUserDataInTableAcc(RowData *rowData,Statement *stmt,string tableName)
-{
+{	
 	try
 	{
 		ResultSet *res = stmt->executeQuery("select * from "+tableName+" where user='"+rowData->user+"';");
@@ -127,10 +128,10 @@ void checkPresenceOfUserDataInTableAcc(RowData *rowData,Statement *stmt,string t
 	}
 	catch (sql::SQLException &e)
 	{
-	syslog(LOG_NOTICE,e.what());
-	syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__FILE__).c_str());
-	syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__LINE__).c_str());
-}
+		syslog(LOG_NOTICE,e.what());
+		syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__FILE__).c_str());
+		syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__LINE__).c_str());
+	}
 }
 
 void checkPresenecOfUserStatisticsTableAcc(Statement *stmt,string tableName)
@@ -259,9 +260,9 @@ void checkPresenecOfUserStatisticsTableDen(Statement *stmt,string tableName)
 	}
 	catch (sql::SQLException &e)
 	{
-	syslog(LOG_NOTICE,e.what());
-	syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__FILE__).c_str());
-	syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__LINE__).c_str());
-}
+		syslog(LOG_NOTICE,e.what());
+		syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__FILE__).c_str());
+		syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__LINE__).c_str());
+	}
 }
 

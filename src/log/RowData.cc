@@ -156,10 +156,10 @@ void updateObjFromTable(int pointObj,ResultSet *res)
 	}
 	catch (exception& e)
 	{
-	syslog(LOG_NOTICE,e.what());
-	syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__FILE__).c_str());
-	syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__LINE__).c_str());
-}
+		syslog(LOG_NOTICE,e.what());
+		syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__FILE__).c_str());
+		syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__LINE__).c_str());
+	}
 }
 
 void insertObjIntoTable(int pointObj,DBConnection *statLog,string ctn)
@@ -280,83 +280,102 @@ int checkDataInTable(DBConnection *statLog,string tableName,string user,string d
 	}
 	catch (exception& e)
 	{
-	syslog(LOG_NOTICE,e.what());
-	syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__FILE__).c_str());
-	syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__LINE__).c_str());
-}
+		syslog(LOG_NOTICE,e.what());
+		syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__FILE__).c_str());
+		syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__LINE__).c_str());
+	}
 //	syslog(LOG_NOTICE,"end in row data check table");
 	return -1;
 }
 
 
+
 void tempTableToDayTable(DBConnection *statLog,string currentTable,string dayTN)
 {
-		
-		try
-		{
-                string ctn = currentTable;
+	try
+	{
+		string ctn = currentTable;
 		string tn = dayTN;
+		string year = tn.substr(13,4);		
+		string schema = "squidStatistics_"+year;
+		syslog(LOG_NOTICE,schema.c_str());
 		sql::Driver* drivers = get_driver_instance();
-                sql::Connection* conns = drivers->connect("tcp://127.0.0.1:3306","root","simple");
-		conns->setSchema("squidStatistics_2015");
-
-		syslog(LOG_NOTICE,"tempTableToDayTable acc start");	
-                ResultSet *dayRes,*temRes;
-                PreparedStatement *readPstmt;
-                string searchQueryDay = "select * from "+ tn +"  where user=? and domain=?;";
-                string selectQuery = "select * from " + ctn  +";";
-                Statement *stmt = conns->createStatement();
-
-                readPstmt = conns->prepareStatement(selectQuery);
-                temRes = readPstmt->executeQuery();
-
-                while(temRes->next())
-                {
-
-                                readPstmt = conns->prepareStatement(searchQueryDay);
-                                readPstmt->setString(1,temRes->getString(1));
-                                readPstmt->setString(2,temRes->getString(2));
-                                dayRes = readPstmt->executeQuery();
-
-                                if(dayRes->next())
-                                {
-                                        RowData *rowData = new RowData();
-                                        rowData->user = temRes->getString(1);
-                                        rowData->domain = temRes->getString(2);
-                                        rowData->size = temRes->getDouble(3) + dayRes->getDouble(3);
-                                        rowData->connection = temRes->getInt(4) + dayRes->getInt(4);
-                                        rowData->hit = temRes->getDouble(5) + dayRes->getDouble(5);
-                                        rowData->miss = temRes->getDouble(6) + dayRes->getDouble(6);
-                                        rowData->response_time = temRes->getDouble(7) + dayRes->getDouble(7);
-                                        updateTableAcc(rowData,stmt,tn);
-                                }
-                                else
-                                {
-                                        RowData *rowData = new RowData();
-                                        rowData->user = temRes->getString(1);
-                                        rowData->domain = temRes->getString(2);
-                                        rowData->size = temRes->getDouble(3);
-                                        rowData->connection = temRes->getInt(4);
-                                        rowData->hit = temRes->getDouble(5) ;
-                                        rowData->miss = temRes->getDouble(6);
-                                        rowData->response_time = temRes->getDouble(7);
-                                        insertIntoTableAcc(rowData,stmt,tn);
-                                }
-               }
-		syslog(LOG_NOTICE,"tempTableToDayTable acc end");
-		delete readPstmt;
-		delete temRes;
-		delete dayRes;
-		delete stmt;
-		delete conns; 
+		sql::Connection* conns = drivers->connect("tcp://127.0.0.1:3306","root","simple");
+		conns->setSchema(schema);
 		
+		syslog(LOG_NOTICE,"tempTableToDayTable acc start");
+		ResultSet *dayRes,*temRes;
+		PreparedStatement *readPstmt;
+		string searchQueryDay = "select * from "+ tn +" where user=? and domain=?;";
+		string selectQuery = "select * from " + ctn +" where isInObj=0 ;";
+		Statement *stmt = conns->createStatement();
+		readPstmt = conns->prepareStatement(selectQuery);
+		temRes = readPstmt->executeQuery();
+		while(temRes->next())
+		{
+			readPstmt = conns->prepareStatement(searchQueryDay);
+			readPstmt->setString(1,temRes->getString(1));
+			readPstmt->setString(2,temRes->getString(2));
+			dayRes = readPstmt->executeQuery();
+			if(dayRes->next())
+			{
+				RowData *rowData = new RowData();
+				rowData->user = temRes->getString(1);
+				rowData->domain = temRes->getString(2);
+				rowData->size = temRes->getDouble(3) + dayRes->getDouble(3);
+				rowData->connection = temRes->getInt(4) + dayRes->getInt(4);
+				rowData->hit = temRes->getDouble(5) + dayRes->getDouble(5);
+				rowData->miss = temRes->getDouble(6) + dayRes->getDouble(6);
+				rowData->response_time = temRes->getDouble(7) + dayRes->getDouble(7);
+				updateTableAcc(rowData,stmt,tn);
+			}
+			else
+			{
+				RowData *rowData = new RowData();
+				rowData->user = temRes->getString(1);
+				rowData->domain = temRes->getString(2);
+				rowData->size = temRes->getDouble(3);
+				rowData->connection = temRes->getInt(4);
+				rowData->hit = temRes->getDouble(5) ;
+				rowData->miss = temRes->getDouble(6);
+				rowData->response_time = temRes->getDouble(7);
+				insertIntoTableAcc(rowData,stmt,tn);
+			}
+	
+
+		}
+		syslog(LOG_NOTICE,"tempTableToDayTable acc end");
+		delete stmt;
+        	delete conns;
+
+	}
+	catch (exception& e)
+	{
+		syslog(LOG_NOTICE,e.what());
+		syslog(LOG_NOTICE,"Inside Temp Row Data");
+		cout << "# ERR File: " << __FILE__;
+		cout << "(" << __FUNCTION__ << ") on line " << __LINE__ << endl;
+		cout << e.what() << '\n';
+	}
+}
+
+
+
+
+
+void updateIsInObjInTable(DBConnection *statLog,string tableName,string user,string domain)
+{
+	try
+	{
+		updateTableIsInObj(statLog->stmt,tableName,user,domain);
 	}
 	catch (exception& e)
         {
                 syslog(LOG_NOTICE,e.what());
-		 syslog(LOG_NOTICE,"Inside Temp Row Data");
-		syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__FILE__).c_str());
-		syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__LINE__).c_str());
+                syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__FILE__).c_str());
+                syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__LINE__).c_str());
+        }
+
 }
-}
+
 
