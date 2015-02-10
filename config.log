@@ -531,7 +531,7 @@ configure:14192: checking how to hardcode library paths into programs
 configure:14217: result: immediate
 configure:14311: checking for shl_load
 configure:14311: gcc -o conftest   -g conftest.c  >&5
-/tmp/cciCz92O.o: In function `main':
+/tmp/ccSzlicP.o: In function `main':
 /root/sp/SquidWithStatisticsUpdated/conftest.c:49: undefined reference to `shl_load'
 collect2: ld returned 1 exit status
 configure:14311: $? = 1
@@ -627,7 +627,7 @@ configure: failed program was:
 configure:14349: result: no
 configure:14354: checking for dlopen
 configure:14354: gcc -o conftest   -g conftest.c  >&5
-/tmp/ccSSwWjV.o: In function `main':
+/tmp/ccgqgViV.o: In function `main':
 /root/sp/SquidWithStatisticsUpdated/conftest.c:49: undefined reference to `dlopen'
 collect2: ld returned 1 exit status
 configure:14354: $? = 1
@@ -785,7 +785,7 @@ configure:18110: checking for the default library search path
 configure:18117: result: /lib /usr/lib /usr/lib64/mysql /usr/lib/vmware-tools/lib32/libvmGuestLib.so /usr/lib/vmware-tools/lib64/libvmGuestLib.so /usr/lib/vmware-tools/lib32/libvmGuestLibJava.so /usr/lib/vmware-tools/lib64/libvmGuestLibJava.so /usr/lib/vmware-tools/lib32/libDeployPkg.so /usr/lib/vmware-tools/lib64/libDeployPkg.so /usr/lib64/xulrunner 
 configure:18147: checking for library containing dlopen
 configure:18178: gcc -o conftest   -g conftest.c  >&5
-/tmp/cc9yPsBm.o: In function `main':
+/tmp/ccNCdeDc.o: In function `main':
 /root/sp/SquidWithStatisticsUpdated/conftest.c:29: undefined reference to `dlopen'
 collect2: ld returned 1 exit status
 configure:18178: $? = 1
@@ -1352,7 +1352,7 @@ configure:19084: $? = 0
 configure:19084: result: yes
 configure:19101: checking for strlcat
 configure:19101: g++ -o conftest -g -O2 -march=native  -g conftest.cpp -ldl  >&5
-/tmp/ccYJplzm.o: In function `main':
+/tmp/cclzpyza.o: In function `main':
 /root/sp/SquidWithStatisticsUpdated/conftest.cpp:71: undefined reference to `strlcat'
 collect2: ld returned 1 exit status
 configure:19101: $? = 1
@@ -1434,7 +1434,7 @@ configure: failed program was:
 configure:19101: result: no
 configure:19101: checking for strlcpy
 configure:19101: g++ -o conftest -g -O2 -march=native  -g conftest.cpp -ldl  >&5
-/tmp/ccxefADs.o: In function `main':
+/tmp/ccZP9KPg.o: In function `main':
 /root/sp/SquidWithStatisticsUpdated/conftest.cpp:71: undefined reference to `strlcpy'
 collect2: ld returned 1 exit status
 configure:19101: $? = 1
@@ -1777,7 +1777,7 @@ configure:20102: $? = 0
 configure:20137: xmalloc stats display: no
 configure:20177: checking for library containing shm_open
 configure:20208: g++ -o conftest -g -O2 -march=native  -g conftest.cpp -ldl -ldl  >&5
-/tmp/cc5JYKTK.o: In function `main':
+/tmp/cc23qZqx.o: In function `main':
 /root/sp/SquidWithStatisticsUpdated/conftest.cpp:60: undefined reference to `shm_open'
 collect2: ld returned 1 exit status
 configure:20208: $? = 1
@@ -2451,7 +2451,7 @@ configure:22729: checking for sys/event.h
 configure:22729: result: no
 configure:22747: checking for kqueue
 configure:22747: g++ -o conftest -g -O2 -march=native  -g conftest.cpp -lrt -ldl -ldl  >&5
-/tmp/ccw9xl1i.o: In function `main':
+/tmp/ccCLGdT6.o: In function `main':
 /root/sp/SquidWithStatisticsUpdated/conftest.cpp:110: undefined reference to `kqueue'
 collect2: ld returned 1 exit status
 configure:22747: $? = 1
@@ -2815,7 +2815,7 @@ configure:23194: Linux Netfilter support requested: auto
 configure:23220: Linux Netfilter Conntrack support requested: auto
 configure:23223: checking for library containing nfct_query
 configure:23254: g++ -o conftest -g -O2 -march=native  -g conftest.cpp -lrt -ldl -ldl  >&5
-/tmp/ccP9bnGE.o: In function `main':
+/tmp/ccz5faNv.o: In function `main':
 /root/sp/SquidWithStatisticsUpdated/conftest.cpp:92: undefined reference to `nfct_query'
 collect2: ld returned 1 exit status
 configure:23254: $? = 1
@@ -25448,7 +25448,7 @@ configure:29003: $? = 0
 configure:29020: result: none required
 configure:29028: checking for library containing res_init
 configure:29059: g++ -o conftest -g -O2 -march=native  -g conftest.cpp -lrt -ldl -ldl  >&5
-/tmp/ccWoNCZ5.o: In function `main':
+/tmp/ccdz4h3f.o: In function `main':
 /root/sp/SquidWithStatisticsUpdated/conftest.cpp:230: undefined reference to `res_init'
 collect2: ld returned 1 exit status
 configure:29059: $? = 1
@@ -25687,7 +25687,7 @@ configure: failed program was:
 |   return 0;
 | }
 configure:29059: g++ -o conftest -g -O2 -march=native  -g conftest.cpp -lresolv  -lrt -ldl -ldl  >&5
-/tmp/cceVHk0b.o: In function `main':
+/tmp/ccnUc6Am.o: In function `main':
 /root/sp/SquidWithStatisticsUpdated/conftest.cpp:230: undefined reference to `res_init'
 collect2: ld returned 1 exit status
 configure:29059: $? = 1
@@ -25928,7 +25928,7 @@ configure: failed program was:
 configure:29076: result: no
 configure:29084: checking for library containing __res_search
 configure:29115: g++ -o conftest -g -O2 -march=native  -g conftest.cpp -lrt -ldl -ldl  >&5
-/tmp/ccMVSoBd.o: In function `main':
+/tmp/ccAljpKn.o: In function `main':
 /root/sp/SquidWithStatisticsUpdated/conftest.cpp:230: undefined reference to `__res_search'
 collect2: ld returned 1 exit status
 configure:29115: $? = 1
@@ -26175,7 +26175,7 @@ configure:29171: $? = 0
 configure:29188: result: none required
 configure:29196: checking for library containing opcom_stack_trace
 configure:29227: g++ -o conftest -g -O2 -march=native  -g conftest.cpp -lresolv -lrt -ldl -ldl  >&5
-/tmp/ccgv0Rtq.o: In function `main':
+/tmp/ccC1sbwB.o: In function `main':
 /root/sp/SquidWithStatisticsUpdated/conftest.cpp:230: undefined reference to `opcom_stack_trace'
 collect2: ld returned 1 exit status
 configure:29227: $? = 1
@@ -26654,7 +26654,7 @@ configure: failed program was:
 configure:29244: result: no
 configure:29252: checking for library containing strlcpy
 configure:29283: g++ -o conftest -g -O2 -march=native  -g conftest.cpp -lresolv -lrt -ldl -ldl  >&5
-/tmp/ccmh2Xaw.o: In function `main':
+/tmp/cc5fb47G.o: In function `main':
 /root/sp/SquidWithStatisticsUpdated/conftest.cpp:230: undefined reference to `strlcpy'
 collect2: ld returned 1 exit status
 configure:29283: $? = 1
@@ -26893,7 +26893,7 @@ configure: failed program was:
 |   return 0;
 | }
 configure:29283: g++ -o conftest -g -O2 -march=native  -g conftest.cpp -lbsd  -lresolv -lrt -ldl -ldl  >&5
-/tmp/ccEmtqCx.o: In function `main':
+/tmp/cct2UbGL.o: In function `main':
 /root/sp/SquidWithStatisticsUpdated/conftest.cpp:230: undefined reference to `strlcpy'
 collect2: ld returned 1 exit status
 configure:29283: $? = 1
@@ -27134,7 +27134,7 @@ configure: failed program was:
 configure:29300: result: no
 configure:29308: checking for library containing yp_match
 configure:29339: g++ -o conftest -g -O2 -march=native  -g conftest.cpp -lresolv -lrt -ldl -ldl  >&5
-/tmp/ccQGcj4B.o: In function `main':
+/tmp/ccPJAgiN.o: In function `main':
 /root/sp/SquidWithStatisticsUpdated/conftest.cpp:230: undefined reference to `yp_match'
 collect2: ld returned 1 exit status
 configure:29339: $? = 1
@@ -27858,7 +27858,7 @@ configure:29673: result: no
 configure:29700: checking for library containing rint
 configure:29731: gcc -o conftest -Wall   -g conftest.c -lnsl -lresolv -lrt -ldl -ldl  >&5
 conftest.c:227: warning: conflicting types for built-in function 'rint'
-/tmp/ccFrlqcP.o: In function `main':
+/tmp/ccA5lph3.o: In function `main':
 /root/sp/SquidWithStatisticsUpdated/conftest.c:231: undefined reference to `rint'
 collect2: ld returned 1 exit status
 configure:29731: $? = 1
@@ -35117,7 +35117,7 @@ configure:31642: $? = 0
 configure:31642: result: yes
 configure:31642: checking for bswap_16
 configure:31642: g++ -o conftest -g -O2 -march=native  -g conftest.cpp -lm -lnsl -lresolv -lrt -ldl -ldl  >&5
-/tmp/ccb3IO27.o: In function `main':
+/tmp/cco4pL27.o: In function `main':
 /root/sp/SquidWithStatisticsUpdated/conftest.cpp:264: undefined reference to `bswap_16'
 collect2: ld returned 1 exit status
 configure:31642: $? = 1
@@ -35392,7 +35392,7 @@ configure: failed program was:
 configure:31642: result: no
 configure:31642: checking for bswap_32
 configure:31642: g++ -o conftest -g -O2 -march=native  -g conftest.cpp -lm -lnsl -lresolv -lrt -ldl -ldl  >&5
-/tmp/ccLzmWQ2.o: In function `main':
+/tmp/cc7TA489.o: In function `main':
 /root/sp/SquidWithStatisticsUpdated/conftest.cpp:264: undefined reference to `bswap_32'
 collect2: ld returned 1 exit status
 configure:31642: $? = 1
@@ -35667,7 +35667,7 @@ configure: failed program was:
 configure:31642: result: no
 configure:31642: checking for bswap16
 configure:31642: g++ -o conftest -g -O2 -march=native  -g conftest.cpp -lm -lnsl -lresolv -lrt -ldl -ldl  >&5
-/tmp/ccc4IDQ6.o: In function `main':
+/tmp/ccQEnmxe.o: In function `main':
 /root/sp/SquidWithStatisticsUpdated/conftest.cpp:264: undefined reference to `bswap16'
 collect2: ld returned 1 exit status
 configure:31642: $? = 1
@@ -35942,7 +35942,7 @@ configure: failed program was:
 configure:31642: result: no
 configure:31642: checking for bswap32
 configure:31642: g++ -o conftest -g -O2 -march=native  -g conftest.cpp -lm -lnsl -lresolv -lrt -ldl -ldl  >&5
-/tmp/ccNDuvW8.o: In function `main':
+/tmp/ccxdVbbl.o: In function `main':
 /root/sp/SquidWithStatisticsUpdated/conftest.cpp:264: undefined reference to `bswap32'
 collect2: ld returned 1 exit status
 configure:31642: $? = 1
@@ -36217,7 +36217,7 @@ configure: failed program was:
 configure:31642: result: no
 configure:31642: checking for eui64_aton
 configure:31642: g++ -o conftest -g -O2 -march=native  -g conftest.cpp -lm -lnsl -lresolv -lrt -ldl -ldl  >&5
-/tmp/cc9DV0md.o: In function `main':
+/tmp/ccn8XZBp.o: In function `main':
 /root/sp/SquidWithStatisticsUpdated/conftest.cpp:264: undefined reference to `eui64_aton'
 collect2: ld returned 1 exit status
 configure:31642: $? = 1
@@ -36528,7 +36528,7 @@ configure:31642: $? = 0
 configure:31642: result: yes
 configure:31642: checking for htobe16
 configure:31642: g++ -o conftest -g -O2 -march=native  -g conftest.cpp -lm -lnsl -lresolv -lrt -ldl -ldl  >&5
-/tmp/cciAAvEX.o: In function `main':
+/tmp/ccuvsVX8.o: In function `main':
 /root/sp/SquidWithStatisticsUpdated/conftest.cpp:273: undefined reference to `htobe16'
 collect2: ld returned 1 exit status
 configure:31642: $? = 1
@@ -36812,7 +36812,7 @@ configure: failed program was:
 configure:31642: result: no
 configure:31642: checking for htole16
 configure:31642: g++ -o conftest -g -O2 -march=native  -g conftest.cpp -lm -lnsl -lresolv -lrt -ldl -ldl  >&5
-/tmp/ccmnkOj2.o: In function `main':
+/tmp/cc7rFKUa.o: In function `main':
 /root/sp/SquidWithStatisticsUpdated/conftest.cpp:273: undefined reference to `htole16'
 collect2: ld returned 1 exit status
 configure:31642: $? = 1
@@ -37104,7 +37104,7 @@ configure:31642: $? = 0
 configure:31642: result: yes
 configure:31642: checking for mallocblksize
 configure:31642: g++ -o conftest -g -O2 -march=native  -g conftest.cpp -lm -lnsl -lresolv -lrt -ldl -ldl  >&5
-/tmp/ccVanZT7.o: In function `main':
+/tmp/cckJY3Df.o: In function `main':
 /root/sp/SquidWithStatisticsUpdated/conftest.cpp:275: undefined reference to `mallocblksize'
 collect2: ld returned 1 exit status
 configure:31642: $? = 1
@@ -37414,7 +37414,7 @@ configure:31642: $? = 0
 configure:31642: result: yes
 configure:31642: checking for mstats
 configure:31642: g++ -o conftest -g -O2 -march=native  -g conftest.cpp -lm -lnsl -lresolv -lrt -ldl -ldl  >&5
-/tmp/ccds7PbE.o: In function `main':
+/tmp/cct3wXCN.o: In function `main':
 /root/sp/SquidWithStatisticsUpdated/conftest.cpp:281: undefined reference to `mstats'
 collect2: ld returned 1 exit status
 configure:31642: $? = 1
@@ -37750,7 +37750,7 @@ configure:31642: $? = 0
 configure:31642: result: yes
 configure:31642: checking for res_init
 configure:31642: g++ -o conftest -g -O2 -march=native  -g conftest.cpp -lm -lnsl -lresolv -lrt -ldl -ldl  >&5
-/tmp/cc5PtH2m.o: In function `main':
+/tmp/ccHfa1qv.o: In function `main':
 /root/sp/SquidWithStatisticsUpdated/conftest.cpp:292: undefined reference to `res_init'
 collect2: ld returned 1 exit status
 configure:31642: $? = 1
@@ -38165,7 +38165,7 @@ configure:31755: $? = 0
 configure:31755: result: yes
 configure:31768: checking for tempnam
 configure:31768: g++ -o conftest -g -O2 -march=native  -g conftest.cpp -lm -lnsl -lresolv -lrt -ldl -ldl  >&5
-/tmp/ccfVEW7e.o: In function `main':
+/tmp/ccDUbMJm.o: In function `main':
 /root/sp/SquidWithStatisticsUpdated/conftest.cpp:320: warning: the use of `tempnam' is dangerous, better use `mkstemp'
 configure:31768: $? = 0
 configure:31768: result: yes
@@ -40953,6 +40953,7 @@ config.status:1707: creating helpers/storeid_rewrite/file/Makefile
 config.status:1707: creating tools/Makefile
 config.status:1707: creating tools/purge/Makefile
 config.status:1707: creating include/autoconf.h
+config.status:1888: include/autoconf.h is unchanged
 config.status:1936: executing depfiles commands
 config.status:1936: executing libtool commands
 configure:36481: === configuring in libltdl (/root/sp/SquidWithStatisticsUpdated/libltdl)

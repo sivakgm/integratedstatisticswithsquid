@@ -263,9 +263,18 @@ void updateTableAcc(RowData *rowData,Statement *stmt,string tn)
 {
 	try
 	{
-		syslog(LOG_NOTICE,"DB:: update data");
-		stmt->execute("update " + tn + " set size='"+boost::lexical_cast<std::string>(rowData->size)+"',connection='"+boost::lexical_cast<std::string>(rowData->connection)+"',hit='"+boost::lexical_cast<std::string>(rowData->hit)+"',miss='"+boost::lexical_cast<std::string>(rowData->miss)+"',response_time='"+boost::lexical_cast<std::string>(rowData->response_time)+"' where user='"+rowData->user+"' and domain='"+rowData->domain+"';");	
-		syslog(LOG_NOTICE,"DB:: update data");
+		if(tn.substr(0,4) == "swap")
+                {
+			syslog(LOG_NOTICE,"DB:: update data");
+			stmt->execute("update " + tn + " set size='"+boost::lexical_cast<std::string>(rowData->size)+"',connection='"+boost::lexical_cast<std::string>(rowData->connection)+"',hit='"+boost::lexical_cast<std::string>(rowData->hit)+"',miss='"+boost::lexical_cast<std::string>(rowData->miss)+"',response_time='"+boost::lexical_cast<std::string>(rowData->response_time)+"',isInObj=0 where user='"+rowData->user+"' and domain='"+rowData->domain+"';");	
+			syslog(LOG_NOTICE,"DB:: update data");
+		}
+		else
+		{
+			syslog(LOG_NOTICE,"DB:: update data no isinobj");
+                        stmt->execute("update " + tn + " set size='"+boost::lexical_cast<std::string>(rowData->size)+"',connection='"+boost::lexical_cast<std::string>(rowData->connection)+"',hit='"+boost::lexical_cast<std::string>(rowData->hit)+"',miss='"+boost::lexical_cast<std::string>(rowData->miss)+"',response_time='"+boost::lexical_cast<std::string>(rowData->response_time)+"' where user='"+rowData->user+"' and domain='"+rowData->domain+"';");
+                        syslog(LOG_NOTICE,"DB:: update data isinobj");
+		}
 		return;
 	}
 	catch (sql::SQLException &e)
@@ -316,9 +325,18 @@ void updateTableDen(RowDataDenied *rowData,Statement *stmt,string tn)
 {
 	try
 	{
-		syslog(LOG_NOTICE,"DB:: denied update data");
-		stmt->execute("update " + tn + " set connection='"+boost::lexical_cast<std::string>(rowData->connection)+"' where user='"+rowData->user+"' and domain='"+rowData->domain+"';");
-		syslog(LOG_NOTICE,"DB:: denied update data");
+		if(tn.substr(0,4) == "swap")
+		{
+			syslog(LOG_NOTICE,"DB:: denied update data");
+			stmt->execute("update " + tn + " set connection='"+boost::lexical_cast<std::string>(rowData->connection)+"',isInObj=0 where user='"+rowData->user+"' and domain='"+rowData->domain+"';");
+			syslog(LOG_NOTICE,"DB:: denied update data");
+		}
+		else
+		{
+			syslog(LOG_NOTICE,"DB:: denied update data");
+                        stmt->execute("update " + tn + " set connection='"+boost::lexical_cast<std::string>(rowData->connection)+"',isInObj=0 where user='"+rowData->user+"' and domain='"+rowData->domain+"';");
+                        syslog(LOG_NOTICE,"DB:: denied update data");
+		}
 		return;
 	}
 	catch (sql::SQLException &e)
