@@ -102,10 +102,10 @@ string processDateFromConfFile = "";
 string previousLogYear="",previousLogMonth="",previousLogDay="";
 
 
-const int MAXDENIEDOBJ = 4;
+const int MAXDENIEDOBJ = 100;
 int NoDENOBJ;
 
-const int MAXACCESSOBJ = 4;
+const int MAXACCESSOBJ = 100;
 int NoACCOBJ;
 
 string currentTableAcc,currentTableDen;
@@ -398,33 +398,33 @@ Log::Format::SquidNative(const AccessLogEntry::Pointer &al, Logfile * logfile)
 
 	t = clock() - tim;
 	string t_str = boost::lexical_cast<std::string>((long int) current_time.tv_sec - stopClock);	
-	syslog(LOG_NOTICE,"stop clock");
-	syslog(LOG_NOTICE,t_str.c_str());
+	//syslog(LOG_NOTICE,"stop clock");
+//	syslog(LOG_NOTICE,t_str.c_str());
 
 //	if(((float)t)/CLOCKS_PER_SEC > 60)
 	if(( (long int) current_time.tv_sec - stopClock) > 60)
 	{		
 		
-		syslog(LOG_NOTICE,"start of swap table part");
+//		syslog(LOG_NOTICE,"start of swap table part");
 		
      		 tim = clock();
 		 stopClock = (long int) current_time.tv_sec;
 
-		syslog(LOG_NOTICE,"start of swap thread Accessed");
+		//syslog(LOG_NOTICE,"start of swap thread Accessed");
 		 string dayTN = statLog->tableNameAcc ; 
 		 resetAccObjIsInTable();
 //                 insertAllObjDataIntoTable(statLog,currentTableAcc);
                  thread t3(tempTableToDayTable,statLog,currentTableAcc,dayTN);
                  t3.detach();
-		 syslog(LOG_NOTICE,"End accessed");		
+		 //syslog(LOG_NOTICE,"End accessed");		
 
-		syslog(LOG_NOTICE,"Start denied swap thread");
+//		syslog(LOG_NOTICE,"Start denied swap thread");
  		 dayTN = statLog->tableNameDen;
 		resetDenObjIsInTable();
 //    	 	 insertAllDenObjDataIntoTable(statLog,currentTableDen);
                  thread t4(tempTableToDayTableDen,statLog,currentTableDen,dayTN);
                  t4.detach();
-		syslog(LOG_NOTICE,"End den thread");
+//		syslog(LOG_NOTICE,"End den thread");
 
                 ptrToSwpTable++;	
 		if(ptrToSwpTable > 5)
@@ -434,14 +434,14 @@ Log::Format::SquidNative(const AccessLogEntry::Pointer &al, Logfile * logfile)
 
                 currentTableAcc = "swap_acc"+boost::lexical_cast<std::string>(ptrToSwpTable);
                 currentTableDen = "swap_den"+boost::lexical_cast<std::string>(ptrToSwpTable);
-		syslog(LOG_NOTICE,"ctn");
-		syslog(LOG_NOTICE,currentTableAcc.c_str());
-		syslog(LOG_NOTICE,currentTableDen.c_str());
+//		syslog(LOG_NOTICE,"ctn");
+//		syslog(LOG_NOTICE,currentTableAcc.c_str());
+//		syslog(LOG_NOTICE,currentTableDen.c_str());
 
 		statLog->stmt->execute("truncate "+currentTableAcc+";");
         	statLog->stmt->execute("truncate "+currentTableDen+";");
 
-		syslog(LOG_NOTICE,"End of swap table part");
+//		syslog(LOG_NOTICE,"End of swap table part");
 	
 	}
 	
@@ -452,12 +452,12 @@ Log::Format::SquidNative(const AccessLogEntry::Pointer &al, Logfile * logfile)
 	/////////////////////////////////////////////////////////
 	string sta = "TCP_DENIED";
 	int cf =  strcmp(LogTags_str[al->cache.code],sta.c_str());
-        syslog(LOG_NOTICE,LogTags_str[al->cache.code]);
-        syslog(LOG_NOTICE,sta.c_str());
+  //      syslog(LOG_NOTICE,LogTags_str[al->cache.code]);
+   //     syslog(LOG_NOTICE,sta.c_str());
 //	if( LogTags_str[al->cache.code] != sta.c_str())
 	if( cf != 0)
 	{
-		syslog(LOG_NOTICE,"MAIN:: access ");
+//		syslog(LOG_NOTICE,"MAIN:: access ");
 		logDataAcc *dataLog = new logDataAcc();
 		dataLog->domain = domain;
 		dataLog->response_time = al->cache.msec;
@@ -465,7 +465,8 @@ Log::Format::SquidNative(const AccessLogEntry::Pointer &al, Logfile * logfile)
 		dataLog->status = LogTags_str[al->cache.code];
 		dataLog->tim = currentLogTime;
 		dataLog->user = userIp;
-
+		
+//		syslog(LOG_NOTICE,domain.c_str());
 
 		pointObj = checkDataInOBJ(NoACCOBJ,userIp,domain);
 		if(pointObj != -1)
@@ -481,6 +482,7 @@ Log::Format::SquidNative(const AccessLogEntry::Pointer &al, Logfile * logfile)
 			}
 			else
 			{
+//				syslog(LOG_NOTICE,"insertObjIntoTable");
 				pointObj = getLeastObjPriority();
 				insertObjIntoTable(pointObj,statLog,currentTableAcc);
 				emptyTheObj(pointObj);
@@ -489,6 +491,7 @@ Log::Format::SquidNative(const AccessLogEntry::Pointer &al, Logfile * logfile)
 			isnewLogInTable = checkDataInTable(statLog,currentTableAcc,userIp,domain);
 			if(isnewLogInTable == 1)
 			{
+//				syslog(LOG_NOTICE,"updateIsInObjInTable");
 				//change where we need to update	
 				updateIsInObjInTable(statLog,currentTableAcc,userIp,domain);
 				updateObjFromTable(pointObj,statLog->res);
@@ -496,14 +499,15 @@ Log::Format::SquidNative(const AccessLogEntry::Pointer &al, Logfile * logfile)
 			}
 			else
 			{
+//				syslog(LOG_NOTICE,"only updateDataInObj");
 				updateDataInObj(statLog,rowDataAcc[pointObj],dataLog);
 			}
 		}
-		syslog(LOG_NOTICE,"MAIN:: End of access");
+	//	syslog(LOG_NOTICE,"MAIN:: End of access");
 	}
 	else
 	{
-		syslog(LOG_NOTICE,"MAIN:: Denied ");
+		//syslog(LOG_NOTICE,"MAIN:: Denied ");
 		logDataDen *dataLog = new logDataDen();
 		dataLog->domain = domain;
 		dataLog->tim = currentLogTime;
@@ -542,11 +546,11 @@ Log::Format::SquidNative(const AccessLogEntry::Pointer &al, Logfile * logfile)
 				updateDataInDenObj(statLog,rowDataDen[pointObj],dataLog);
 			}
 		}
-		syslog(LOG_NOTICE,"MAIN:: End of Denied");
+//		syslog(LOG_NOTICE,"MAIN:: End of Denied");
 	}
 
-	syslog(LOG_NOTICE,"Process data at the end");
-	syslog(LOG_NOTICE,processDateFromConfFile.c_str());
+//	syslog(LOG_NOTICE,"Process data at the end");
+//	syslog(LOG_NOTICE,processDateFromConfFile.c_str());
 	}
 	catch (exception& e)
         {

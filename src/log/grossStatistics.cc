@@ -39,7 +39,7 @@ void grossStatisticsAcc(string tbNa)
 		confFile>>tName;
 		confFile.close();
 		cout<<"start of Acc thread for table:"<<tName<<endl;*/
-		syslog(LOG_NOTICE,"gsACC: start");
+		//syslog(LOG_NOTICE,"gsACC: start");
 		PreparedStatement *readPstmt;
 		ResultSet *dailyRes,*ymRes;
 
@@ -99,7 +99,7 @@ void grossStatisticsAcc(string tbNa)
 		}
 		createUserStatisticsAcc(tName);
 		createDomainStatisticsAcc(tName);
-		 syslog(LOG_NOTICE,"gsACC: end");
+		 //syslog(LOG_NOTICE,"gsACC: end");
 	}
 	catch (sql::SQLException &e)
 	{
@@ -190,7 +190,7 @@ void grossStatisticsDen(string tbNa)
 		confFile>>tName;
 		confFile.close();*/
 
-		syslog(LOG_NOTICE,"gsDen:start");
+//		syslog(LOG_NOTICE,"gsDen:start");
 		PreparedStatement *readPstmt;
 		ResultSet *dailyRes,*ymRes;
 
@@ -253,7 +253,7 @@ void grossStatisticsDen(string tbNa)
 		}
 		createUserStatisticsDen(tName);
 		createDomainStatisticsDen(tName);
-		 syslog(LOG_NOTICE,"gsDen:end");
+//		 syslog(LOG_NOTICE,"gsDen:end");
 
 	}
 	catch (sql::SQLException &e)

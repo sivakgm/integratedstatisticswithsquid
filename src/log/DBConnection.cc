@@ -17,6 +17,8 @@ void DBConnection::createDBIfNotExists(string schema)
 	{
 		this->stmt=this->conn->createStatement();
 		this->stmt->execute("create database if not exists "+schema+";");
+
+
 		return;
 	}
 	catch (sql::SQLException &e)
@@ -68,6 +70,20 @@ void DBConnection::dbConnOpen(string host,string port,string user,string pass,st
 		this->conn = driver->connect(addre,user,pass);
 		this->createDBIfNotExists(schema);
 		this->conn->setSchema(schema);
+
+		
+		this->stmt->execute("create table if not exists swap_acc1 (user varchar(16), domain varchar(100), size double, connection double, hit double, miss double,response_time double,isInObj int default 0);");
+		this->stmt->execute("create table if not exists swap_acc2 (user varchar(16), domain varchar(100), size double, connection double, hit double, miss double,response_time double,isInObj int default 0);");
+		this->stmt->execute("create table if not exists swap_acc3 (user varchar(16), domain varchar(100), size double, connection double, hit double, miss double,response_time double,isInObj int default 0);");
+		this->stmt->execute("create table if not exists swap_acc4 (user varchar(16), domain varchar(100), size double, connection double, hit double, miss double,response_time double,isInObj int default 0);");
+		this->stmt->execute("create table if not exists swap_acc5 (user varchar(16), domain varchar(100), size double, connection double, hit double, miss double,response_time double,isInObj int default 0);");
+		
+		this->stmt->execute("create table if not exists swap_den1 (user varchar(16), domain varchar(100), connection double,isInObj int default 0);");
+		this->stmt->execute("create table if not exists swap_den2 (user varchar(16), domain varchar(100), connection double,isInObj int default 0);");
+		this->stmt->execute("create table if not exists swap_den3 (user varchar(16), domain varchar(100), connection double,isInObj int default 0);");
+		this->stmt->execute("create table if not exists swap_den4 (user varchar(16), domain varchar(100), connection double,isInObj int default 0);");
+		this->stmt->execute("create table if not exists swap_den5 (user varchar(16), domain varchar(100), connection double,isInObj int default 0);");
+
 		return;
 	}
 	catch (sql::SQLException &e)
@@ -247,9 +263,9 @@ void insertIntoTableAcc(RowData *rowData,Statement *stmt,string tn)
 {
 	try
 	{
-		syslog(LOG_NOTICE,"DB:: insert data");
+		//syslog(LOG_NOTICE,"DB:: insert data");
 		stmt->execute("insert into " + tn +"(user,domain,size,connection,hit,miss,response_time) values('"+rowData->user+"','"+rowData->domain+"','"+boost::lexical_cast<std::string>(rowData->size)+"','"+ boost::lexical_cast<std::string>(rowData->connection)+"','"+boost::lexical_cast<std::string>(rowData->hit)+"','"+boost::lexical_cast<std::string>(rowData->miss)+"','"+boost::lexical_cast<std::string>(rowData->response_time)+"');");
-		syslog(LOG_NOTICE,"DB:: insert data");
+		//syslog(LOG_NOTICE,"DB:: insert data");
 	}
 	catch (sql::SQLException &e)
 	{
@@ -265,15 +281,15 @@ void updateTableAcc(RowData *rowData,Statement *stmt,string tn)
 	{
 		if(tn.substr(0,4) == "swap")
                 {
-			syslog(LOG_NOTICE,"DB:: update data");
+			//syslog(LOG_NOTICE,"DB:: update data");
 			stmt->execute("update " + tn + " set size='"+boost::lexical_cast<std::string>(rowData->size)+"',connection='"+boost::lexical_cast<std::string>(rowData->connection)+"',hit='"+boost::lexical_cast<std::string>(rowData->hit)+"',miss='"+boost::lexical_cast<std::string>(rowData->miss)+"',response_time='"+boost::lexical_cast<std::string>(rowData->response_time)+"',isInObj=0 where user='"+rowData->user+"' and domain='"+rowData->domain+"';");	
-			syslog(LOG_NOTICE,"DB:: update data");
+			//syslog(LOG_NOTICE,"DB:: update data");
 		}
 		else
 		{
-			syslog(LOG_NOTICE,"DB:: update data no isinobj");
+			//syslog(LOG_NOTICE,"DB:: update data no isinobj");
                         stmt->execute("update " + tn + " set size='"+boost::lexical_cast<std::string>(rowData->size)+"',connection='"+boost::lexical_cast<std::string>(rowData->connection)+"',hit='"+boost::lexical_cast<std::string>(rowData->hit)+"',miss='"+boost::lexical_cast<std::string>(rowData->miss)+"',response_time='"+boost::lexical_cast<std::string>(rowData->response_time)+"' where user='"+rowData->user+"' and domain='"+rowData->domain+"';");
-                        syslog(LOG_NOTICE,"DB:: update data isinobj");
+                        //syslog(LOG_NOTICE,"DB:: update data isinobj");
 		}
 		return;
 	}
@@ -289,9 +305,9 @@ void updateTableIsInObj(Statement *stmt,string tn,string user,string domain)
 {
         try
         {
-                syslog(LOG_NOTICE,"DB:: update data is in obj");
+//                syslog(LOG_NOTICE,"DB:: update data is in obj");
                 stmt->execute("update " + tn + " set isInObj=1 where user='"+user+"' and domain='"+domain+"';");
-                syslog(LOG_NOTICE,"DB:: update datais in obj");
+//                syslog(LOG_NOTICE,"DB:: update datais in obj");
                 return;
         }
         catch (sql::SQLException &e)
@@ -308,9 +324,9 @@ void insertIntoTableDen(RowDataDenied *rowData,Statement *stmt,string tn)
 {
 	try
 	{
-	syslog(LOG_NOTICE,"DB:: denied insert data");
+//	syslog(LOG_NOTICE,"DB:: denied insert data");
 	stmt->execute("insert into " + tn +"(user,domain,connection) values('"+rowData->user+"','"+rowData->domain+"','"+boost::lexical_cast<std::string>(rowData->connection)+"');");
-	syslog(LOG_NOTICE,"DB:: denied insert data");
+//	syslog(LOG_NOTICE,"DB:: denied insert data");
 	return;
 	}
 	catch (sql::SQLException &e)
@@ -327,15 +343,15 @@ void updateTableDen(RowDataDenied *rowData,Statement *stmt,string tn)
 	{
 		if(tn.substr(0,4) == "swap")
 		{
-			syslog(LOG_NOTICE,"DB:: denied update data");
+//			syslog(LOG_NOTICE,"DB:: denied update data");
 			stmt->execute("update " + tn + " set connection='"+boost::lexical_cast<std::string>(rowData->connection)+"',isInObj=0 where user='"+rowData->user+"' and domain='"+rowData->domain+"';");
-			syslog(LOG_NOTICE,"DB:: denied update data");
+//			syslog(LOG_NOTICE,"DB:: denied update data");
 		}
 		else
 		{
-			syslog(LOG_NOTICE,"DB:: denied update data");
-                        stmt->execute("update " + tn + " set connection='"+boost::lexical_cast<std::string>(rowData->connection)+"',isInObj=0 where user='"+rowData->user+"' and domain='"+rowData->domain+"';");
-                        syslog(LOG_NOTICE,"DB:: denied update data");
+//			syslog(LOG_NOTICE,"DB:: denied update data");
+                        stmt->execute("update " + tn + " set connection='"+boost::lexical_cast<std::string>(rowData->connection)+"' where user='"+rowData->user+"' and domain='"+rowData->domain+"';");
+  //                      syslog(LOG_NOTICE,"DB:: denied update data");
 		}
 		return;
 	}

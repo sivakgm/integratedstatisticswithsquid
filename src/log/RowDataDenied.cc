@@ -221,8 +221,8 @@ void tempTableToDayTableDen(DBConnection *statLog,string currentTable,string day
                 string year = tn.substr(13,4);   
                 string schema = "squidStatistics_"+year;
 		
-		syslog(LOG_NOTICE,schema.c_str());
-		syslog(LOG_NOTICE,"tempTableToDayTableDen start");
+		//syslog(LOG_NOTICE,schema.c_str());
+		//syslog(LOG_NOTICE,"tempTableToDayTableDen start");
    		ResultSet *dayRes,*temRes;
 		PreparedStatement *readPstmt;
 
@@ -264,7 +264,7 @@ void tempTableToDayTableDen(DBConnection *statLog,string currentTable,string day
                                 }
 				
                }
-		syslog(LOG_NOTICE,"tempTableToDayTableDen end");
+		//syslog(LOG_NOTICE,"tempTableToDayTableDen end");
 
 		
 		                delete stmt;

@@ -171,15 +171,15 @@ void insertObjIntoTable(int pointObj,DBConnection *statLog,string ctn)
 
 		if(rowDataAcc[pointObj]->isInTable == 1)
 		{	
-			syslog(LOG_NOTICE,"RD:: update data");
+			//syslog(LOG_NOTICE,"RD:: update data");
 			updateTableAcc(rowDataAcc[pointObj],statLog->stmt,tn);
-			syslog(LOG_NOTICE,"RD:: End of update data");
+			//syslog(LOG_NOTICE,"RD:: End of update data");
 		}
 		else
 		{	
-			syslog(LOG_NOTICE,"RD:: Insert data");
+//			syslog(LOG_NOTICE,"RD:: Insert data");
 			insertIntoTableAcc(rowDataAcc[pointObj],statLog->stmt,tn);
-			syslog(LOG_NOTICE,"RD:: End of Insert data");
+//			syslog(LOG_NOTICE,"RD:: End of Insert data");
 		}
 	}
 	catch (exception& e)
@@ -298,12 +298,12 @@ void tempTableToDayTable(DBConnection *statLog,string currentTable,string dayTN)
 		string tn = dayTN;
 		string year = tn.substr(13,4);		
 		string schema = "squidStatistics_"+year;
-		syslog(LOG_NOTICE,schema.c_str());
+//		syslog(LOG_NOTICE,schema.c_str());
 		sql::Driver* drivers = get_driver_instance();
 		sql::Connection* conns = drivers->connect("tcp://127.0.0.1:3306","root","simple");
 		conns->setSchema(schema);
 		
-		syslog(LOG_NOTICE,"tempTableToDayTable acc start");
+//		syslog(LOG_NOTICE,"tempTableToDayTable acc start");
 		ResultSet *dayRes,*temRes;
 		PreparedStatement *readPstmt;
 		string searchQueryDay = "select * from "+ tn +" where user=? and domain=?;";
@@ -344,7 +344,7 @@ void tempTableToDayTable(DBConnection *statLog,string currentTable,string dayTN)
 	
 
 		}
-		syslog(LOG_NOTICE,"tempTableToDayTable acc end");
+//		syslog(LOG_NOTICE,"tempTableToDayTable acc end");
 		delete stmt;
         	delete conns;
 
