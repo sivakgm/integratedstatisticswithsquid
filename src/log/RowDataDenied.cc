@@ -238,6 +238,7 @@ void tempTableToDayTableDen(DBConnection *statLog,string currentTable,string day
                 readPstmt = conns->prepareStatement(selectQuery);
                 temRes = readPstmt->executeQuery();
 
+		RowDataDenied *rowData = new RowDataDenied();
                 while(temRes->next())
                 {
 	
@@ -248,7 +249,6 @@ void tempTableToDayTableDen(DBConnection *statLog,string currentTable,string day
 
                                 if(dayRes->next())
                                 {
-					RowDataDenied *rowData = new RowDataDenied();
 			                rowData->user = temRes->getString(1);
 			                rowData->domain = temRes->getString(2);
 			                rowData->connection = temRes->getInt(3) + dayRes->getInt(3);
@@ -256,7 +256,6 @@ void tempTableToDayTableDen(DBConnection *statLog,string currentTable,string day
                                 }
                                 else
                                 {
-					RowDataDenied *rowData = new RowDataDenied();
 			                rowData->user = temRes->getString(1);
 			                rowData->domain = temRes->getString(2);
 			                rowData->connection = temRes->getInt(3);
@@ -269,6 +268,7 @@ void tempTableToDayTableDen(DBConnection *statLog,string currentTable,string day
 		
 		                delete stmt;
 		                delete conns;
+				delete rowData;
 	}
 
         catch (exception& e)

@@ -311,6 +311,7 @@ void tempTableToDayTable(DBConnection *statLog,string currentTable,string dayTN)
 		Statement *stmt = conns->createStatement();
 		readPstmt = conns->prepareStatement(selectQuery);
 		temRes = readPstmt->executeQuery();
+		RowData *rowData = new RowData();
 		while(temRes->next())
 		{
 			readPstmt = conns->prepareStatement(searchQueryDay);
@@ -319,7 +320,6 @@ void tempTableToDayTable(DBConnection *statLog,string currentTable,string dayTN)
 			dayRes = readPstmt->executeQuery();
 			if(dayRes->next())
 			{
-				RowData *rowData = new RowData();
 				rowData->user = temRes->getString(1);
 				rowData->domain = temRes->getString(2);
 				rowData->size = temRes->getDouble(3) + dayRes->getDouble(3);
@@ -331,7 +331,6 @@ void tempTableToDayTable(DBConnection *statLog,string currentTable,string dayTN)
 			}
 			else
 			{
-				RowData *rowData = new RowData();
 				rowData->user = temRes->getString(1);
 				rowData->domain = temRes->getString(2);
 				rowData->size = temRes->getDouble(3);
@@ -347,6 +346,7 @@ void tempTableToDayTable(DBConnection *statLog,string currentTable,string dayTN)
 //		syslog(LOG_NOTICE,"tempTableToDayTable acc end");
 		delete stmt;
         	delete conns;
+		delete rowData;
 
 	}
 	catch (exception& e)

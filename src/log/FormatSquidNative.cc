@@ -102,10 +102,10 @@ string processDateFromConfFile = "";
 string previousLogYear="",previousLogMonth="",previousLogDay="";
 
 
-const int MAXDENIEDOBJ = 100;
+const int MAXDENIEDOBJ = 5;
 int NoDENOBJ;
 
-const int MAXACCESSOBJ = 100;
+const int MAXACCESSOBJ = 5;
 int NoACCOBJ;
 
 string currentTableAcc,currentTableDen;
@@ -121,6 +121,8 @@ long int stopClock = 0;
 
 void resetAccObjIsInTable();
 void resetDenObjIsInTable();
+tm *ltm;
+
 // ##################################
 
 
@@ -136,15 +138,15 @@ Log::Format::SquidNative(const AccessLogEntry::Pointer &al, Logfile * logfile)
 
     //#############
     string currentLogTime,currentLogDate;
-	string userIp,domain,dateForTN;
-	int pointObj,isnewLogInTable;
+    string userIp,domain,dateForTN;
+    int pointObj,isnewLogInTable;
     //##########
 
 
 
 	//Modified for DB log
 	
-	tm *ltm = localtime(&current_time.tv_sec);
+	ltm = localtime(&current_time.tv_sec);
 
 	//########################
 
@@ -188,7 +190,6 @@ Log::Format::SquidNative(const AccessLogEntry::Pointer &al, Logfile * logfile)
                   al->http.content_type,
                   (Config.onoff.log_mime_hdrs?"":"\n"));
 
-    safe_free(user);
 
 //Log insertion DB insertion
  //**********************************************************************************
@@ -503,6 +504,7 @@ Log::Format::SquidNative(const AccessLogEntry::Pointer &al, Logfile * logfile)
 				updateDataInObj(statLog,rowDataAcc[pointObj],dataLog);
 			}
 		}
+		delete dataLog;
 	//	syslog(LOG_NOTICE,"MAIN:: End of access");
 	}
 	else
@@ -546,7 +548,8 @@ Log::Format::SquidNative(const AccessLogEntry::Pointer &al, Logfile * logfile)
 				updateDataInDenObj(statLog,rowDataDen[pointObj],dataLog);
 			}
 		}
-//		syslog(LOG_NOTICE,"MAIN:: End of Denied");
+	//		syslog(LOG_NOTICE,"MAIN:: End of Denied");
+		delete dataLog;
 	}
 
 //	syslog(LOG_NOTICE,"Process data at the end");
@@ -559,7 +562,7 @@ Log::Format::SquidNative(const AccessLogEntry::Pointer &al, Logfile * logfile)
         	syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__LINE__).c_str());
 	}
 
-	
+    safe_free(user);
 
 	////////////////////////////////////////////////////////
 

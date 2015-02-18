@@ -360,7 +360,7 @@ DOC_START
 	If you want to use the traditional NCSA proxy authentication, set
 	this line to something like
 
-	auth_param basic program /usr/local/test-integ/libexec/basic_ncsa_auth /usr/local/test-integ/etc/passwd
+	auth_param basic program /usr/local/test-5-obj-ml/libexec/basic_ncsa_auth /usr/local/test-5-obj-ml/etc/passwd
 
 	"utf8" on|off
 	HTTP uses iso-latin-1 as character set, while some authentication
@@ -444,7 +444,7 @@ DOC_START
 	If you want to use a digest authenticator, set this line to
 	something like
 
-	auth_param digest program /usr/local/test-integ/bin/digest_pw_auth /usr/local/test-integ/etc/digpass
+	auth_param digest program /usr/local/test-5-obj-ml/bin/digest_pw_auth /usr/local/test-5-obj-ml/etc/digpass
 
 	"utf8" on|off
 	HTTP uses iso-latin-1 as character set, while some authentication
@@ -1089,7 +1089,7 @@ IF USE_SSL
 	acl aclname ssl_error errorname
 	  # match against SSL certificate validation error [fast]
 	  #
-	  # For valid error names see in /usr/local/test-integ/share/errors/templates/error-details.txt
+	  # For valid error names see in /usr/local/test-5-obj-ml/share/errors/templates/error-details.txt
 	  # template file.
 	  #
 	  # The following can be used as shortcuts for certificate properties:
@@ -2594,13 +2594,13 @@ COMMENT_END
 NAME: sslcrtd_program
 TYPE: eol 
 IFDEF: USE_SSL_CRTD
-DEFAULT: /usr/local/test-integ/libexec/ssl_crtd -s /usr/local/test-integ/var/lib/ssl_db -M 4MB
+DEFAULT: /usr/local/test-5-obj-ml/libexec/ssl_crtd -s /usr/local/test-5-obj-ml/var/lib/ssl_db -M 4MB
 LOC: Ssl::TheConfig.ssl_crtd
 DOC_START
 	Specify the location and options of the executable for ssl_crtd process.
-	/usr/local/test-integ/libexec/ssl_crtd program requires -s and -M parameters
+	/usr/local/test-5-obj-ml/libexec/ssl_crtd program requires -s and -M parameters
 	For more information use:
-		/usr/local/test-integ/libexec/ssl_crtd -h
+		/usr/local/test-5-obj-ml/libexec/ssl_crtd -h
 DOC_END
 
 NAME: sslcrtd_children
@@ -3547,7 +3547,7 @@ DOC_START
 NOCOMMENT_START
 
 # Uncomment and adjust the following to add a disk cache directory.
-#cache_dir ufs /usr/local/test-integ/var/cache/squid 100 16 256
+#cache_dir ufs /usr/local/test-5-obj-ml/var/cache/squid 100 16 256
 NOCOMMENT_END
 DOC_END
 
@@ -3906,7 +3906,7 @@ DOC_END
 NAME: access_log cache_access_log
 TYPE: access_log
 LOC: Config.Log.accesslogs
-DEFAULT_IF_NONE: daemon:/usr/local/test-integ/var/logs/access.log squid
+DEFAULT_IF_NONE: daemon:/usr/local/test-5-obj-ml/var/logs/access.log squid
 DOC_START
 	Configures whether and how Squid logs HTTP and ICP transactions.
 	If access logging is enabled, a single line is logged for every 
@@ -3984,7 +3984,7 @@ DOC_START
 		Place Format:   //host:port
 
 	Default:
-		access_log daemon:/usr/local/test-integ/var/logs/access.log squid
+		access_log daemon:/usr/local/test-5-obj-ml/var/logs/access.log squid
 DOC_END
 
 NAME: icap_log
@@ -4078,7 +4078,7 @@ DOC_END
 
 NAME: logfile_daemon
 TYPE: string
-DEFAULT: /usr/local/test-integ/libexec/log_file_daemon
+DEFAULT: /usr/local/test-5-obj-ml/libexec/log_file_daemon
 LOC: Log::TheConfig.logfile_daemon
 DOC_START
 	Specify the path to the logfile-writing daemon. This daemon is
@@ -4137,8 +4137,8 @@ DOC_START
 	of modules supported.
 	
 	Example:
-		cache_store_log stdio:/usr/local/test-integ/var/logs/store.log
-		cache_store_log daemon:/usr/local/test-integ/var/logs/store.log
+		cache_store_log stdio:/usr/local/test-5-obj-ml/var/logs/store.log
+		cache_store_log daemon:/usr/local/test-5-obj-ml/var/logs/store.log
 DOC_END
 
 NAME: cache_swap_state cache_swap_log
@@ -4213,7 +4213,7 @@ DOC_END
 
 NAME: mime_table
 TYPE: string
-DEFAULT: /usr/local/test-integ/etc/mime.conf
+DEFAULT: /usr/local/test-5-obj-ml/etc/mime.conf
 LOC: Config.mimeTablePathname
 DOC_START
 	Path to Squid's icon configuration file.
@@ -4249,7 +4249,7 @@ DOC_END
 
 NAME: pid_filename
 TYPE: string
-DEFAULT: /usr/local/test-integ/var/run/squid.pid
+DEFAULT: /usr/local/test-5-obj-ml/var/run/squid.pid
 LOC: Config.pidFilename
 DOC_START
 	A filename to write the process-id to.  To disable, enter "none".
@@ -4313,7 +4313,7 @@ DOC_END
 
 NAME: netdb_filename
 TYPE: string
-DEFAULT: stdio:/usr/local/test-integ/var/logs/netdb.state
+DEFAULT: stdio:/usr/local/test-5-obj-ml/var/logs/netdb.state
 LOC: Config.netdbFilename
 IFDEF: USE_ICMP
 DOC_START
@@ -4330,7 +4330,7 @@ COMMENT_END
 
 NAME: cache_log
 TYPE: string
-DEFAULT_IF_NONE: /usr/local/test-integ/var/logs/cache.log
+DEFAULT_IF_NONE: /usr/local/test-5-obj-ml/var/logs/cache.log
 LOC: Debug::cache_log
 DOC_START
 	Squid administrative logging file.
@@ -4374,7 +4374,7 @@ DOC_START
 NOCOMMENT_START
 
 # Leave coredumps in the first cache dir
-coredump_dir /usr/local/test-integ/var/cache/squid
+coredump_dir /usr/local/test-5-obj-ml/var/cache/squid
 NOCOMMENT_END
 DOC_END
 
@@ -4511,7 +4511,7 @@ COMMENT_END
 
 NAME: diskd_program
 TYPE: string
-DEFAULT: /usr/local/test-integ/libexec/diskd
+DEFAULT: /usr/local/test-5-obj-ml/libexec/diskd
 LOC: Config.Program.diskd
 DOC_START
 	Specify the location of the diskd executable.
@@ -4522,7 +4522,7 @@ DOC_END
 NAME: unlinkd_program
 IFDEF: USE_UNLINKD
 TYPE: string
-DEFAULT: /usr/local/test-integ/libexec/unlinkd
+DEFAULT: /usr/local/test-5-obj-ml/libexec/unlinkd
 LOC: Config.Program.unlinkd
 DOC_START
 	Specify the location of the executable for file deletion process.
@@ -4530,7 +4530,7 @@ DOC_END
 
 NAME: pinger_program
 TYPE: string
-DEFAULT: /usr/local/test-integ/libexec/pinger
+DEFAULT: /usr/local/test-5-obj-ml/libexec/pinger
 LOC: Config.pinger.program
 IFDEF: USE_ICMP
 DOC_START
@@ -7104,10 +7104,10 @@ COMMENT_END
 NAME: icon_directory
 TYPE: string
 LOC: Config.icons.directory
-DEFAULT: /usr/local/test-integ/share/icons
+DEFAULT: /usr/local/test-5-obj-ml/share/icons
 DOC_START
 	Where the icons are stored. These are normally kept in
-	/usr/local/test-integ/share/icons
+	/usr/local/test-5-obj-ml/share/icons
 DOC_END
 
 NAME: global_internal_static
@@ -7202,7 +7202,7 @@ DOC_END
 NAME: err_page_stylesheet
 TYPE: string
 LOC: Config.errorStylesheet
-DEFAULT: /usr/local/test-integ/etc/errorpage.css
+DEFAULT: /usr/local/test-5-obj-ml/etc/errorpage.css
 DOC_START
 	CSS Stylesheet to pattern the display of Squid default error pages.
 
@@ -7995,7 +7995,7 @@ DOC_START
 	Instructs Squid to load the specified dynamic module(s) or activate
 	preloaded module(s).
 Example:
-loadable_modules /usr/local/test-integ/lib/MinimalAdapter.so
+loadable_modules /usr/local/test-5-obj-ml/lib/MinimalAdapter.so
 DOC_END
 
 COMMENT_START
@@ -8283,7 +8283,7 @@ DOC_END
 NAME: cache_dns_program
 TYPE: string
 IFDEF: USE_DNSHELPER
-DEFAULT: /usr/local/test-integ/libexec/dnsserver
+DEFAULT: /usr/local/test-5-obj-ml/libexec/dnsserver
 LOC: Config.Program.dnsserver
 DOC_START
 	Specify the location of the executable for dnslookup process.
