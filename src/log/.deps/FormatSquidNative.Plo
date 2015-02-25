@@ -219,30 +219,38 @@ FormatSquidNative.lo: FormatSquidNative.cc ../../include/squid.h \
  /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_multimap.h \
  /usr/include/strings.h ../../src/icmp/IcmpConfig.h ../../src/YesNoNone.h \
  ../../src/SquidTime.h ../../include/rfc1123.h \
+ /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/thread \
+ /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/chrono \
+ /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/ratio \
+ /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/limits \
  /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/ctime \
- /usr/include/mysql_connection.h /usr/include/cppconn/connection.h \
- /usr/include/cppconn/build_config.h /usr/include/cppconn/warning.h \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/stdexcept \
+ /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/functional \
+ /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/typeinfo \
+ /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/tuple \
+ /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/utility \
+ /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_relops.h \
+ /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/tr1_impl/utility \
+ /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/functional_hash.h \
+ /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/tr1_impl/functional_hash.h \
+ /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/tr1_impl/functional \
  /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/memory \
  /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_construct.h \
  /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_uninitialized.h \
  /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_tempbuf.h \
  /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_raw_storage_iter.h \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/typeinfo \
  /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/ext/concurrence.h \
  /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/unique_ptr.h \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/utility \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_relops.h \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/tr1_impl/utility \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/tuple \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/functional \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/functional_hash.h \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/tr1_impl/functional_hash.h \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/tr1_impl/functional \
  /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/backward/auto_ptr.h \
  /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/tr1_impl/boost_sp_counted_base.h \
  /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/shared_ptr.h \
- /usr/include/cppconn/sqlstring.h \
+ /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/mutex \
+ /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/system_error \
+ /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/x86_64-redhat-linux/bits/error_constants.h \
+ /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/stdexcept \
+ /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/condition_variable \
+ ../../src/log/DBConnection.h /usr/include/mysql_connection.h \
+ /usr/include/cppconn/connection.h /usr/include/cppconn/build_config.h \
+ /usr/include/cppconn/warning.h /usr/include/cppconn/sqlstring.h \
  /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/algorithm \
  /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_algo.h \
  /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/algorithmfwd.h \
@@ -292,9 +300,8 @@ FormatSquidNative.lo: FormatSquidNative.cc ../../include/squid.h \
  /usr/include/cppconn/prepared_statement.h \
  /usr/include/cppconn/statement.h /usr/include/boost/lexical_cast.hpp \
  /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/climits \
- /usr/include/boost/limits.hpp \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/limits \
- /usr/include/boost/mpl/if.hpp /usr/include/boost/mpl/aux_/value_wknd.hpp \
+ /usr/include/boost/limits.hpp /usr/include/boost/mpl/if.hpp \
+ /usr/include/boost/mpl/aux_/value_wknd.hpp \
  /usr/include/boost/mpl/aux_/static_cast.hpp \
  /usr/include/boost/mpl/aux_/config/workaround.hpp \
  /usr/include/boost/mpl/aux_/config/integral.hpp \
@@ -416,16 +423,9 @@ FormatSquidNative.lo: FormatSquidNative.cc ../../include/squid.h \
  /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/x86_64-redhat-linux/bits/basic_file.h \
  /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/x86_64-redhat-linux/bits/c++io.h \
  /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/fstream.tcc \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/thread \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/chrono \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/ratio \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/mutex \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/system_error \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/x86_64-redhat-linux/bits/error_constants.h \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/condition_variable \
- ../../src/log/DBConnection.h ../../src/log/RowData.h \
- ../../src/log/RowDataDenied.h ../../src/log/grossStatistics.h \
- ../../src/log/DomainStatistics.h ../../src/log/UserStatistics.h
+ ../../src/log/RowData.h ../../src/log/RowDataDenied.h \
+ ../../src/log/grossStatistics.h ../../src/log/DomainStatistics.h \
+ ../../src/log/UserStatistics.h
 
 ../../include/squid.h:
 
@@ -1183,17 +1183,33 @@ FormatSquidNative.lo: FormatSquidNative.cc ../../include/squid.h \
 
 ../../include/rfc1123.h:
 
+/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/thread:
+
+/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/chrono:
+
+/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/ratio:
+
+/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/limits:
+
 /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/ctime:
 
-/usr/include/mysql_connection.h:
+/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/functional:
 
-/usr/include/cppconn/connection.h:
+/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/typeinfo:
 
-/usr/include/cppconn/build_config.h:
+/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/tuple:
 
-/usr/include/cppconn/warning.h:
+/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/utility:
 
-/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/stdexcept:
+/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_relops.h:
+
+/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/tr1_impl/utility:
+
+/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/functional_hash.h:
+
+/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/tr1_impl/functional_hash.h:
+
+/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/tr1_impl/functional:
 
 /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/memory:
 
@@ -1205,33 +1221,35 @@ FormatSquidNative.lo: FormatSquidNative.cc ../../include/squid.h \
 
 /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_raw_storage_iter.h:
 
-/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/typeinfo:
-
 /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/ext/concurrence.h:
 
 /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/unique_ptr.h:
-
-/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/utility:
-
-/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_relops.h:
-
-/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/tr1_impl/utility:
-
-/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/tuple:
-
-/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/functional:
-
-/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/functional_hash.h:
-
-/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/tr1_impl/functional_hash.h:
-
-/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/tr1_impl/functional:
 
 /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/backward/auto_ptr.h:
 
 /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/tr1_impl/boost_sp_counted_base.h:
 
 /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/shared_ptr.h:
+
+/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/mutex:
+
+/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/system_error:
+
+/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/x86_64-redhat-linux/bits/error_constants.h:
+
+/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/stdexcept:
+
+/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/condition_variable:
+
+../../src/log/DBConnection.h:
+
+/usr/include/mysql_connection.h:
+
+/usr/include/cppconn/connection.h:
+
+/usr/include/cppconn/build_config.h:
+
+/usr/include/cppconn/warning.h:
 
 /usr/include/cppconn/sqlstring.h:
 
@@ -1352,8 +1370,6 @@ FormatSquidNative.lo: FormatSquidNative.cc ../../include/squid.h \
 /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/climits:
 
 /usr/include/boost/limits.hpp:
-
-/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/limits:
 
 /usr/include/boost/mpl/if.hpp:
 
@@ -1606,22 +1622,6 @@ FormatSquidNative.lo: FormatSquidNative.cc ../../include/squid.h \
 /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/x86_64-redhat-linux/bits/c++io.h:
 
 /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/fstream.tcc:
-
-/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/thread:
-
-/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/chrono:
-
-/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/ratio:
-
-/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/mutex:
-
-/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/system_error:
-
-/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/x86_64-redhat-linux/bits/error_constants.h:
-
-/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/condition_variable:
-
-../../src/log/DBConnection.h:
 
 ../../src/log/RowData.h:
 

@@ -31,7 +31,8 @@ void grossStatisticsAcc(string tbNa)
 
 	cout<<"";
 	string tn;
-
+	
+	syslog(LOG_NOTICE,"Start of gross statistics thread");
 
 	try
 	{
@@ -39,7 +40,6 @@ void grossStatisticsAcc(string tbNa)
 		confFile>>tName;
 		confFile.close();
 		cout<<"start of Acc thread for table:"<<tName<<endl;*/
-		//syslog(LOG_NOTICE,"gsACC: start");
 		PreparedStatement *readPstmt;
 		ResultSet *dailyRes,*ymRes;
 
@@ -99,7 +99,13 @@ void grossStatisticsAcc(string tbNa)
 		}
 		createUserStatisticsAcc(tName);
 		createDomainStatisticsAcc(tName);
-		 //syslog(LOG_NOTICE,"gsACC: end");
+
+		delete dailyRes;
+		delete readPstmt;
+		delete stmt;
+		delete grossLog;
+
+		syslog(LOG_NOTICE,"End of Gross statistics thrad");
 	}
 	catch (sql::SQLException &e)
 	{
@@ -130,6 +136,7 @@ void updateRowDataAcc(ResultSet *dailyRes,ResultSet *ymRes,Statement *stmt,strin
 		rowData->response_time = dailyRes->getDouble(7) + ymRes->getDouble(7);
 
 		updateTableAcc(rowData,stmt,tn);
+		delete rowData;
 	}
 	catch (sql::SQLException &e)
 	{
@@ -152,6 +159,7 @@ void insertRowDataAcc(ResultSet *dailyRes,Statement *stmt,string tn)
 		rowData->response_time = dailyRes->getDouble(7);
 
 		insertIntoTableAcc(rowData,stmt,tn);
+		delete rowData;
 	}
 	catch (sql::SQLException &e)
 	{
@@ -190,7 +198,7 @@ void grossStatisticsDen(string tbNa)
 		confFile>>tName;
 		confFile.close();*/
 
-//		syslog(LOG_NOTICE,"gsDen:start");
+		syslog(LOG_NOTICE,"Start of gross Denied Statistics thread");
 		PreparedStatement *readPstmt;
 		ResultSet *dailyRes,*ymRes;
 
@@ -253,7 +261,12 @@ void grossStatisticsDen(string tbNa)
 		}
 		createUserStatisticsDen(tName);
 		createDomainStatisticsDen(tName);
-//		 syslog(LOG_NOTICE,"gsDen:end");
+                delete dailyRes;
+                delete readPstmt;
+                delete stmt;
+                delete grossLog;
+
+		 syslog(LOG_NOTICE,"End of denied statistics thread");
 
 	}
 	catch (sql::SQLException &e)
@@ -280,6 +293,7 @@ void updateRowDataDen(ResultSet *dailyRes,ResultSet *ymRes,Statement *stmt,strin
 		rowData->connection = dailyRes->getInt(3) + ymRes->getInt(3);
 
 		updateTableDen(rowData,stmt,tn);
+		delete rowData;
 	}
 	catch (sql::SQLException &e)
 	{
@@ -297,6 +311,7 @@ void insertRowDataDen(ResultSet *dailyRes,Statement *stmt,string tn)
 		rowData->domain = dailyRes->getString(2);
 		rowData->connection = dailyRes->getInt(3);
 		insertIntoTableDen(rowData,stmt,tn);
+		delete rowData; 
 	}
 	catch (sql::SQLException &e)
 	{

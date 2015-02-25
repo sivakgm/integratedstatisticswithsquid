@@ -34,7 +34,7 @@ void DBConnection::createStatTable(int flag,string tableNam)
 	try
 	{
 	/////////////////////////////////////////////////////
-		this->stmt=this->conn->createStatement();
+//		this->stmt=this->conn->createStatement();
 		if(tableNam != "")
 		{
 			if(flag == 1)
@@ -125,7 +125,7 @@ void DBConnection::createTableIfNotExist()
 {
 	try
 	{
-		this->stmt=this->conn->createStatement();
+//		this->stmt=this->conn->createStatement();
 		this->stmt->execute("create table if not exists " + this->tableNameAcc + " (user varchar(16), domain varchar(100), size double, connection double, hit double, miss double,response_time double);");
 		this->stmt->execute("create table if not exists " + this->tableNameDen + " (user varchar(16), domain varchar(100), connection double);");
 		this->stmt->execute("create table if not exists " + this->tableNameAccTime + " (user varchar(16), domain varchar(100), accTime varchar(15));");
@@ -140,85 +140,17 @@ void DBConnection::createTableIfNotExist()
 	}
 }
 
-/*void DBConnection::setPstmt()
-{
-	try
-	{
-		string query = "insert into " + this->tableNameAcc +"(user,domain,size,connection,hit,miss,response_time) values(?,?,?,?,?,?,?)";
-		this->insPstmtAcc=this->conn->prepareStatement(query);
-
-		query = "update " + this->tableNameAcc + " set size=?,connection=?,hit=?,miss=?,response_time=? where user=? and domain=?;";
-		this->upPstmtAcc=this->conn->prepareStatement(query);
-
-		query = "insert into " + this->tableNameDen +"(user,domain,connection) values(?,?,?)";
-		this->insPstmtDen=this->conn->prepareStatement(query);
-
-		query = "update " + this->tableNameDen + " set connection=? where user=? and domain=?;";
-		this->upPstmtDen=this->conn->prepareStatement(query);
-
-		query = "insert into " + this->tableNameAccTime +"(user,domain,accTime) values(?,?,?);";
-		this->insPstmtAccTime=this->conn->prepareStatement(query);
-
-		query = "insert into " + this->tableNameDenTime +"(user,domain,accTime) values(?,?,?);";
-		this->insPstmtDenTime=this->conn->prepareStatement(query);
-	}
-	catch (sql::SQLException &e)
-	{
-		cout << "# ERR: SQLException in " << __FILE__;
-		cout << "(" << __FUNCTION__ << ") on line " << __LINE__ << endl;
-		cout << "# ERR: " << e.what();
-		cout << " (MySQL error code: " << e.getErrorCode();
-		cout << ", SQLState: " << e.getSQLState() << " )" << endl;
-	}
-}
 
 
-void DBConnection::setReadPstmt(int flag,string tableNam,string user,string domain)
-{
-	try
-	{
-		//syslog(LOG_NOTICE,"DB:set read pstmt");
-		string query;
-
-		if(flag == 1)
-		{
-			query = "select * from " + tableNam +";";
-		}
-		else
-		{
-			query = "select * from " + tableNam +" where user=? and domain=?;";
-		}
-
-		this->readpstmt = this->conn->prepareStatement(query);
-
-		if(flag != 1 )
-		{
-			this->readpstmt->setString(1,user);
-			this->readpstmt->setString(2,domain);
-		}
-	}
-	catch (sql::SQLException &e)
-	{
-		cout << "# ERR: SQLException in " << __FILE__;
-		cout << "(" << __FUNCTION__ << ") on line " << __LINE__ << endl;
-	  	cout << "# ERR: " << e.what();
-	  	cout << " (MySQL error code: " << e.getErrorCode();
-	  	cout << ", SQLState: " << e.getSQLState() << " )" << endl;
-	}
-	//syslog(LOG_NOTICE,"DB:end set read pstmt");
-}*/
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 string timeAndDate()
 {
 	try
 	{
-		time_t now = time(0);
+/*		time_t now = time(0);
 		tm *ltm = localtime(&now);
-		string date = boost::lexical_cast<std::string>((ltm->tm_mday < 10 ?"0":""))+boost::lexical_cast<std::string>(ltm->tm_mday)+"_"+boost::lexical_cast<std::string>(1 + ltm->tm_mon < 10 ?"0":"")+boost::lexical_cast<std::string>(1 + ltm->tm_mon)+"_"+boost::lexical_cast<std::string>(1900 + ltm->tm_year);
-		return date;
+		string date = boost::lexical_cast<std::string>((ltm->tm_mday < 10 ?"0":""))+boost::lexical_cast<std::string>(ltm->tm_mday)+"_"+boost::lexical_cast<std::string>(1 + ltm->tm_mon < 10 ?"0":"")+boost::lexical_cast<std::string>(1 + ltm->tm_mon)+"_"+boost::lexical_cast<std::string>(1900 + ltm->tm_year);*/
+		return "19_02_2015";
 	}
 	catch (exception& e)
 	{

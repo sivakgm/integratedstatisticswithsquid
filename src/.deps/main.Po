@@ -235,9 +235,10 @@ main.o: main.cc ../include/squid.h ../include/autoconf.h \
  /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/x86_64-redhat-linux/bits/basic_file.h \
  /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/x86_64-redhat-linux/bits/c++io.h \
  /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/fstream.tcc \
- log/DBConnection.h /usr/include/mysql_connection.h \
- /usr/include/cppconn/connection.h /usr/include/cppconn/build_config.h \
- /usr/include/cppconn/warning.h \
+ log/DBConnection.h \
+ /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/ctime \
+ /usr/include/mysql_connection.h /usr/include/cppconn/connection.h \
+ /usr/include/cppconn/build_config.h /usr/include/cppconn/warning.h \
  /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/stdexcept \
  /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/memory \
  /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/stl_tempbuf.h \
@@ -290,13 +291,12 @@ main.o: main.cc ../include/squid.h ../include/autoconf.h \
  /usr/include/boost/scoped_ptr.hpp \
  /usr/include/boost/smart_ptr/scoped_ptr.hpp /usr/include/mysql_driver.h \
  /usr/include/cppconn/driver.h /usr/include/cppconn/connection.h \
- /usr/include/cppconn/statement.h /usr/include/cppconn/config.h \
+ /usr/include/cppconn/exception.h /usr/include/cppconn/resultset.h \
+ /usr/include/cppconn/config.h /usr/include/cppconn/resultset_metadata.h \
+ /usr/include/cppconn/datatype.h /usr/include/cppconn/statement.h \
  /usr/include/cppconn/resultset.h \
- /usr/include/cppconn/resultset_metadata.h \
- /usr/include/cppconn/datatype.h /usr/include/cppconn/resultset.h \
  /usr/include/cppconn/prepared_statement.h \
- /usr/include/cppconn/statement.h /usr/include/cppconn/exception.h \
- /usr/include/boost/lexical_cast.hpp \
+ /usr/include/cppconn/statement.h /usr/include/boost/lexical_cast.hpp \
  /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/climits \
  /usr/lib/gcc/x86_64-redhat-linux/4.4.7/include/limits.h \
  /usr/lib/gcc/x86_64-redhat-linux/4.4.7/include/syslimits.h \
@@ -416,7 +416,6 @@ main.o: main.cc ../include/squid.h ../include/autoconf.h \
  /usr/include/boost/type_traits/is_abstract.hpp \
  /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/locale \
  /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/locale_facets_nonio.h \
- /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/ctime \
  /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/x86_64-redhat-linux/bits/time_members.h \
  /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/x86_64-redhat-linux/bits/messages_members.h \
  /usr/include/libintl.h \
@@ -1443,6 +1442,8 @@ WinSvc.h:
 
 log/DBConnection.h:
 
+/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/ctime:
+
 /usr/include/mysql_connection.h:
 
 /usr/include/cppconn/connection.h:
@@ -1565,23 +1566,23 @@ log/DBConnection.h:
 
 /usr/include/cppconn/connection.h:
 
-/usr/include/cppconn/statement.h:
-
-/usr/include/cppconn/config.h:
+/usr/include/cppconn/exception.h:
 
 /usr/include/cppconn/resultset.h:
+
+/usr/include/cppconn/config.h:
 
 /usr/include/cppconn/resultset_metadata.h:
 
 /usr/include/cppconn/datatype.h:
+
+/usr/include/cppconn/statement.h:
 
 /usr/include/cppconn/resultset.h:
 
 /usr/include/cppconn/prepared_statement.h:
 
 /usr/include/cppconn/statement.h:
-
-/usr/include/cppconn/exception.h:
 
 /usr/include/boost/lexical_cast.hpp:
 
@@ -1834,8 +1835,6 @@ log/DBConnection.h:
 /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/locale:
 
 /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/locale_facets_nonio.h:
-
-/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/ctime:
 
 /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/x86_64-redhat-linux/bits/time_members.h:
 

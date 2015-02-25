@@ -43,7 +43,7 @@
 
 //Modified to insert log into DB
 
-#include <ctime>
+/*#include <ctime>
 #include<sys/time.h>
 #include <string>
 #include <mysql_connection.h>
@@ -60,11 +60,11 @@
 
 //#################################
 #include <fstream>
-#include <thread>
 #include <fstream>
 #include <cstdlib>
-#include <time.h>
+#include <time.h>*/
 
+#include <thread>
 
 #include "log/DBConnection.h"
 #include "log/RowData.h"
@@ -121,7 +121,7 @@ long int stopClock = 0;
 
 void resetAccObjIsInTable();
 void resetDenObjIsInTable();
-tm *ltm;
+//tm *ltm;
 
 // ##################################
 
@@ -146,7 +146,7 @@ Log::Format::SquidNative(const AccessLogEntry::Pointer &al, Logfile * logfile)
 
 	//Modified for DB log
 	
-	ltm = localtime(&current_time.tv_sec);
+//	ltm = localtime(&current_time.tv_sec);
 
 	//########################
 
@@ -204,13 +204,22 @@ Log::Format::SquidNative(const AccessLogEntry::Pointer &al, Logfile * logfile)
 		//inserting date	
 		//	currentLogDate = boost::lexical_cast<std::string>(1900 + ltm->tm_year)+"-"+boost::lexical_cast<std::string>(1 + ltm->tm_mon < 10 ?"0":"")+boost::lexical_cast<std::string>(1 + ltm->tm_mon)+"-"+boost::lexical_cast<std::string>((ltm->tm_mday < 10 ?"0":""))+boost::lexical_cast<std::string>(ltm->tm_mday);
 //			currentLogDate = boost::lexical_cast<std::string>(1900 + ltm->tm_year)+"-"+boost::lexical_cast<std::string>(1 + ltm->tm_mon < 10 ?"0":"")+boost::lexical_cast<std::string>(1 + ltm->tm_mon)+"-"+boost::lexical_cast<std::string>((ltm->tm_mday < 10 ?"0":""))+boost::lexical_cast<std::string>(ltm->tm_mday);
-			currentLogDate = boost::lexical_cast<std::string>((ltm->tm_mday < 10 ?"0":""))+boost::lexical_cast<std::string>(ltm->tm_mday) + "-"+boost::lexical_cast<std::string>(1 + ltm->tm_mon < 10 ?"0":"")+boost::lexical_cast<std::string>(1 + ltm->tm_mon)+"-"+boost::lexical_cast<std::string>(1900 + ltm->tm_year);
-			pstmt->setString(2,boost::lexical_cast<std::string>(1900 + ltm->tm_year)+"-"+boost::lexical_cast<std::string>(1 + ltm->tm_mon < 10 ?"0":"")+boost::lexical_cast<std::string>(1 + ltm->tm_mon)+"-"+boost::lexical_cast<std::string>((ltm->tm_mday < 10 ?"0":""))+boost::lexical_cast<std::string>(ltm->tm_mday));
+
+
+
+///////////////////////////////////////////////////////
+//			currentLogDate = boost::lexical_cast<std::string>((ltm->tm_mday < 10 ?"0":""))+boost::lexical_cast<std::string>(ltm->tm_mday) + "-"+boost::lexical_cast<std::string>(1 + ltm->tm_mon < 10 ?"0":"")+boost::lexical_cast<std::string>(1 + ltm->tm_mon)+"-"+boost::lexical_cast<std::string>(1900 + ltm->tm_year);
+//			pstmt->setString(2,boost::lexical_cast<std::string>(1900 + ltm->tm_year)+"-"+boost::lexical_cast<std::string>(1 + ltm->tm_mon < 10 ?"0":"")+boost::lexical_cast<std::string>(1 + ltm->tm_mon)+"-"+boost::lexical_cast<std::string>((ltm->tm_mday < 10 ?"0":""))+boost::lexical_cast<std::string>(ltm->tm_mday));
 
 		//inserting time
-			currentLogTime = boost::lexical_cast<std::string>(ltm->tm_hour)+":"+boost::lexical_cast<std::string>((ltm->tm_min < 10 ?"0":"")) +boost::lexical_cast<std::string>( ltm->tm_min) + ":" + boost::lexical_cast<std::string>(( ltm->tm_sec < 10 ?"0":""))+boost::lexical_cast<std::string>( ltm->tm_sec);
-			pstmt->setString(3,boost::lexical_cast<std::string>(ltm->tm_hour)+":"+boost::lexical_cast<std::string>((ltm->tm_min < 10 ?"0":"")) +boost::lexical_cast<std::string>( ltm->tm_min) + ":" + boost::lexical_cast<std::string>(( ltm->tm_sec < 10 ?"0":""))+boost::lexical_cast<std::string>( ltm->tm_sec));
-		
+//			currentLogTime = boost::lexical_cast<std::string>(ltm->tm_hour)+":"+boost::lexical_cast<std::string>((ltm->tm_min < 10 ?"0":"")) +boost::lexical_cast<std::string>( ltm->tm_min) + ":" + boost::lexical_cast<std::string>(( ltm->tm_sec < 10 ?"0":""))+boost::lexical_cast<std::string>( ltm->tm_sec);
+//			pstmt->setString(3,boost::lexical_cast<std::string>(ltm->tm_hour)+":"+boost::lexical_cast<std::string>((ltm->tm_min < 10 ?"0":"")) +boost::lexical_cast<std::string>( ltm->tm_min) + ":" + boost::lexical_cast<std::string>(( ltm->tm_sec < 10 ?"0":""))+boost::lexical_cast<std::string>( ltm->tm_sec));
+	
+			currentLogDate = "19_02_2015";
+			currentLogTime = "02:10";
+			pstmt->setString(2,currentLogDate);
+			pstmt->setString(3,currentLogTime);
+	
 			pstmt->setInt(4,al->cache.msec);
     	    		pstmt->setString(5,clientip);
 	        	pstmt->setString(6,LogTags_str[al->cache.code]);

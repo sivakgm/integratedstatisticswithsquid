@@ -222,7 +222,7 @@ void tempTableToDayTableDen(DBConnection *statLog,string currentTable,string day
                 string schema = "squidStatistics_"+year;
 		
 		//syslog(LOG_NOTICE,schema.c_str());
-		//syslog(LOG_NOTICE,"tempTableToDayTableDen start");
+		syslog(LOG_NOTICE,"Start of denied thread");
    		ResultSet *dayRes,*temRes;
 		PreparedStatement *readPstmt;
 
@@ -263,7 +263,7 @@ void tempTableToDayTableDen(DBConnection *statLog,string currentTable,string day
                                 }
 				
                }
-		//syslog(LOG_NOTICE,"tempTableToDayTableDen end");
+		syslog(LOG_NOTICE,"End of denied thread");
 
 		
 		                delete stmt;

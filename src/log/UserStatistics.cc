@@ -79,6 +79,11 @@ void createUserStatisticsAcc(string tableName)
 		checkPresenceOfUserDataInTableAcc(rowData,stmt,monthStatisticstable);
 		checkPresenceOfUserDataInTableAcc(rowData,stmt,yearStatisticstable);
 
+                delete udStatData;
+                delete readPstmt;
+                delete stmt;
+                delete rowData;
+                delete grossLog;
 
 	}
 	catch (sql::SQLException &e)
@@ -204,6 +209,13 @@ void createUserStatisticsDen(string tableName)
 		insertDataIntoDailyUserStatisticsDen(rowDataDenied,stmt,dayStatisticstable);
 		checkPresenceOfUserDataInTableDen(rowDataDenied,stmt,monthStatisticstable);
 		checkPresenceOfUserDataInTableDen(rowDataDenied,stmt,yearStatisticstable);
+		
+                delete udStatData;
+                delete readPstmt;
+                delete stmt;
+                delete rowDataDenied;
+                delete grossLog;
+
 	}
 	catch (sql::SQLException &e)
 	{

@@ -344,7 +344,11 @@ RowDataDenied.lo: RowDataDenied.cc ../../include/squid.h \
  /usr/include/boost/smart_ptr/detail/operator_bool.hpp \
  /usr/include/boost/scoped_ptr.hpp \
  /usr/include/boost/smart_ptr/scoped_ptr.hpp /usr/include/mysql_driver.h \
- /usr/include/cppconn/driver.h /usr/include/cppconn/connection.h
+ /usr/include/cppconn/driver.h /usr/include/cppconn/connection.h \
+ /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/fstream \
+ /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/x86_64-redhat-linux/bits/basic_file.h \
+ /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/x86_64-redhat-linux/bits/c++io.h \
+ /usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/fstream.tcc
 
 ../../include/squid.h:
 
@@ -1211,3 +1215,11 @@ RowDataDenied.lo: RowDataDenied.cc ../../include/squid.h \
 /usr/include/cppconn/driver.h:
 
 /usr/include/cppconn/connection.h:
+
+/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/fstream:
+
+/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/x86_64-redhat-linux/bits/basic_file.h:
+
+/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/x86_64-redhat-linux/bits/c++io.h:
+
+/usr/lib/gcc/x86_64-redhat-linux/4.4.7/../../../../include/c++/4.4.7/bits/fstream.tcc:

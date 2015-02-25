@@ -71,13 +71,19 @@ void createDomainStatisticsAcc(string tableName)
 		insertDataIntoDailyDomainStatisticsAcc(rowData,stmt,dayStatisticstable);
 		checkPresenceOfDomainDataInTableAcc(rowData,stmt,monthStatisticstable);
 		checkPresenceOfDomainDataInTableAcc(rowData,stmt,yearStatisticstable);
+		delete udStatData;
+		delete readPstmt;
+		delete stmt;
+		delete rowData;
+		delete grossLog;
 	}
+
 	catch (sql::SQLException &e)
 	{
-	syslog(LOG_NOTICE,e.what());
-	syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__FILE__).c_str());
-	syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__LINE__).c_str());
-}
+		syslog(LOG_NOTICE,e.what());
+		syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__FILE__).c_str());
+		syslog(LOG_NOTICE,boost::lexical_cast<std::string>(__LINE__).c_str());
+	}
 }
 
 void insertDataIntoDailyDomainStatisticsAcc(RowData *rowData,Statement *stmt,string tableName)
@@ -191,6 +197,12 @@ void createDomainStatisticsDen(string tableName)
 		insertDataIntoDailyDomainStatisticsDen(rowDataDenied,stmt,dayStatisticstable);
 		checkPresenceOfDomainDataInTableDen(rowDataDenied,stmt,monthStatisticstable);
 		checkPresenceOfDomainDataInTableDen(rowDataDenied,stmt,yearStatisticstable);
+                delete udStatData;
+                delete readPstmt;
+                delete stmt;
+                delete rowDataDenied;
+                delete grossLog;
+
 	}
 	catch (sql::SQLException &e)
 	{

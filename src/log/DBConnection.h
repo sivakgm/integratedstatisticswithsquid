@@ -9,24 +9,35 @@
 #define DBCONNECTION_H_
 
 
-
-
-#include <iostream>
+#include <ctime>
+#include<sys/time.h>
 #include <string>
-
 #include <mysql_connection.h>
 #include <mysql_driver.h>
-
 #include <cppconn/driver.h>
-#include <cppconn/statement.h>
-#include <cppconn/resultset.h>
-#include <cppconn/prepared_statement.h>
 #include <cppconn/exception.h>
-
+#include <cppconn/resultset.h>
+#include <cppconn/statement.h>
+#include <cppconn/prepared_statement.h>
 #include <boost/lexical_cast.hpp>
 
-#include <ctime>
-#include <sys/time.h>
+
+
+
+//#################################
+#include <fstream>
+#include <cstdlib>
+#include <time.h>
+
+
+
+
+
+
+
+
+
+
 
 class RowData;
 class RowDataDenied;

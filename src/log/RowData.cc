@@ -303,7 +303,7 @@ void tempTableToDayTable(DBConnection *statLog,string currentTable,string dayTN)
 		sql::Connection* conns = drivers->connect("tcp://127.0.0.1:3306","root","simple");
 		conns->setSchema(schema);
 		
-//		syslog(LOG_NOTICE,"tempTableToDayTable acc start");
+		syslog(LOG_NOTICE,"Start of access thead");
 		ResultSet *dayRes,*temRes;
 		PreparedStatement *readPstmt;
 		string searchQueryDay = "select * from "+ tn +" where user=? and domain=?;";
@@ -343,6 +343,7 @@ void tempTableToDayTable(DBConnection *statLog,string currentTable,string dayTN)
 	
 
 		}
+		syslog(LOG_NOTICE,"End of access thread");
 //		syslog(LOG_NOTICE,"tempTableToDayTable acc end");
 		delete stmt;
         	delete conns;
